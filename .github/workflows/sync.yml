@@ -1,0 +1,31 @@
+name: sync
+on:
+  schedule: [{cron: "0 6 * * 1"}]   # Mondays 06:00 UTC
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: {python-version: "3.12"}
+      - run: pip install okf-kit
+      - name: Discover and sync the bundle
+        id: b
+        run: |
+          DIR=$(dirname "$(dirname "$(ls */.okf-kit/state.json | head -1)")")
+          echo "dir=$DIR" >> "$GITHUB_OUTPUT"
+          okf sync "$DIR"
+      - name: Commit the delta
+        run: |
+          git config user.name okf-bot
+          git config user.email okf-bot@users.noreply.github.com
+          git add -A && git commit -m "sync: $(date -u +%F)" && git push || echo "no changes"
+      - name: Re-package release
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          DIR="${{ steps.b.outputs.dir }}"
+          okf zip "$DIR" -o "$DIR-okf.zip"
+          gh release upload v0.1.0 "$DIR-okf.zip" --clobber

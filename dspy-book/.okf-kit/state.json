@@ -1,0 +1,1130 @@
+{
+  "generator": "okf-kit",
+  "okf_version": "0.1",
+  "root_url": "https://dspy.ai/",
+  "updated_at": "2026-07-07T10:31:54.416464+00:00",
+  "config": {
+    "max_depth": 3,
+    "max_pages": 70,
+    "fetcher": "http",
+    "respect_robots": true,
+    "path_prefix": "/"
+  },
+  "page_count": 70,
+  "pages": [
+    {
+      "path": "pages/api.md",
+      "url": "https://dspy.ai/api",
+      "title": "API Reference - DSPy",
+      "hash": "62176b2e07887709083203c77cf5b68293a3c17074a6a5040d444019f80ffe47"
+    },
+    {
+      "path": "pages/community/use-cases.md",
+      "url": "https://dspy.ai/community/use-cases",
+      "title": "Use Cases - DSPy",
+      "hash": "c967489dae873c3020ba18764038ef0f0e86e5a1d3c0d442b233ea1512b4ac8d"
+    },
+    {
+      "path": "pages/diving-deeper/adapters.md",
+      "url": "https://dspy.ai/diving-deeper/adapters",
+      "title": "Adapters: how signatures become prompts - DSPy",
+      "hash": "c4e0afdf03b89ee184d29f1e1094f0248a978e2c8d12a27e691beb27130eacd9"
+    },
+    {
+      "path": "pages/diving-deeper/bootstrap-fewshot-family.md",
+      "url": "https://dspy.ai/diving-deeper/bootstrap-fewshot-family",
+      "title": "BootstrapFewShot family - DSPy",
+      "hash": "e4e10bdc977adf03ae052512bd9a73988f9aeec20fb2cf57b0d4c44173868ea8"
+    },
+    {
+      "path": "pages/diving-deeper/built-in-module-variants.md",
+      "url": "https://dspy.ai/diving-deeper/built-in-module-variants",
+      "title": "Built-in module variants - DSPy",
+      "hash": "da45a02a780527898e2c65a88d778684192a17cba4c3f200f6f4f5b926288dac"
+    },
+    {
+      "path": "pages/diving-deeper/choosing-an-optimizer.md",
+      "url": "https://dspy.ai/diving-deeper/choosing-an-optimizer",
+      "title": "Optimizers: choosing one - DSPy",
+      "hash": "dcb27e07716415c7ff23c5cef1b4034eea47b067ad5798319c875779fdacf9e2"
+    },
+    {
+      "path": "pages/diving-deeper/gepa-in-depth.md",
+      "url": "https://dspy.ai/diving-deeper/gepa-in-depth",
+      "title": "GEPA in depth - DSPy",
+      "hash": "b15798b88bbeb7a8378d2f5397b78e6f69b9416195c37435a541592c36788a9b"
+    },
+    {
+      "path": "pages/diving-deeper/metrics-and-evaluation.md",
+      "url": "https://dspy.ai/diving-deeper/metrics-and-evaluation",
+      "title": "Metrics and evaluation - DSPy",
+      "hash": "75d599f78c1b123e918e597b58724ab67de0239c9b4fa93c0e40d0a0c7b5b5a9"
+    },
+    {
+      "path": "pages/diving-deeper/modules.md",
+      "url": "https://dspy.ai/diving-deeper/modules",
+      "title": "Modules: composing your own - DSPy",
+      "hash": "77d0bd087b55c155264e4b6a288a3ef090561fe8a970e7945e4085ae40eeb37e"
+    },
+    {
+      "path": "pages/diving-deeper/rlm.md",
+      "url": "https://dspy.ai/diving-deeper/rlm",
+      "title": "RLM: exploring large contexts with code - DSPy",
+      "hash": "193330221b8f720d6eaa8498256100c08857d972914fe502a281f26115bea1f2"
+    },
+    {
+      "path": "pages/diving-deeper/saving-and-loading.md",
+      "url": "https://dspy.ai/diving-deeper/saving-and-loading",
+      "title": "Saving and loading - DSPy",
+      "hash": "9425ae03b27293e42b81e12f98ffff81be31a1fc85db00ba57dcbe54285be132"
+    },
+    {
+      "path": "pages/diving-deeper/settings-and-context.md",
+      "url": "https://dspy.ai/diving-deeper/settings-and-context",
+      "title": "Settings and context() - DSPy",
+      "hash": "9038b62a74c5ec623bdc62aaf055122b3daebd6d7af1255b4d8db583e9b2a9cd"
+    },
+    {
+      "path": "pages/diving-deeper/signatures-in-depth.md",
+      "url": "https://dspy.ai/diving-deeper/signatures-in-depth",
+      "title": "Signatures in depth - DSPy",
+      "hash": "92c2a74b878ffc7d6c055c642828060e1877481746376bc83452c7f0216152a8"
+    },
+    {
+      "path": "pages/diving-deeper/tools-react-and-mcp.md",
+      "url": "https://dspy.ai/diving-deeper/tools-react-and-mcp",
+      "title": "Tools, ReAct, and MCP - DSPy",
+      "hash": "6acc9e433dfca8ae43d5b3b710337bb556664c930fcdda8ee10f122df0e741a6"
+    },
+    {
+      "path": "pages/faqs.md",
+      "url": "https://dspy.ai/faqs",
+      "title": "FAQ - DSPy",
+      "hash": "037f7b6c9376433f386f77b7e301fb02b04f947d2e5c7fad248460dc41f4e4aa"
+    },
+    {
+      "path": "pages/getting-started/changing-modules.md",
+      "url": "https://dspy.ai/getting-started/changing-modules",
+      "title": "Changing modules - DSPy",
+      "hash": "2a12de68eb06c6378831176bb82a66d4194464e603f14a8d9066bb43d84b9f69"
+    },
+    {
+      "path": "pages/getting-started/class-based-signatures.md",
+      "url": "https://dspy.ai/getting-started/class-based-signatures",
+      "title": "Class-based signatures - DSPy",
+      "hash": "4822ce34fb6e186a73115151c848e5e97414c2755d774fe854da03afe9c6d7de"
+    },
+    {
+      "path": "pages/getting-started/composing-modules.md",
+      "url": "https://dspy.ai/getting-started/composing-modules",
+      "title": "Composing modules - DSPy",
+      "hash": "9c85fb6a324f7a5f67f9871cf54b80fe454cc887080786c5c2ac84e1c4c9b319"
+    },
+    {
+      "path": "pages/getting-started/expanding-signatures.md",
+      "url": "https://dspy.ai/getting-started/expanding-signatures",
+      "title": "Expanding signatures - DSPy",
+      "hash": "c5378c11584c0a39c64c00574c698e120a693752d39dc4ad8ae5abc3ceabb2fd"
+    },
+    {
+      "path": "pages/getting-started/first-program.md",
+      "url": "https://dspy.ai/getting-started/first-program",
+      "title": "Your first program - DSPy",
+      "hash": "f90e64f0319398734a13b51e1c5ce0024ce0cbfc0d87b68ad4273d9ad6dd8299"
+    },
+    {
+      "path": "pages/getting-started/gepa-optimization.md",
+      "url": "https://dspy.ai/getting-started/gepa-optimization",
+      "title": "GEPA optimization - DSPy",
+      "hash": "3b34739a61a44fa8f096d22fc102e3d852b97a2480dd244ebd8b6702e7d6f41b"
+    },
+    {
+      "path": "pages/getting-started/installation.md",
+      "url": "https://dspy.ai/getting-started/installation",
+      "title": "Setting up DSPy - DSPy",
+      "hash": "9a12448015a9244eaa5daa748cb906ace46c569bd35cd331840ab8e32db042b8"
+    },
+    {
+      "path": "pages/getting-started/metrics.md",
+      "url": "https://dspy.ai/getting-started/metrics",
+      "title": "Metrics - DSPy",
+      "hash": "81dace015b9ee26e3e03b75527647fc71c5d3f5564d1822caff86ead3fea27e3"
+    },
+    {
+      "path": "pages/getting-started/program-dont-prompt.md",
+      "url": "https://dspy.ai/getting-started/program-dont-prompt",
+      "title": "Program, don't prompt - DSPy",
+      "hash": "2a13c4fafdc249b17f5d253e55a8907a7f6bdedfdcfa5e7ab4ccbef4386dd3bb"
+    },
+    {
+      "path": "pages/getting-started/react-and-tools.md",
+      "url": "https://dspy.ai/getting-started/react-and-tools",
+      "title": "Tools with ReAct - DSPy",
+      "hash": "35bdb6018cc03319e4b5c8c2fe2186d53c0ba78ae2d033de723b34f7f42a201b"
+    },
+    {
+      "path": "pages/getting-started/saving-and-loading.md",
+      "url": "https://dspy.ai/getting-started/saving-and-loading",
+      "title": "Saving and loading - DSPy",
+      "hash": "f54ab9ff91aef1dcea7af7491bd555523525a9ee9dc802f486a1dcc969295435"
+    },
+    {
+      "path": "pages/getting-started/where-to-go-next.md",
+      "url": "https://dspy.ai/getting-started/where-to-go-next",
+      "title": "Where to go next - DSPy",
+      "hash": "837fac68177d8f5e1c98e922844a2f80e598ab2759fea62f31971f7c9cec3443"
+    },
+    {
+      "path": "pages/home.md",
+      "url": "https://dspy.ai/",
+      "title": "DSPy",
+      "hash": "bc376bb3300472dc63c3d504940426fe4e221a35ce609b9af1775c3a33f32273"
+    },
+    {
+      "path": "pages/tutorials.md",
+      "url": "https://dspy.ai/tutorials",
+      "title": "Tutorials Overview - DSPy",
+      "hash": "2aa0f2032908847b84722679bb26cb6b96f59112f87458806ae8a4e1e75fd10e"
+    },
+    {
+      "path": "pages/tutorials/agents.md",
+      "url": "https://dspy.ai/tutorials/agents",
+      "title": "Building RAG as Agent - DSPy",
+      "hash": "947340d0a0b01c92cc241fd947bf02c38dacd6afca1d3c789d9cd02fed7001e2"
+    },
+    {
+      "path": "pages/tutorials/async.md",
+      "url": "https://dspy.ai/tutorials/async",
+      "title": "Async - DSPy",
+      "hash": "fd57cfa3ac7cc2e818f625113788e04c9dee2e47aba3e62e812f182aa7fb5654"
+    },
+    {
+      "path": "pages/tutorials/audio.md",
+      "url": "https://dspy.ai/tutorials/audio",
+      "title": "Audio - DSPy",
+      "hash": "dbb8ac7fe89715d492ceef3d972cd11bb3bd40f5853546e13f2db39e63a507bc"
+    },
+    {
+      "path": "pages/tutorials/build_ai_program.md",
+      "url": "https://dspy.ai/tutorials/build_ai_program",
+      "title": "Overview - DSPy",
+      "hash": "d3244670f0274790548da91ad9985df5b795572e26dc3b22f957fe524b5be7ed"
+    },
+    {
+      "path": "pages/tutorials/cache.md",
+      "url": "https://dspy.ai/tutorials/cache",
+      "title": "Cache - DSPy",
+      "hash": "7a335bacdc9f652aebdb905c1982188dc2452309567657bfffd37f82fdd81e0d"
+    },
+    {
+      "path": "pages/tutorials/classification.md",
+      "url": "https://dspy.ai/tutorials/classification",
+      "title": "Classification - DSPy",
+      "hash": "d975389da5aaca349292bd3a74b6548d533f786a3534a38152b2c5327bae8b06"
+    },
+    {
+      "path": "pages/tutorials/classification_finetuning.md",
+      "url": "https://dspy.ai/tutorials/classification_finetuning",
+      "title": "Classification Finetuning - DSPy",
+      "hash": "4533be1c0824313d06c2b3afa40647577412714654cb8bb18f45897c538d6c46"
+    },
+    {
+      "path": "pages/tutorials/conversation_history.md",
+      "url": "https://dspy.ai/tutorials/conversation_history",
+      "title": "Managing Conversation History - DSPy",
+      "hash": "a4ca0feabced0f98b77bc6ae2ae69fab53ee7757cb627ab4fee25dd1ad0e9876"
+    },
+    {
+      "path": "pages/tutorials/core_development.md",
+      "url": "https://dspy.ai/tutorials/core_development",
+      "title": "Overview - DSPy",
+      "hash": "ca0725c4d2b894560f3f56174c6352fa3fa6887ae355f5a39d70f044876422d7"
+    },
+    {
+      "path": "pages/tutorials/custom_module.md",
+      "url": "https://dspy.ai/tutorials/custom_module",
+      "title": "Building AI Applications by Customizing DSPy Modules - DSPy",
+      "hash": "79a4b7644b6bc7fd0ddb5117ab02a6baeaf35f46fc47a81fca6f0bf2a795ec17"
+    },
+    {
+      "path": "pages/tutorials/customer_service_agent.md",
+      "url": "https://dspy.ai/tutorials/customer_service_agent",
+      "title": "Building AI Agents with DSPy - DSPy",
+      "hash": "a5f89f6e0bc3b5dd0f356f7b70b69de9c602d52d6251573ad4ff6e71add592dd"
+    },
+    {
+      "path": "pages/tutorials/deployment.md",
+      "url": "https://dspy.ai/tutorials/deployment",
+      "title": "Deployment - DSPy",
+      "hash": "e2a28504d623190766eb9389e8b46c1e1781a89918ddcd2455b6780bb6551277"
+    },
+    {
+      "path": "pages/tutorials/email_extraction.md",
+      "url": "https://dspy.ai/tutorials/email_extraction",
+      "title": "Email Information Extraction - DSPy",
+      "hash": "c1b6ec8e323512512910dbddba71f2646db81a7e6581b754e5383a6c359dea2d"
+    },
+    {
+      "path": "pages/tutorials/entity_extraction.md",
+      "url": "https://dspy.ai/tutorials/entity_extraction",
+      "title": "Entity Extraction - DSPy",
+      "hash": "cf360c6659df541cc0423c59e6b451c16e9f1c9f7356d35149f37d1ba68f7d4e"
+    },
+    {
+      "path": "pages/tutorials/games.md",
+      "url": "https://dspy.ai/tutorials/games",
+      "title": "Finetuning Agents - DSPy",
+      "hash": "7793b4f80aefadd0edaf1f30e5e1a24b4278d0adb8359dbc384a53e5e9cf8c54"
+    },
+    {
+      "path": "pages/tutorials/gepa_ai_program.md",
+      "url": "https://dspy.ai/tutorials/gepa_ai_program",
+      "title": "Overview - DSPy",
+      "hash": "682d001cf6168f558c4654320bb10ac686d126b0856be6a5dcbb88401bba0516"
+    },
+    {
+      "path": "pages/tutorials/gepa_aime.md",
+      "url": "https://dspy.ai/tutorials/gepa_aime",
+      "title": "GEPA for AIME (Math) - DSPy",
+      "hash": "a5b1669efb73ccb9fcd3f57570766cc0c2ba8b11ee47e24e6c1bd681863277d0"
+    },
+    {
+      "path": "pages/tutorials/gepa_facilitysupportanalyzer.md",
+      "url": "https://dspy.ai/tutorials/gepa_facilitysupportanalyzer",
+      "title": "GEPA for Structured Information Extraction for Enterprise Tasks - DSPy",
+      "hash": "2ed26778c1ff4ddd62e8424e3261b13f322654b47bc10a4da65219293fbad704"
+    },
+    {
+      "path": "pages/tutorials/gepa_papillon.md",
+      "url": "https://dspy.ai/tutorials/gepa_papillon",
+      "title": "GEPA for Privacy-Conscious Delegation - DSPy",
+      "hash": "428d33b274e0b8d5a7b9cc5f01ab8d958490c0ae9967aa56f01331545801edec"
+    },
+    {
+      "path": "pages/tutorials/gepa_trusted_monitor.md",
+      "url": "https://dspy.ai/tutorials/gepa_trusted_monitor",
+      "title": "GEPA for Code Backdoor Classification (AI control) - DSPy",
+      "hash": "d21a789122dddb0c7a4c3d62ba389e403062112ebaec036276d3f29e5cb874ac"
+    },
+    {
+      "path": "pages/tutorials/image_generation_prompting.md",
+      "url": "https://dspy.ai/tutorials/image_generation_prompting",
+      "title": "Image Generation Prompt iteration - DSPy",
+      "hash": "a89e2d915f148c41ffa319b52c825c0adbe4a7750cce24e44c258c7547e573b7"
+    },
+    {
+      "path": "pages/tutorials/llms_txt_generation.md",
+      "url": "https://dspy.ai/tutorials/llms_txt_generation",
+      "title": "Generating llms.txt - DSPy",
+      "hash": "d721f4f52d66cda25c2e6f3770bf9c8af6154277bb823a8c9cf5e62ff28ed9ae"
+    },
+    {
+      "path": "pages/tutorials/math.md",
+      "url": "https://dspy.ai/tutorials/math",
+      "title": "Math Reasoning - DSPy",
+      "hash": "d8a776b6a3b152d6ceddc733ecea83461c2cc2fd0ce34b640a927f2bc79fde2d"
+    },
+    {
+      "path": "pages/tutorials/mcp.md",
+      "url": "https://dspy.ai/tutorials/mcp",
+      "title": "Use MCP in DSPy - DSPy",
+      "hash": "948eafbd702f16a53ce221eb296c80fc00148bcd8c8d26426cf08a89f6494b40"
+    },
+    {
+      "path": "pages/tutorials/mem0_react_agent.md",
+      "url": "https://dspy.ai/tutorials/mem0_react_agent",
+      "title": "Memory-Enabled ReAct Agents - DSPy",
+      "hash": "6e7d00678509a99e8e27571f1ff65832899af99e27149cb2d155abe6c7ad6100"
+    },
+    {
+      "path": "pages/tutorials/multihop_search.md",
+      "url": "https://dspy.ai/tutorials/multihop_search",
+      "title": "Multi-Hop RAG - DSPy",
+      "hash": "bf1f5f7fb1de98f513af4ff5f589e048e1ce7e5a99240ef83f8db3243ef7a1f6"
+    },
+    {
+      "path": "pages/tutorials/observability.md",
+      "url": "https://dspy.ai/tutorials/observability",
+      "title": "Debugging & Observability - DSPy",
+      "hash": "b089815cb9fa4f619b3a468d4707ce40c8a99edeb128c9a9bb5a801aa79cd811"
+    },
+    {
+      "path": "pages/tutorials/optimize_ai_program.md",
+      "url": "https://dspy.ai/tutorials/optimize_ai_program",
+      "title": "Overview - DSPy",
+      "hash": "0180c79dda4d283979e258dbd2b535f0e9c015ce893f0f73408e4a3534b97152"
+    },
+    {
+      "path": "pages/tutorials/optimizer_tracking.md",
+      "url": "https://dspy.ai/tutorials/optimizer_tracking",
+      "title": "Tracking DSPy Optimizers - DSPy",
+      "hash": "5025e66c5929fff637bd4319bd4fb65cfa33a1f79300be0e3a01c85ddd5c1987"
+    },
+    {
+      "path": "pages/tutorials/output_refinement/best-of-n-and-refine.md",
+      "url": "https://dspy.ai/tutorials/output_refinement/best-of-n-and-refine",
+      "title": "Output Refinement - DSPy",
+      "hash": "50da7540236e9171e944fb5494827b82b9c974c4e43bfbf7dbd2223f73d66e59"
+    },
+    {
+      "path": "pages/tutorials/papillon.md",
+      "url": "https://dspy.ai/tutorials/papillon",
+      "title": "Privacy-Conscious Delegation - DSPy",
+      "hash": "a26d3c8719ce86eefe3651083bd383897ed7193c110c04150d534577088855bc"
+    },
+    {
+      "path": "pages/tutorials/program_of_thought.md",
+      "url": "https://dspy.ai/tutorials/program_of_thought",
+      "title": "Program Of Thought - DSPy",
+      "hash": "d9953971474908d7005383f6bcf6025b26339357beb10e9fc773ca3a09e466ad"
+    },
+    {
+      "path": "pages/tutorials/rag.md",
+      "url": "https://dspy.ai/tutorials/rag",
+      "title": "Retrieval-Augmented Generation (RAG) - DSPy",
+      "hash": "9c9cb701c8411f5a427674c8b1b931554dc6fbb436c4e807b9269f881dc8b2a5"
+    },
+    {
+      "path": "pages/tutorials/real_world_examples.md",
+      "url": "https://dspy.ai/tutorials/real_world_examples",
+      "title": "Overview - DSPy",
+      "hash": "64cf99c3873878e5fab289501fda2bc0eafcfbdb99ef3aa9855475a19b35ed8f"
+    },
+    {
+      "path": "pages/tutorials/rl_ai_program.md",
+      "url": "https://dspy.ai/tutorials/rl_ai_program",
+      "title": "Overview - DSPy",
+      "hash": "7896fe3b9470fb21f441f375d7f32d62a20948261fac30b315ad262f5571cfdf"
+    },
+    {
+      "path": "pages/tutorials/rl_multihop.md",
+      "url": "https://dspy.ai/tutorials/rl_multihop",
+      "title": "RL for Multi-Hop Research - DSPy",
+      "hash": "871eb0eb59638804721147926a4966507fb3c88bb6d6c1d600ad07c4bd5cbd26"
+    },
+    {
+      "path": "pages/tutorials/rl_papillon.md",
+      "url": "https://dspy.ai/tutorials/rl_papillon",
+      "title": "RL for Privacy-Conscious Delegation - DSPy",
+      "hash": "8a93c46e65f5244dae7bda256404e8435465c2ccc30fa0fe6b1688aef4cb5d23"
+    },
+    {
+      "path": "pages/tutorials/saving.md",
+      "url": "https://dspy.ai/tutorials/saving",
+      "title": "Saving and Loading - DSPy",
+      "hash": "e7a48ae06aba6c24524a83857a2770499531f53429ad917f22d7ccf7ac1b8d09"
+    },
+    {
+      "path": "pages/tutorials/streaming.md",
+      "url": "https://dspy.ai/tutorials/streaming",
+      "title": "Streaming - DSPy",
+      "hash": "5081514fc74a544ae9e6b3e90d399371a08d4400ecacaf38cef5261ff0e5468c"
+    },
+    {
+      "path": "pages/tutorials/tool_use.md",
+      "url": "https://dspy.ai/tutorials/tool_use",
+      "title": "Advanced Tool Use - DSPy",
+      "hash": "a4bd87511b787099c6dd8d93e14e2e10b4553558120db2b2dec9d801cf587a4c"
+    },
+    {
+      "path": "pages/tutorials/yahoo_finance_react.md",
+      "url": "https://dspy.ai/tutorials/yahoo_finance_react",
+      "title": "Financial Analysis with Yahoo Finance - DSPy",
+      "hash": "4d3e55a43383d539070d61bffbc5c3f6ec7ce109aabb0226cbf6f54d74060c41"
+    }
+  ],
+  "edges": [
+    [
+      "pages/community/use-cases.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/diving-deeper/adapters.md",
+      "pages/diving-deeper/settings-and-context.md"
+    ],
+    [
+      "pages/diving-deeper/adapters.md",
+      "pages/diving-deeper/signatures-in-depth.md"
+    ],
+    [
+      "pages/diving-deeper/bootstrap-fewshot-family.md",
+      "pages/diving-deeper/choosing-an-optimizer.md"
+    ],
+    [
+      "pages/diving-deeper/bootstrap-fewshot-family.md",
+      "pages/diving-deeper/gepa-in-depth.md"
+    ],
+    [
+      "pages/diving-deeper/bootstrap-fewshot-family.md",
+      "pages/diving-deeper/metrics-and-evaluation.md"
+    ],
+    [
+      "pages/diving-deeper/bootstrap-fewshot-family.md",
+      "pages/diving-deeper/modules.md"
+    ],
+    [
+      "pages/diving-deeper/built-in-module-variants.md",
+      "pages/diving-deeper/modules.md"
+    ],
+    [
+      "pages/diving-deeper/built-in-module-variants.md",
+      "pages/diving-deeper/rlm.md"
+    ],
+    [
+      "pages/diving-deeper/built-in-module-variants.md",
+      "pages/diving-deeper/settings-and-context.md"
+    ],
+    [
+      "pages/diving-deeper/built-in-module-variants.md",
+      "pages/diving-deeper/tools-react-and-mcp.md"
+    ],
+    [
+      "pages/diving-deeper/choosing-an-optimizer.md",
+      "pages/diving-deeper/bootstrap-fewshot-family.md"
+    ],
+    [
+      "pages/diving-deeper/choosing-an-optimizer.md",
+      "pages/diving-deeper/gepa-in-depth.md"
+    ],
+    [
+      "pages/diving-deeper/choosing-an-optimizer.md",
+      "pages/diving-deeper/metrics-and-evaluation.md"
+    ],
+    [
+      "pages/diving-deeper/gepa-in-depth.md",
+      "pages/diving-deeper/bootstrap-fewshot-family.md"
+    ],
+    [
+      "pages/diving-deeper/gepa-in-depth.md",
+      "pages/diving-deeper/choosing-an-optimizer.md"
+    ],
+    [
+      "pages/diving-deeper/gepa-in-depth.md",
+      "pages/diving-deeper/metrics-and-evaluation.md"
+    ],
+    [
+      "pages/diving-deeper/gepa-in-depth.md",
+      "pages/diving-deeper/modules.md"
+    ],
+    [
+      "pages/diving-deeper/metrics-and-evaluation.md",
+      "pages/diving-deeper/built-in-module-variants.md"
+    ],
+    [
+      "pages/diving-deeper/metrics-and-evaluation.md",
+      "pages/diving-deeper/choosing-an-optimizer.md"
+    ],
+    [
+      "pages/diving-deeper/metrics-and-evaluation.md",
+      "pages/diving-deeper/settings-and-context.md"
+    ],
+    [
+      "pages/diving-deeper/modules.md",
+      "pages/diving-deeper/saving-and-loading.md"
+    ],
+    [
+      "pages/diving-deeper/modules.md",
+      "pages/diving-deeper/settings-and-context.md"
+    ],
+    [
+      "pages/diving-deeper/rlm.md",
+      "pages/diving-deeper/built-in-module-variants.md"
+    ],
+    [
+      "pages/diving-deeper/rlm.md",
+      "pages/diving-deeper/tools-react-and-mcp.md"
+    ],
+    [
+      "pages/diving-deeper/saving-and-loading.md",
+      "pages/diving-deeper/modules.md"
+    ],
+    [
+      "pages/diving-deeper/saving-and-loading.md",
+      "pages/diving-deeper/settings-and-context.md"
+    ],
+    [
+      "pages/diving-deeper/saving-and-loading.md",
+      "pages/diving-deeper/signatures-in-depth.md"
+    ],
+    [
+      "pages/diving-deeper/settings-and-context.md",
+      "pages/diving-deeper/saving-and-loading.md"
+    ],
+    [
+      "pages/diving-deeper/signatures-in-depth.md",
+      "pages/diving-deeper/adapters.md"
+    ],
+    [
+      "pages/diving-deeper/signatures-in-depth.md",
+      "pages/diving-deeper/modules.md"
+    ],
+    [
+      "pages/diving-deeper/tools-react-and-mcp.md",
+      "pages/diving-deeper/adapters.md"
+    ],
+    [
+      "pages/diving-deeper/tools-react-and-mcp.md",
+      "pages/diving-deeper/built-in-module-variants.md"
+    ],
+    [
+      "pages/diving-deeper/tools-react-and-mcp.md",
+      "pages/diving-deeper/modules.md"
+    ],
+    [
+      "pages/diving-deeper/tools-react-and-mcp.md",
+      "pages/diving-deeper/rlm.md"
+    ],
+    [
+      "pages/getting-started/changing-modules.md",
+      "pages/diving-deeper/built-in-module-variants.md"
+    ],
+    [
+      "pages/getting-started/changing-modules.md",
+      "pages/getting-started/react-and-tools.md"
+    ],
+    [
+      "pages/getting-started/class-based-signatures.md",
+      "pages/diving-deeper/signatures-in-depth.md"
+    ],
+    [
+      "pages/getting-started/class-based-signatures.md",
+      "pages/getting-started/changing-modules.md"
+    ],
+    [
+      "pages/getting-started/composing-modules.md",
+      "pages/diving-deeper/modules.md"
+    ],
+    [
+      "pages/getting-started/composing-modules.md",
+      "pages/diving-deeper/settings-and-context.md"
+    ],
+    [
+      "pages/getting-started/composing-modules.md",
+      "pages/diving-deeper/tools-react-and-mcp.md"
+    ],
+    [
+      "pages/getting-started/composing-modules.md",
+      "pages/getting-started/metrics.md"
+    ],
+    [
+      "pages/getting-started/expanding-signatures.md",
+      "pages/diving-deeper/signatures-in-depth.md"
+    ],
+    [
+      "pages/getting-started/expanding-signatures.md",
+      "pages/getting-started/class-based-signatures.md"
+    ],
+    [
+      "pages/getting-started/first-program.md",
+      "pages/diving-deeper/adapters.md"
+    ],
+    [
+      "pages/getting-started/first-program.md",
+      "pages/diving-deeper/modules.md"
+    ],
+    [
+      "pages/getting-started/first-program.md",
+      "pages/getting-started/expanding-signatures.md"
+    ],
+    [
+      "pages/getting-started/gepa-optimization.md",
+      "pages/diving-deeper/choosing-an-optimizer.md"
+    ],
+    [
+      "pages/getting-started/gepa-optimization.md",
+      "pages/diving-deeper/gepa-in-depth.md"
+    ],
+    [
+      "pages/getting-started/gepa-optimization.md",
+      "pages/getting-started/saving-and-loading.md"
+    ],
+    [
+      "pages/getting-started/gepa-optimization.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/getting-started/installation.md",
+      "pages/diving-deeper/settings-and-context.md"
+    ],
+    [
+      "pages/getting-started/installation.md",
+      "pages/getting-started/first-program.md"
+    ],
+    [
+      "pages/getting-started/installation.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/getting-started/metrics.md",
+      "pages/diving-deeper/choosing-an-optimizer.md"
+    ],
+    [
+      "pages/getting-started/metrics.md",
+      "pages/diving-deeper/metrics-and-evaluation.md"
+    ],
+    [
+      "pages/getting-started/metrics.md",
+      "pages/getting-started/gepa-optimization.md"
+    ],
+    [
+      "pages/getting-started/program-dont-prompt.md",
+      "pages/getting-started/installation.md"
+    ],
+    [
+      "pages/getting-started/react-and-tools.md",
+      "pages/diving-deeper/tools-react-and-mcp.md"
+    ],
+    [
+      "pages/getting-started/react-and-tools.md",
+      "pages/getting-started/composing-modules.md"
+    ],
+    [
+      "pages/getting-started/saving-and-loading.md",
+      "pages/diving-deeper/saving-and-loading.md"
+    ],
+    [
+      "pages/getting-started/saving-and-loading.md",
+      "pages/getting-started/where-to-go-next.md"
+    ],
+    [
+      "pages/getting-started/where-to-go-next.md",
+      "pages/diving-deeper/choosing-an-optimizer.md"
+    ],
+    [
+      "pages/getting-started/where-to-go-next.md",
+      "pages/diving-deeper/gepa-in-depth.md"
+    ],
+    [
+      "pages/getting-started/where-to-go-next.md",
+      "pages/diving-deeper/metrics-and-evaluation.md"
+    ],
+    [
+      "pages/getting-started/where-to-go-next.md",
+      "pages/diving-deeper/modules.md"
+    ],
+    [
+      "pages/getting-started/where-to-go-next.md",
+      "pages/tutorials/async.md"
+    ],
+    [
+      "pages/getting-started/where-to-go-next.md",
+      "pages/tutorials/observability.md"
+    ],
+    [
+      "pages/home.md",
+      "pages/community/use-cases.md"
+    ],
+    [
+      "pages/home.md",
+      "pages/getting-started/changing-modules.md"
+    ],
+    [
+      "pages/home.md",
+      "pages/getting-started/composing-modules.md"
+    ],
+    [
+      "pages/home.md",
+      "pages/getting-started/expanding-signatures.md"
+    ],
+    [
+      "pages/home.md",
+      "pages/getting-started/gepa-optimization.md"
+    ],
+    [
+      "pages/home.md",
+      "pages/getting-started/installation.md"
+    ],
+    [
+      "pages/home.md",
+      "pages/getting-started/program-dont-prompt.md"
+    ],
+    [
+      "pages/home.md",
+      "pages/getting-started/react-and-tools.md"
+    ],
+    [
+      "pages/home.md",
+      "pages/tutorials/image_generation_prompting.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/agents.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/async.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/audio.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/cache.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/classification.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/classification_finetuning.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/conversation_history.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/custom_module.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/customer_service_agent.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/deployment.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/email_extraction.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/entity_extraction.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/games.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/gepa_ai_program.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/gepa_aime.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/gepa_facilitysupportanalyzer.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/gepa_papillon.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/gepa_trusted_monitor.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/image_generation_prompting.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/llms_txt_generation.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/math.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/mcp.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/mem0_react_agent.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/multihop_search.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/observability.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/optimizer_tracking.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/output_refinement/best-of-n-and-refine.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/papillon.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/program_of_thought.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/rag.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/real_world_examples.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/rl_ai_program.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/rl_multihop.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/rl_papillon.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/saving.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/streaming.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/tool_use.md"
+    ],
+    [
+      "pages/tutorials.md",
+      "pages/tutorials/yahoo_finance_react.md"
+    ],
+    [
+      "pages/tutorials/agents.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/build_ai_program.md",
+      "pages/tutorials/agents.md"
+    ],
+    [
+      "pages/tutorials/build_ai_program.md",
+      "pages/tutorials/audio.md"
+    ],
+    [
+      "pages/tutorials/build_ai_program.md",
+      "pages/tutorials/classification.md"
+    ],
+    [
+      "pages/tutorials/build_ai_program.md",
+      "pages/tutorials/conversation_history.md"
+    ],
+    [
+      "pages/tutorials/build_ai_program.md",
+      "pages/tutorials/custom_module.md"
+    ],
+    [
+      "pages/tutorials/build_ai_program.md",
+      "pages/tutorials/customer_service_agent.md"
+    ],
+    [
+      "pages/tutorials/build_ai_program.md",
+      "pages/tutorials/entity_extraction.md"
+    ],
+    [
+      "pages/tutorials/build_ai_program.md",
+      "pages/tutorials/image_generation_prompting.md"
+    ],
+    [
+      "pages/tutorials/build_ai_program.md",
+      "pages/tutorials/multihop_search.md"
+    ],
+    [
+      "pages/tutorials/build_ai_program.md",
+      "pages/tutorials/papillon.md"
+    ],
+    [
+      "pages/tutorials/build_ai_program.md",
+      "pages/tutorials/program_of_thought.md"
+    ],
+    [
+      "pages/tutorials/build_ai_program.md",
+      "pages/tutorials/rag.md"
+    ],
+    [
+      "pages/tutorials/classification_finetuning.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/core_development.md",
+      "pages/tutorials/async.md"
+    ],
+    [
+      "pages/tutorials/core_development.md",
+      "pages/tutorials/cache.md"
+    ],
+    [
+      "pages/tutorials/core_development.md",
+      "pages/tutorials/deployment.md"
+    ],
+    [
+      "pages/tutorials/core_development.md",
+      "pages/tutorials/mcp.md"
+    ],
+    [
+      "pages/tutorials/core_development.md",
+      "pages/tutorials/observability.md"
+    ],
+    [
+      "pages/tutorials/core_development.md",
+      "pages/tutorials/optimizer_tracking.md"
+    ],
+    [
+      "pages/tutorials/core_development.md",
+      "pages/tutorials/output_refinement/best-of-n-and-refine.md"
+    ],
+    [
+      "pages/tutorials/core_development.md",
+      "pages/tutorials/saving.md"
+    ],
+    [
+      "pages/tutorials/core_development.md",
+      "pages/tutorials/streaming.md"
+    ],
+    [
+      "pages/tutorials/custom_module.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/customer_service_agent.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/email_extraction.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/entity_extraction.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/games.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/gepa_ai_program.md",
+      "pages/tutorials/gepa_aime.md"
+    ],
+    [
+      "pages/tutorials/gepa_ai_program.md",
+      "pages/tutorials/gepa_facilitysupportanalyzer.md"
+    ],
+    [
+      "pages/tutorials/gepa_ai_program.md",
+      "pages/tutorials/gepa_papillon.md"
+    ],
+    [
+      "pages/tutorials/gepa_ai_program.md",
+      "pages/tutorials/gepa_trusted_monitor.md"
+    ],
+    [
+      "pages/tutorials/gepa_aime.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/gepa_facilitysupportanalyzer.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/gepa_papillon.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/gepa_papillon.md",
+      "pages/tutorials/papillon.md"
+    ],
+    [
+      "pages/tutorials/gepa_trusted_monitor.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/math.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/mcp.md",
+      "pages/tutorials/observability.md"
+    ],
+    [
+      "pages/tutorials/mem0_react_agent.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/multihop_search.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/observability.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/observability.md",
+      "pages/tutorials/deployment.md"
+    ],
+    [
+      "pages/tutorials/optimize_ai_program.md",
+      "pages/tutorials/classification_finetuning.md"
+    ],
+    [
+      "pages/tutorials/optimize_ai_program.md",
+      "pages/tutorials/games.md"
+    ],
+    [
+      "pages/tutorials/optimize_ai_program.md",
+      "pages/tutorials/math.md"
+    ],
+    [
+      "pages/tutorials/optimize_ai_program.md",
+      "pages/tutorials/tool_use.md"
+    ],
+    [
+      "pages/tutorials/program_of_thought.md",
+      "pages/tutorials/multihop_search.md"
+    ],
+    [
+      "pages/tutorials/rag.md",
+      "pages/home.md"
+    ],
+    [
+      "pages/tutorials/real_world_examples.md",
+      "pages/tutorials/email_extraction.md"
+    ],
+    [
+      "pages/tutorials/real_world_examples.md",
+      "pages/tutorials/llms_txt_generation.md"
+    ],
+    [
+      "pages/tutorials/real_world_examples.md",
+      "pages/tutorials/mem0_react_agent.md"
+    ],
+    [
+      "pages/tutorials/real_world_examples.md",
+      "pages/tutorials/yahoo_finance_react.md"
+    ],
+    [
+      "pages/tutorials/rl_ai_program.md",
+      "pages/tutorials/rl_multihop.md"
+    ],
+    [
+      "pages/tutorials/rl_ai_program.md",
+      "pages/tutorials/rl_papillon.md"
+    ],
+    [
+      "pages/tutorials/rl_papillon.md",
+      "pages/tutorials/papillon.md"
+    ],
+    [
+      "pages/tutorials/tool_use.md",
+      "pages/home.md"
+    ]
+  ]
+}
