@@ -3,7 +3,7 @@ type: Web Page
 title: Tools, ReAct, and MCP - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/tools-react-and-mcp
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tools, ReAct, and MCP
@@ -122,10 +122,10 @@ Builds a `Tool` whose `func` is an `async def` closure: it awaits `session.call_
 `(args, arg_types, arg_desc)`
 Walks an MCP-style JSON schema and produces the three dicts a `Tool` needs. Resolves `$defs`, picks up `description` fields as `arg_desc`, and translates JSON-schema types to Python types via a `_TYPE_MAPPING` table. Exported in case callers want to write their own bridge against a non-MCP protocol with similar JSON-schema arguments.## Cross-links
 
-- Adapters: how signatures become prompts — where `Tool`and`ToolCalls`are formatted onto the wire, and where native function calling is opted into.
-- Built-in module variants — `CodeAct`and`RLM`use the same tool-wrapping machinery in a code-execution context.
-- RLM: exploring large contexts with code — how RLM exposes built-in `llm_query`tools and your own tools inside its sandbox.
-- Modules: composing your own — `ReAct`is a`Module`, so trace, history, and`set_lm`all apply.
+- [Adapters: how signatures become prompts](../adapters/)— where- `Tool`and- `ToolCalls`are formatted onto the wire, and where native function calling is opted into.
+- [Built-in module variants](../built-in-module-variants/)—- `CodeAct`and- `RLM`use the same tool-wrapping machinery in a code-execution context.
+- [RLM: exploring large contexts with code](../rlm/)— how RLM exposes built-in- `llm_query`tools and your own tools inside its sandbox.
+- [Modules: composing your own](../modules/)—- `ReAct`is a- `Module`, so trace, history, and- `set_lm`all apply.
 
 # Citations
 

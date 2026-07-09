@@ -3,7 +3,7 @@ type: Web Page
 title: Math Reasoning - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/math
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tutorial: Math Reasoning
@@ -16,7 +16,7 @@ Install the latest DSPy via `pip install -U dspy` and follow along. You also nee
 
 ### MLflow DSPy Integration
 
-MLflow is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
+[MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
 
 - Install MLflow
 
@@ -42,9 +42,9 @@ mlflow.dspy.autolog()
 ```
 Once you have completed the steps above, you can see traces for each program execution on the notebook. They provide great visibility into the model's behavior and helps you understand the DSPy's concepts better throughout the tutorial.
 
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
-Let's tell DSPy that we will use OpenAI's `gpt-4o-mini` in our modules. To authenticate, DSPy will look into your `OPENAI_API_KEY`. You can easily swap this out for other providers or local models.
+Let's tell DSPy that we will use OpenAI's `gpt-4o-mini` in our modules. To authenticate, DSPy will look into your `OPENAI_API_KEY`. You can easily swap this out for [other providers or local models](https://github.com/stanfordnlp/dspy/blob/main/examples/migration.ipynb).
 
 ```
 import dspy
@@ -52,7 +52,7 @@ gpt4o_mini = dspy.LM('openai/gpt-4o-mini', max_tokens=2000)
 gpt4o = dspy.LM('openai/gpt-4o', max_tokens=2000)
 dspy.configure(lm=gpt4o_mini)  # we'll use gpt-4o-mini as the default LM, unless otherwise specified
 ```
-Next, let's load some data examples from the MATH benchmark. We'll use a training split for optimization and evaluate it on a held-out dev set.
+Next, let's load some data examples from the [MATH](https://arxiv.org/abs/2103.03874) benchmark. We'll use a training split for optimization and evaluate it on a held-out dev set.
 
 Please note that the following step will require:
 
@@ -134,7 +134,7 @@ with mlflow.start_run(run_name="math_evaluation"):
         artifact_file="eval_results.json",
     )
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 And lastly let's optimize our module. Since we want strong reasoning, we'll use the large GPT-4o as the teacher model (used to bootstrap reasoning for the small LM at optimization time) but not as the prompt model (used to craft instructions) or the task model (trained).
 

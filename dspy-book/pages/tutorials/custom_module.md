@@ -3,14 +3,14 @@ type: Web Page
 title: Building AI Applications by Customizing DSPy Modules - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/custom_module
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Building AI Applications by Customizing DSPy Modules
 
 In this guide, we will walk you through how to build a GenAI application by customizing `dspy.Module`.
 
-A DSPy module is the building block for DSPy programs.
+A [DSPy module](https://dspy.ai/learn/programming/modules/) is the building block for DSPy programs.
 
 - Each built-in module abstracts a prompting technique (like chain of thought or ReAct). Crucially, they are generalized to handle any signature. 
 - A DSPy module has learnable parameters (i.e., the little pieces comprising the prompt and the LM weights) and can be invoked (called) to process inputs and return outputs. 
@@ -27,7 +27,7 @@ Before getting started, make sure you have DSPy installed:
 
 ### MLflow DSPy Integration
 
-MLflow is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
+[MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
 
 - Install MLflow
 
@@ -51,7 +51,7 @@ mlflow.set_experiment("DSPy")
 ```
 mlflow.dspy.autolog()
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 ## Customize DSPy Module
 

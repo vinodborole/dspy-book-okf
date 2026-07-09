@@ -3,7 +3,7 @@ type: Web Page
 title: Multi-Hop RAG - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/multihop_search
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tutorial: Multi-Hop Retrieval
@@ -16,7 +16,7 @@ Install the latest DSPy via `pip install -U dspy` and follow along. You also nee
 
 ### MLflow DSPy Integration
 
-MLflow is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
+[MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
 
 - Install MLflow
 
@@ -40,7 +40,7 @@ mlflow.set_experiment("DSPy")
 ```
 mlflow.dspy.autolog()
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 In this tutorial, we'll use a small local LM, Meta's `Llama-3.1-8B-Instruct` which has 8 billion parameters.
 
@@ -224,7 +224,7 @@ with mlflow.start_run(run_name="hop_evaluation"):
         artifact_file="eval_results.json",
     )
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 Let's now optimize the two prompts inside the `Hop()` program jointly to maximize the recall of our program. This may take around 35 minutes and make some $5 worth of calls to GPT-4o to optimize Llama-3.1-8B.
 
@@ -303,7 +303,7 @@ with mlflow.start_run(run_name="optimized"):
 # Load the program back from MLflow
 loaded = mlflow.dspy.load_model(model_info.model_uri)
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 # Citations
 

@@ -3,7 +3,7 @@ type: Web Page
 title: Audio - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/audio
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tutorial: Using Audio in DSPy Programs
@@ -24,7 +24,7 @@ pip install datasets soundfile torch==2.0.1+cu118 torchaudio==2.0.2+cu118
 ```
 ### Load the Spoken-SQuAD Dataset
 
-We'll use the Spoken-SQuAD dataset (Official & HuggingFace version for tutorial demonstration), which contains spoken audio passages used for question-answering:
+We'll use the Spoken-SQuAD dataset ([Official](https://github.com/Chia-Hsuan-Lee/Spoken-SQuAD) & [HuggingFace version](https://huggingface.co/datasets/AudioLLMs/spoken_squad_test) for tutorial demonstration), which contains spoken audio passages used for question-answering:
 
 ```
 import random
@@ -55,7 +55,7 @@ len(trainset), len(testset)
 ```
 ## DSPy program for spoken question answering
 
-Let's define a simple DSPy program that uses audio inputs to answer questions directly. This is very similar to the BasicQA task, with the only difference being that the passage context is provided as an audio file for the model to listen to and answer the question:
+Let's define a simple DSPy program that uses audio inputs to answer questions directly. This is very similar to the [BasicQA](https://dspy.ai/cheatsheet/?h=basicqa#dspysignature) task, with the only difference being that the passage context is provided as an audio file for the model to listen to and answer the question:
 
 ```
 class SpokenQASignature(dspy.Signature):
@@ -106,7 +106,7 @@ In this next task, we'll use a standard text-based LLM to generate prompts for a
 
 ### Load the CREMA-D Dataset
 
-We'll use the CREMA-D dataset (Official & HuggingFace version for tutorial demonstration), which includes audio clips of chosen participants speaking the same line with one of six target emotions: neutral, happy, sad, anger, fear, and disgust.
+We'll use the CREMA-D dataset ([Official](https://github.com/CheyneyComputerScience/CREMA-D) & [HuggingFace version](https://huggingface.co/datasets/myleslinder/crema-d) for tutorial demonstration), which includes audio clips of chosen participants speaking the same line with one of six target emotions: neutral, happy, sad, anger, fear, and disgust.
 
 ```
 from collections import defaultdict

@@ -3,7 +3,7 @@ type: Web Page
 title: Built-in module variants - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/built-in-module-variants
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Built-in module variants
@@ -102,14 +102,16 @@ Wraps
 
 ** dspy.KNN** is a retrieval helper, not a generation module — see the Retrievers reference page.
 
-** dspy.ReAct** is the canonical tool-using loop and has its own page: Tools, ReAct, and MCP. The wrapping machinery there is what 
+** dspy.ReAct** is the canonical tool-using loop and has its own page: 
+
+[Tools, ReAct, and MCP](../tools-react-and-mcp/). The wrapping machinery there is what
 
 `CodeAct` and `RLM` reuse.## Cross-links
 
-- Modules: composing your own — every variant here is a `dspy.Module`(except`Parallel`and`majority`), so the composition rules apply.
-- Tools, ReAct, and MCP — `CodeAct`and`RLM`use the same tool-wrapping machinery as`ReAct`.
-- RLM: exploring large contexts with code — the deep dive on the experimental REPL-driven module summarized above.
-- Settings and `context()`— how`Parallel`and`Module.batch`snapshot the active overrides into each worker.
+- [Modules: composing your own](../modules/)— every variant here is a- `dspy.Module`(except- `Parallel`and- `majority`), so the composition rules apply.
+- [Tools, ReAct, and MCP](../tools-react-and-mcp/)—- `CodeAct`and- `RLM`use the same tool-wrapping machinery as- `ReAct`.
+- [RLM: exploring large contexts with code](../rlm/)— the deep dive on the experimental REPL-driven module summarized above.
+- [Settings and](../settings-and-context/)— how- `context()`- `Parallel`and- `Module.batch`snapshot the active overrides into each worker.
 
 # Citations
 

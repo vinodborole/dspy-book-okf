@@ -3,7 +3,7 @@ type: Web Page
 title: Saving and loading - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/saving-and-loading
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Saving and loading
@@ -92,10 +92,6 @@ Two entry points, matching the two save modes.
 
 Loads state into an existing module instance. You instantiate the program the same way you built it, then call `.load()` on it. JSON paths load freely; `.pkl` paths require `allow_pickle=True`. `allow_unsafe_lm_state=True` keeps `api_base`, `base_url`, and `model_list` instead of stripping them.
 
-```
-program = HaikuEnsemble(n=5)        # same construction as when saved
-program.load("haiku_ensemble.json") # state slots in
-```
 `dspy.load(path, allow_pickle=False)`
 
 Loads a full-program directory and returns the rehydrated module. No prior instantiation needed — cloudpickle reconstructs the object graph. Always requires `allow_pickle=True` in practice (pickle is the only loading path here); the flag is the user’s acknowledgment that the directory is trusted.
@@ -146,9 +142,9 @@ On load, the runtime compares versions to the current process. A mismatch logs a
 
 ## Cross-links
 
-- Modules: composing your own — `Module.save`/`load`are inherited from`BaseModule`; the tree-walk that gathers state is the same one optimizers use.
-- Signatures in depth — `Signature.dump_state`/`load_state`are what carry an optimizer’s rewritten instructions through a round-trip.
-- Settings and `context()`—`dspy.settings.save`/`dspy.load_settings`are a parallel surface for the settings singleton.
+- [Modules: composing your own](../modules/)—- `Module.save`/- `load`are inherited from- `BaseModule`; the tree-walk that gathers state is the same one optimizers use.
+- [Signatures in depth](../signatures-in-depth/)—- `Signature.dump_state`/- `load_state`are what carry an optimizer’s rewritten instructions through a round-trip.
+- [Settings and](../settings-and-context/)—- `context()`- `dspy.settings.save`/- `dspy.load_settings`are a parallel surface for the settings singleton.
 
 # Citations
 

@@ -3,7 +3,7 @@ type: Web Page
 title: Metrics and evaluation - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/metrics-and-evaluation
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Metrics and evaluation
@@ -115,9 +115,9 @@ A
 
 `dspy.Prediction` subclass with two fields: `.score` (aggregate) and `.results` (list of triples). `repr` shows the score and the result count rather than dumping the full list, so logging an `EvaluationResult` doesn’t print a megabyte of output.## Cross-links
 
-- Settings and `context()`— how`Evaluate`‘s workers inherit a`dspy.context(...)`override around the call.
-- Built-in module variants — `dspy.Parallel`and`Module.batch`use the same`ParallelExecutor`under the hood.
-- Optimizers: choosing one — every optimizer compiles against a metric defined here; the `Prediction(score, feedback)`shape GEPA expects is documented above.
+- [Settings and](../settings-and-context/)— how- `context()`- `Evaluate`‘s workers inherit a- `dspy.context(...)`override around the call.
+- [Built-in module variants](../built-in-module-variants/)—- `dspy.Parallel`and- `Module.batch`use the same- `ParallelExecutor`under the hood.
+- [Optimizers: choosing one](../choosing-an-optimizer/)— every optimizer compiles against a metric defined here; the- `Prediction(score, feedback)`shape GEPA expects is documented above.
 
 # Citations
 

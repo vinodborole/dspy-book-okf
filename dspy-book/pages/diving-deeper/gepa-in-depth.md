@@ -3,7 +3,7 @@ type: Web Page
 title: GEPA in depth - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/gepa-in-depth
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # GEPA in depth
@@ -141,10 +141,10 @@ Stream search progress to Weights & Biases or MLflow. Each candidate’s aggrega
 
 ## Cross-links
 
-- Optimizers: choosing one — the selection guide that recommends GEPA for feedback-rich tasks.
-- Metrics and evaluation — the `Prediction(score, feedback)`shape GEPA requires, and the LLM-as-judge pattern for building one.
-- Modules: composing your own — `_compiled`propagation and the deepcopy-then-mutate pattern GEPA uses on the student.
-- BootstrapFewShot family — the demo-tuning alternative; pair with GEPA via `BetterTogether`when both knobs need to turn.
+- [Optimizers: choosing one](../choosing-an-optimizer/)— the selection guide that recommends GEPA for feedback-rich tasks.
+- [Metrics and evaluation](../metrics-and-evaluation/)— the- `Prediction(score, feedback)`shape GEPA requires, and the LLM-as-judge pattern for building one.
+- [Modules: composing your own](../modules/)—- `_compiled`propagation and the deepcopy-then-mutate pattern GEPA uses on the student.
+- [BootstrapFewShot family](../bootstrap-fewshot-family/)— the demo-tuning alternative; pair with GEPA via- `BetterTogether`when both knobs need to turn.
 
 # Citations
 

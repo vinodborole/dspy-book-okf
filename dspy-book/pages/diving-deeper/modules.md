@@ -3,7 +3,7 @@ type: Web Page
 title: 'Modules: composing your own - DSPy'
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/modules
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Modules: composing your own
@@ -110,7 +110,7 @@ Returns the LM if every predictor agrees on one. Raises `ValueError` on a mix. A
 
 ### State and copies
 
-The save/load surface. The full lifecycle — JSON vs PKL, full-program vs state-only, `save_program=True` — lives in Saving and loading; the methods here are what that page is about.
+The save/load surface. The full lifecycle — JSON vs PKL, full-program vs state-only, `save_program=True` — lives in [Saving and loading](../saving-and-loading/); the methods here are what that page is about.
 
 `Module.dump_state(json_mode=True)` / `Module.load_state(state, allow_unsafe_lm_state=False)`
 
@@ -167,8 +167,8 @@ Token-usage accounting. Populated when the prediction ran under `dspy.settings(t
 `Example` is for training data — it carries `_demos` and `_input_keys`, and `.with_inputs` returns a filtered copy. `Prediction` is for module outputs — no input/output split, plus completions and usage. Use `Example` for what goes in, `Prediction` for what comes out.## Cross-links
 
 - Each built-in module subclass has its own DD page: see the predictor zoo, ReAct, and the optimizer-specific pages.
-- Saving and loading covers the persistence story in detail.
-- Settings and context() covers how LM / adapter / callback overrides propagate into a module’s sub-modules.
+- [Saving and loading](../saving-and-loading/)covers the persistence story in detail.
+- [Settings and context()](../settings-and-context/)covers how LM / adapter / callback overrides propagate into a module’s sub-modules.
 
 # Citations
 

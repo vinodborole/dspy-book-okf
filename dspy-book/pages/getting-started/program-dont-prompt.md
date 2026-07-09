@@ -3,7 +3,7 @@ type: Web Page
 title: Program, don't prompt - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/getting-started/program-dont-prompt
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Program, don’t prompt
@@ -27,7 +27,7 @@ In this tutorial we’ll build a haiku-writing program that starts with four lin
 - How to write **metrics**and use**optimizers**to compile better versions of our program.
 - How to save optimized programs and reload them.
 
-**Next:** Setting up DSPy →
+**Next:** [Setting up DSPy →](../installation/)
 
 # Citations
 

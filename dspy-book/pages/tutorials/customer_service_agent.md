@@ -3,7 +3,7 @@ type: Web Page
 title: Building AI Agents with DSPy - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/customer_service_agent
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Build AI Agents with DSPy
@@ -31,7 +31,7 @@ Before starting, let's install the required packages:
 
 ### MLflow DSPy Integration
 
-MLflow is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
+[MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
 
 - Install MLflow
 
@@ -55,7 +55,7 @@ mlflow.set_experiment("DSPy")
 ```
 mlflow.dspy.autolog()
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 ## Define Tools
 
@@ -71,7 +71,7 @@ We need to prepare a list of tools so that the agent can behave like a human air
 
 ### Define Data Structure
 
-Before defining the tools, we need to define the data structure. In real production, this will be the database schema. As a demo, we just define the data structure as pydantic models for simplicity.
+Before defining the tools, we need to define the data structure. In real production, this will be the database schema. As a demo, we just define the data structure as [pydantic models](https://docs.pydantic.dev/latest/concepts/models/) for simplicity.
 
 ```
 from pydantic import BaseModel
@@ -255,7 +255,7 @@ agent = dspy.ReAct(
 
 To interact with the agent, simply provide the request through `user_request`, and the agent will start doing its job.
 
-Select a language model and set up the API keys. We are using gpt-4o-mini here, but you can change to other models. For how to configure the language model, please refer to this guide.
+Select a language model and set up the API keys. We are using gpt-4o-mini here, but you can change to other models. For how to configure the language model, please refer to [this guide](https://dspy.ai/learn/programming/language_models/).
 
 ```
 import os

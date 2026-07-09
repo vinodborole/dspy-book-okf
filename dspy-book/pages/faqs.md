@@ -3,7 +3,7 @@ type: Web Page
 title: FAQ - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/faqs
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 This page is outdated and may not be fully accurate in DSPy 2.5 and 2.6
@@ -22,7 +22,7 @@ The **DSPy** philosophy and abstraction differ significantly from other librarie
 
 ## Basic Usage
 
-**How should I use DSPy for my task?** We wrote an eight-step guide on this. In short, using DSPy is an iterative process. You first define your task and the metrics you want to maximize, and prepare a few example inputs — typically without labels (or only with labels for the final outputs, if your metric requires them). Then, you build your pipeline by selecting built-in layers (`modules`) to use, giving each layer a `signature` (input/output spec), and then calling your modules freely in your Python code. Lastly, you use a DSPy `optimizer` to compile your code into high-quality instructions, automatic few-shot examples, or updated LM weights for your LM.
+**How should I use DSPy for my task?** We wrote an [eight-step guide](/learn/) on this. In short, using DSPy is an iterative process. You first define your task and the metrics you want to maximize, and prepare a few example inputs — typically without labels (or only with labels for the final outputs, if your metric requires them). Then, you build your pipeline by selecting built-in layers (`modules`) to use, giving each layer a `signature` (input/output spec), and then calling your modules freely in your Python code. Lastly, you use a DSPy `optimizer` to compile your code into high-quality instructions, automatic few-shot examples, or updated LM weights for your LM.
 
 **How do I convert my complex prompt into a DSPy pipeline?** See the same answer above.
 
@@ -36,11 +36,11 @@ You can specify multiple output fields. For the short-form signature, you can li
 
 - **How do I define my own metrics? Can metrics return a float?**
 
-You can define metrics as simply Python functions that process model generations and evaluate them based on user-defined requirements. Metrics can compare existent data (e.g. gold labels) to model predictions or they can be used to assess various components of an output using validation feedback from LMs (e.g. LLMs-as-Judges). Metrics can return `bool`, `int`, and `float` types scores. Check out the official Metrics docs to learn more about defining custom metrics and advanced evaluations using AI feedback and/or DSPy programs.
+You can define metrics as simply Python functions that process model generations and evaluate them based on user-defined requirements. Metrics can compare existent data (e.g. gold labels) to model predictions or they can be used to assess various components of an output using validation feedback from LMs (e.g. LLMs-as-Judges). Metrics can return `bool`, `int`, and `float` types scores. Check out the official [Metrics docs](../learn/evaluation/metrics/) to learn more about defining custom metrics and advanced evaluations using AI feedback and/or DSPy programs.
 
 - **How expensive or slow is compiling??**
 
-To reflect compiling metrics, we highlight an experiment for reference, compiling a program using the BootstrapFewShotWithRandomSearch optimizer on the `gpt-3.5-turbo-1106` model over 7 candidate programs and 10 threads. We report that compiling this program takes around 6 minutes with 3200 API calls, 2.7 million input tokens and 156,000 output tokens, reporting a total cost of $3 USD (at the current pricing of the OpenAI model).
+To reflect compiling metrics, we highlight an experiment for reference, compiling a program using the [BootstrapFewShotWithRandomSearch](../api/optimizers/BootstrapFewShotWithRandomSearch/) optimizer on the `gpt-3.5-turbo-1106` model over 7 candidate programs and 10 threads. We report that compiling this program takes around 6 minutes with 3200 API calls, 2.7 million input tokens and 156,000 output tokens, reporting a total cost of $3 USD (at the current pricing of the OpenAI model).
 
 Compiling DSPy `optimizers` naturally will incur additional LM calls, but we substantiate this overhead with minimalistic executions with the goal of maximizing performance. This invites avenues to enhance performance of smaller models by compiling DSPy programs with larger models to learn enhanced behavior during compile-time and propagate such behavior to the tested smaller model during inference-time.  
 
@@ -50,21 +50,13 @@ Compiling DSPy `optimizers` naturally will incur additional LM calls, but we sub
 
 Here is an example of saving/loading a compiled module:
 
-```
-cot_compiled = teleprompter.compile(CoT(), trainset=trainset, valset=devset)
-#Saving
-cot_compiled.save('compiled_cot_gsm8k.json')
-#Loading:
-cot = CoT()
-cot.load('compiled_cot_gsm8k.json')
-```
 - **How do I export for deployment?**
 
 Exporting DSPy programs is simply saving them as highlighted above!
 
 - **How do I search my own data?**
 
-Open source libraries such as RAGatouille enable you to search for your own data through advanced retrieval models like ColBERT with tools to embed and index documents. Feel free to integrate such libraries to create searchable datasets while developing your DSPy programs!
+Open source libraries such as [RAGatouille](https://github.com/bclavie/RAGatouille) enable you to search for your own data through advanced retrieval models like ColBERT with tools to embed and index documents. Feel free to integrate such libraries to create searchable datasets while developing your DSPy programs!
 
 - **How do I turn off the cache? How do I export the cache?**
 
@@ -96,11 +88,11 @@ Modules can be frozen by setting their `._compiled` attribute to be True, indica
 
 If you’re dealing with “context too long” errors in DSPy, you’re likely using DSPy optimizers to include demonstrations within your prompt, and this is exceeding your current context window. DSPy raises this as `dspy.ContextWindowExceededError`, a subclass of `dspy.LMInvalidRequestError`. Try reducing these parameters (e.g. `max_bootstrapped_demos` and `max_labeled_demos`). Additionally, you can also reduce the number of retrieved passages/docs/embeddings to ensure your prompt is fitting within your model context length.
 
-A more general fix is simply increasing the number of `max_tokens` specified to the LM request (e.g. `lm = dspy.LM('openai/gpt-4o-mini', max_tokens=...)`). For other provider failures, catch `dspy.LMError` or a concrete subclass such as `dspy.LMRateLimitError`, `dspy.LMAuthError`, or `dspy.LMServerError`. See the Errors API reference for details.
+A more general fix is simply increasing the number of `max_tokens` specified to the LM request (e.g. `lm = dspy.LM('openai/gpt-4o-mini', max_tokens=...)`). For other provider failures, catch `dspy.LMError` or a concrete subclass such as `dspy.LMRateLimitError`, `dspy.LMAuthError`, or `dspy.LMServerError`. See the [Errors API reference](../api/utils/Errors/) for details.
 
 ## Set Verbose Level
 
-DSPy utilizes the logging library to print logs. If you want to debug your DSPy code, set the logging level to DEBUG with the example code below.
+DSPy utilizes the [logging library](https://docs.python.org/3/library/logging.html) to print logs. If you want to debug your DSPy code, set the logging level to DEBUG with the example code below.
 
 Alternatively, if you want to reduce the amount of logs, set the logging level to WARNING or ERROR.
 

@@ -3,8 +3,10 @@ type: Web Page
 title: DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
+
+[learn more →](https://github.com/stanfordnlp/dspy/releases)
 
 # 
           Program, don’t prompt,

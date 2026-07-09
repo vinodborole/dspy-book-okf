@@ -3,7 +3,7 @@ type: Web Page
 title: Program Of Thought - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/program_of_thought
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tutorial: ProgramOfThought
@@ -29,7 +29,7 @@ answer
 
 As an example, we'll define a signature with an input question and an output answer. Then, we'll create and invoke the `ProgramOfThought` program, which uses an LM to first generate code to represent the question, executes the code using the interpreter and outputs the final result as the answer to the question.
 
-Let's use Meta's `Llama-3-70b-Instruct`. You can easily swap this out for other providers or local models.
+Let's use Meta's `Llama-3-70b-Instruct`. You can easily swap this out for [other providers or local models](https://github.com/stanfordnlp/dspy/blob/main/examples/migration.ipynb).
 
 ```
 llama31_70b = dspy.LM("openai/meta-llama/Meta-Llama-3-70b-Instruct", api_base="API_BASE", api_key="None")
@@ -109,7 +109,7 @@ def search_wikipedia(query: str):
 ```
 ### Step 2: Multi-Hop Search with ProgramOfThought
 
-We'll take inspiration from the Multi-Hop Search task and simply tweak the final `generate_answer` layer to use `ProgramOfThought` in place of `ChainOfThought` to ensure accurate computations given a question and retrieved context.
+We'll take inspiration from the [Multi-Hop Search task](https://dspy.ai/tutorials/multihop_search/) and simply tweak the final `generate_answer` layer to use `ProgramOfThought` in place of `ChainOfThought` to ensure accurate computations given a question and retrieved context.
 
 We pose a challenging word problem that requires retrieval to gather information and then use the facts to perform computation and produce a final result.
 

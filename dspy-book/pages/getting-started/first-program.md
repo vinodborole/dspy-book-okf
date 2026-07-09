@@ -3,7 +3,7 @@ type: Web Page
 title: Your first program - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/getting-started/first-program
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Writing our first DSPy program
@@ -12,19 +12,17 @@ In this tutorial we’re building a haiku-generating program, extending it in ea
 
 Let’s start by writing the simplest version of our program and run it, then walk through everything DSPy is doing behind the scenes:
 
-```
-haiku_signature = "subject -> haiku"
-haiku_generator = dspy.Predict(haiku_signature)
-result = haiku_generator(subject="computer science")
-print(result.haiku)
-```
 The first line specifies our `Signature`. Signature is a core concept in DSPy, and it’s how we define our task. Similar to function signatures in programming, a DSPy Signature describes the inputs a function accepts and the outputs it returns. 
 
 The simplest way to define a DSPy Signature is with a string of the form `"inputs -> outputs"`. In our case, we want to provide a `subject` and get back a `haiku`.
 
 Because we are programming with language models, the names of our variables matter. They both define the interface for our program and give the model a hint at our intent. If we change `haiku` to `limerick`, the model would note our cue and produce a limerick instead. Additionally, our program’s output would be accessible as `result.limerick`, rather than `result.haiku`.
 
-To turn our Signature into a callable function, we use `dspy.Predict`. Predict is a kind of DSPy `Module`. If Signatures specify *what* we want, Modules define *how* we aim to achieve it. They implement a call-time strategy, manage the control flow, tools, and more. 
+To turn our Signature into a callable function, we use `dspy.Predict`. Predict is a kind of [DSPy  Module](../../diving-deeper/modules/). If Signatures specify 
+
+*what*we want, Modules define
+
+*how*we aim to achieve it. They implement a call-time strategy, manage the control flow, tools, and more.
 
 `Predict` is the foundational Module. Let’s look at what happens when we call `dspy.Predict(haiku_signature)`:
 
@@ -35,7 +33,7 @@ To turn our Signature into a callable function, we use `dspy.Predict`. Predict i
 `haiku_generator` is now callable. Calling `haiku_generator(subject="computer science")` kicks off the following process:
 
 - The DSPy settings are checked to ensure an `LM`is configured.
-- An `Adapter`is used to render the`Signature`and its inputs into messages the`LM`can consume. By default, this is the`ChatAdapter`, but there are JSON, XML, and other variants to format your messages suitable for a given`LM`.
+- An `Adapter``Signature`and its inputs into messages the`LM`can consume. By default, this is the`ChatAdapter`, but there are JSON, XML, and other variants to format your messages suitable for a given`LM`.
 - The `ChatAdapter`builds the prompt, which includes the`Signature`instructions, the field schema describing the inputs and outputs, formatting instructions, and the provided input (in this case, “computer science”).
 - The messages are sent to the `LM`. Caching is enabled by default so identical calls return cached responses.
 - A response is returned, which the `ChatAdapter`parses to extract the output fields.
@@ -50,41 +48,15 @@ DSPy manages all the prompting and templating. Call `dspy.inspect_history(n=1)` 
 
 First, DSPy generated the system instructions:
 
-```
-Your input fields are:
-1. `subject` (str):
-Your output fields are:
-1. `haiku` (str):
-All interactions will be structured in the following way, with the appropriate values filled in.
-[[ ## subject ## ]]
-{subject}
-[[ ## haiku ## ]]
-{haiku}
-[[ ## completed ## ]]
-In adhering to this structure, your objective is: 
-    Given the fields `subject`, produce the fields `haiku`.
-```
 The brackets and hashes style is how the default `ChatAdapter` structures the prompt, demarcating inputs and sections. 
 
 Next, the adapter templated our input into a user message:
 
-```
-[[ ## subject ## ]]
-computer science
-Respond with the corresponding output fields, starting with the field `[[ ## haiku ## ]]`, and then ending with the marker for `[[ ## completed ## ]]`.
-```
 DSPy sent both to the `lm`, which produced this response:
 
-```
-[[ ## haiku ## ]]
-Silent code unfolds
-Logic threads through hidden paths
-Bugs bloom, then resolve
-[[ ## completed ## ]]
-```
 In DSPy, to produce a prompt you compose a signature and the messages are written for you.
 
-**Next:** Expanding signatures →
+**Next:** [Expanding signatures →](../expanding-signatures/)
 
 # Citations
 

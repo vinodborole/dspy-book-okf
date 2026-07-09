@@ -3,7 +3,7 @@ type: Web Page
 title: BootstrapFewShot family - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/bootstrap-fewshot-family
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # BootstrapFewShot family
@@ -136,10 +136,10 @@ The rules are visible and editable — you can read them, decide which to keep, 
 
 ## Cross-links
 
-- Optimizers: choosing one — the selection guide; describes when each family member wins against optimizers outside the family.
-- Metrics and evaluation — the metric shape every bootstrap variant uses, and the failure-score behavior that keeps one bad example from breaking a long bootstrap.
-- Modules: composing your own — `predictor.demos`,`_compiled`flags, and`deepcopy()`behavior, all of which the bootstrap family relies on.
-- GEPA in depth — the instruction-optimization counterpart; combine via `dspy.BetterTogether`when both knobs need to turn.
+- [Optimizers: choosing one](../choosing-an-optimizer/)— the selection guide; describes when each family member wins against optimizers outside the family.
+- [Metrics and evaluation](../metrics-and-evaluation/)— the metric shape every bootstrap variant uses, and the failure-score behavior that keeps one bad example from breaking a long bootstrap.
+- [Modules: composing your own](../modules/)—- `predictor.demos`,- `_compiled`flags, and- `deepcopy()`behavior, all of which the bootstrap family relies on.
+- [GEPA in depth](../gepa-in-depth/)— the instruction-optimization counterpart; combine via- `dspy.BetterTogether`when both knobs need to turn.
 
 # Citations
 

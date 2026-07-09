@@ -3,7 +3,7 @@ type: Web Page
 title: 'Optimizers: choosing one - DSPy'
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/choosing-an-optimizer
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Optimizers: choosing one
@@ -102,7 +102,9 @@ A breadth-first proposer. At each of
 `depth` levels, COPRO uses `prompt_model` to generate `breadth` candidate instructions per predictor, scores them against the trainset, and keeps the best. Total LM cost is roughly `breadth × depth × num_predictors`. Lightweight; especially good when demos are already strong and you only need to fix wording.** dspy.GEPA(metric, auto=None, max_full_evals=None, max_metric_calls=None, reflection_lm=None, skip_perfect_score=True, instruction_proposer=None, use_merge=True, num_threads=None)**
 Evolutionary instruction search guided by reflection. GEPA maintains a population of programs, runs each on the trainset, reads the per-predictor 
 
-`feedback` from the metric, and uses `reflection_lm` to propose edits informed by that feedback. It returns the best candidate from a Pareto frontier. Wins on prompt-only optimization when you have a strong reflection LM and a feedback-shaped metric; see GEPA in depth for the full mechanics.### Optimize instructions and demos together
+`feedback` from the metric, and uses `reflection_lm` to propose edits informed by that feedback. It returns the best candidate from a Pareto frontier. Wins on prompt-only optimization when you have a strong reflection LM and a feedback-shaped metric; see [GEPA in depth](../gepa-in-depth/)for the full mechanics.
+
+### Optimize instructions and demos together
 
 ** dspy.MIPROv2(metric, prompt_model=None, task_model=None, teacher_settings=None, max_bootstrapped_demos=4, max_labeled_demos=4, auto="light", num_candidates=None, num_threads=None, init_temperature=1.0, track_stats=True)**
 Bayesian-optimization search over the joint instruction + demo space. The 
@@ -148,9 +150,9 @@ Built for agent-style programs. Partitions the trainset by metric into positive 
 
 ## Cross-links
 
-- Metrics and evaluation — every optimizer compiles against a metric defined there; the `Prediction(score, feedback)`shape GEPA expects is documented there.
-- GEPA in depth — the deep dive on the optimizer above.
-- BootstrapFewShot family — the deep dive on `BootstrapFewShot`and its random-search variants.
+- [Metrics and evaluation](../metrics-and-evaluation/)— every optimizer compiles against a metric defined there; the- `Prediction(score, feedback)`shape GEPA expects is documented there.
+- [GEPA in depth](../gepa-in-depth/)— the deep dive on the optimizer above.
+- [BootstrapFewShot family](../bootstrap-fewshot-family/)— the deep dive on- `BootstrapFewShot`and its random-search variants.
 - Fine-tuning with `BootstrapFinetune`— the deep dive on weight tuning.
 
 # Citations

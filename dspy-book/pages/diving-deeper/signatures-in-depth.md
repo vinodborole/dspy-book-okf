@@ -3,7 +3,7 @@ type: Web Page
 title: Signatures in depth - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/signatures-in-depth
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Signatures in depth
@@ -56,7 +56,7 @@ When inserting new fields with `prepend` / `append` / `insert`, the position arg
 
 A Signature only declares the annotation: `season: Literal["spring", ...]`, `haikus: list[str]`, a custom Pydantic model. The parsing happens in `dspy/adapters/utils.py::parse_value`, which tries `json_repair`, falls back to `ast.literal_eval`, then validates against `TypeAdapter(annotation)`. For `dspy.Type` subclasses, the adapter retries with the raw string if pydantic validation fails, letting the type’s custom parser take over.
 
-This split exists because multiple adapters (Chat, JSON, XML, TwoStep) need to coerce the same Signature differently. JSON adapters can lean on the model’s JSON mode; XML adapters parse from tags. Keeping coercion in the adapter layer means Signatures stay lean and the parser logic isn’t duplicated. When a typed field misbehaves at parse time, look at the adapter’s output and `parse_value`, not the Signature. See Adapters: how signatures become prompts.
+This split exists because multiple adapters (Chat, JSON, XML, TwoStep) need to coerce the same Signature differently. JSON adapters can lean on the model’s JSON mode; XML adapters parse from tags. Keeping coercion in the adapter layer means Signatures stay lean and the parser logic isn’t duplicated. When a typed field misbehaves at parse time, look at the adapter’s output and `parse_value`, not the Signature. See [Adapters: how signatures become prompts](../adapters/).
 
 ### 8. Custom types are resolved by walking the caller’s stack frames
 
@@ -160,8 +160,8 @@ Silently no-ops when the field is absent. Check `name in cls.fields` first if yo
 
 `prefix=`. Rarely useful on its own.## Cross-links
 
-- Adapters: how signatures become prompts — what `desc`,`prefix`, and types look like on the wire, and where`parse_value`does its work.
-- Modules: composing your own — how `Predict`,`ChainOfThought`, and your own subclasses consume signatures.
+- [Adapters: how signatures become prompts](../adapters/)— what- `desc`,- `prefix`, and types look like on the wire, and where- `parse_value`does its work.
+- [Modules: composing your own](../modules/)— how- `Predict`,- `ChainOfThought`, and your own subclasses consume signatures.
 - GEPA and the Optimizers selection guide — how the docstring gets rewritten and why field names stay fixed.
 
 # Citations

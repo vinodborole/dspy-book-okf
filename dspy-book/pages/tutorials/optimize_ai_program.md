@@ -3,7 +3,7 @@ type: Web Page
 title: Overview - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/optimize_ai_program
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Optimize AI Programs with DSPy
@@ -12,23 +12,23 @@ This section focuses on DSPy’s powerful optimization capabilities, demonstrati
 
 ## Mathematical and Reasoning Tasks
 
-### Math Reasoning
+[Math Reasoning](../math/)
 
 Learn how to optimize DSPy programs for mathematical reasoning tasks. This tutorial demonstrates how optimizers can dramatically improve performance on complex math problems by finding better prompting strategies and few-shot examples.
 
 ## Model Optimization
 
-### Classification Finetuning
+[Classification Finetuning](../classification_finetuning/)
 
 Discover how to use DSPy’s finetuning optimizers to distill knowledge from large language models into smaller, more efficient models. Learn the complete workflow from prompt optimization to model finetuning for classification tasks.
 
 ## Advanced Tool Integration
 
-### Advanced Tool Use
+[Advanced Tool Use](../tool_use/)
 
 Explore how to optimize AI programs that use external tools and APIs. This tutorial shows how DSPy optimizers can learn to use tools more effectively, improving both accuracy and efficiency in tool-calling scenarios.
 
-### Finetuning Agents
+[Finetuning Agents](../games/)
 
 Learn to optimize complex agent-based systems through finetuning. This tutorial demonstrates how to improve agent performance in interactive environments like games, where strategic thinking and adaptation are crucial.
 

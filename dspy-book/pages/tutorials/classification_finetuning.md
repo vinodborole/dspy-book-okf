@@ -3,7 +3,7 @@ type: Web Page
 title: Classification Finetuning - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/classification_finetuning
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tutorial: Classification Fine-tuning
@@ -20,10 +20,8 @@ This tutorial requires a local GPU at the moment for inference, though we plan t
 
 You will also need the following dependencies:
 
-- Inference: We use SGLang to run local inference servers. You can install the latest version by following the instructions here: https://docs.sglang.ai/start/install.html
-Shared below is the most recent install command as of 04/02/2025, but we recommend that you follow the instructions in the most up to date version by navigating to the installation link.
-This ensures that the fine-tuning packages and the `sglang`package are in sync.> pip install --upgrade pip > pip install uv > uv pip install "sglang[all]>=0.4.4.post3" --find-links https://flashinfer.ai/whl/cu124/torch2.5/flashinfer-python 
-- Fine-tuning: We use the following packages. Note that we specify the version for the transformers package as a temporary fix to a recent issue: https://github.com/huggingface/trl/issues/2338> uv pip install -U torch transformers==4.48.3 accelerate trl peft 
+- Inference: We use SGLang to run local inference servers. You can install the latest version by following the instructions here: [https://docs.sglang.ai/start/install.html](https://docs.sglang.ai/start/install.html)Shared below is the most recent install command as of 04/02/2025, but we recommend that you follow the instructions in the most up to date version by navigating to the installation link. This ensures that the fine-tuning packages and the`sglang`package are in sync.> pip install --upgrade pip > pip install uv > uv pip install "sglang[all]>=0.4.4.post3" --find-links https://flashinfer.ai/whl/cu124/torch2.5/flashinfer-python 
+- Fine-tuning: We use the following packages. Note that we specify the version for the transformers package as a temporary fix to a recent issue: [https://github.com/huggingface/trl/issues/2338](https://github.com/huggingface/trl/issues/2338)> uv pip install -U torch transformers==4.48.3 accelerate trl peft 
 
 We recommend using `uv` package manager to speed up the installation.
 
@@ -31,7 +29,7 @@ We recommend using `uv` package manager to speed up the installation.
 
 ### MLflow DSPy Integration
 
-MLflow is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
+[MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
 
 - Install MLflow
 
@@ -55,7 +53,7 @@ mlflow.set_experiment("DSPy")
 ```
 mlflow.dspy.autolog()
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 ### Dataset
 
@@ -225,7 +223,7 @@ with mlflow.start_run(run_name="classifier_evaluation"):
         artifact_file="eval_results.json",
     )
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 Not bad, given that we started with no labels of the task. Even though we have no labels, you can use various strategies to boost the quality of the bootstrapped training data.
 
@@ -310,7 +308,7 @@ with mlflow.start_run(run_name="optimized_classifier"):
 # Load the program back from MLflow
 loaded = mlflow.dspy.load_model(model_info.model_uri)
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 # Citations
 

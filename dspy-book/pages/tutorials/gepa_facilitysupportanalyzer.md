@@ -3,12 +3,12 @@ type: Web Page
 title: GEPA for Structured Information Extraction for Enterprise Tasks - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/gepa_facilitysupportanalyzer
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tutorial: GEPA for Structured Information Extraction for Enterprise Tasks
 
-In this tutorial, we'll explore a three-part task for structured information extraction and classification using the Facility Support Analyzer dataset released by Meta. Given an email or message sent in an enterprise setting related to facility maintenance or support requests, the goal is to extract its urgency, assess the sentiment, and identify all relevant service request categories.
+In this tutorial, we'll explore a three-part task for structured information extraction and classification using the [Facility Support Analyzer](https://github.com/meta-llama/llama-prompt-ops/tree/main/use-cases/facility-support-analyzer) dataset released by Meta. Given an email or message sent in an enterprise setting related to facility maintenance or support requests, the goal is to extract its urgency, assess the sentiment, and identify all relevant service request categories.
 
 We will build a simple DSPy program, and then use the `dspy.GEPA` optimizer to optimize it for the task.
 
@@ -16,7 +16,7 @@ We will build a simple DSPy program, and then use the `dspy.GEPA` optimizer to o
 
 ### MLflow DSPy Integration
 
-MLflow is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. MLflow's autologging capability automatically tracks progress of GEPA optimization, as well as visualizes prompts and module executions as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
+[MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. MLflow's autologging capability automatically tracks progress of GEPA optimization, as well as visualizes prompts and module executions as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
 
 **Visualize module executions as traces**
 
@@ -53,7 +53,7 @@ mlflow.dspy.autolog(
     log_traces=True
 )
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 ### Setup the LM
 
@@ -2548,7 +2548,7 @@ A GEPA run with `track_stats=True` returns detailed results in the `detailed_res
 
 Let's visualize the optimization trajectory taken by GEPA for this task.
 
-Specifically, we can access the `parents` attribute, which identifies the parent programs for each candidate program. We use a simple script to plot these as a Graphviz DOT visualization, which can be rendered locally using Graphviz or through online tools like GraphvizOnline.
+Specifically, we can access the `parents` attribute, which identifies the parent programs for each candidate program. We use a simple script to plot these as a Graphviz DOT visualization, which can be rendered locally using Graphviz or through online tools like [GraphvizOnline](https://is.gd/meuHtO).
 
 ```
 def dag_to_dot(parent_program_for_candidate, dominator_program_ids, best_program_idx, full_eval_scores):

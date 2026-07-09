@@ -3,7 +3,7 @@ type: Web Page
 title: Saving and loading - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/getting-started/saving-and-loading
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Saving a program and reloading it
@@ -16,28 +16,15 @@ The state-only mode is what you usually want. The JSON is small, human-readable,
 
 Reach for `save_program=True` when whoever is loading the program won’t have your Python class definitions handy. Shipping an optimized program to another team is one example; serving it from a different repo than the one you developed it in is another. The cost is that the saved directory contains executable Python, so only load programs from sources you trust.
 
-```
-# state-only — small file, requires re-instantiating the program before loading
-optimized_haiku_bot.save("haiku_bot.json")
-# whole program — directory, rehydrates without you re-defining the class
-optimized_haiku_bot.save("haiku_bot/", save_program=True)
-```
 ## Reloading a saved program
 
 For the directory form, `dspy.load(path)` rehydrates the full module in one call. For the state-only form, you build a fresh copy of the program in code and call `.load(path)` on it to apply the saved state.
 
-```
-# whole program
-loaded = dspy.load("haiku_bot/")
-# state-only
-fresh = dspy.ReAct(HaikuBot, tools=[wikipedia_search, get_wikipedia_page])
-fresh.load("haiku_bot.json")
-```
 The save file contains the optimized instructions, demos, and signature metadata. It does not contain the LM client configuration: your API keys, your provider choice, your temperature. That separation is intentional: configure your LM as usual after loading and the same program targets whichever model you point it at today.
 
-See Saving and loading for versioning saved programs, swapping models against the same checkpoint, and managing demo lifecycles.
+See [Saving and loading](../../diving-deeper/saving-and-loading/) for versioning saved programs, swapping models against the same checkpoint, and managing demo lifecycles.
 
-**Next:** Where to go next →
+**Next:** [Where to go next →](../where-to-go-next/)
 
 # Citations
 

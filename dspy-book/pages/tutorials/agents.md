@@ -3,7 +3,7 @@ type: Web Page
 title: Building RAG as Agent - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/agents
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tutorial: Agents
@@ -16,7 +16,7 @@ Install the latest DSPy via `pip install -U dspy` and follow along. You also nee
 
 ### MLflow DSPy Integration
 
-MLflow is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
+[MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
 
 - Install MLflow
 
@@ -42,7 +42,7 @@ mlflow.dspy.autolog()
 ```
 Once you have completed the steps above, you can see traces for each program execution on the notebook. They provide great visibility into the model's behavior and helps you understand the DSPy's concepts better throughout the tutorial.
 
-To kearn more about the integration, visit MLflow DSPy Documentation as well.
+To kearn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 In this tutorial, we'll use an extremely small LM, Meta's `Llama-3.2-3B-Instruct` which has 3 billion parameters.
 
@@ -200,7 +200,7 @@ with mlflow.start_run(run_name="agent_evaluation"):
         artifact_file="eval_results.json",
     )
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 Wow. It only scores 8% in terms of recall. Not that good!
 
@@ -275,7 +275,7 @@ with mlflow.start_run(run_name="optimized_rag"):
 # Load the program back from MLflow
 loaded = mlflow.dspy.load_model(model_info.model_uri)
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 # Citations
 

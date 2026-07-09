@@ -3,7 +3,7 @@ type: Web Page
 title: 'Adapters: how signatures become prompts - DSPy'
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/adapters
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Adapters: how signatures become prompts
@@ -187,8 +187,8 @@ Declared as a default native response type. When the provider returns citations 
 
 ## Cross-links
 
-- Signatures in depth — what the adapter consumes.
-- Settings and context() — how `configure`and`context`propagate the adapter choice.
+- [Signatures in depth](../signatures-in-depth/)— what the adapter consumes.
+- [Settings and context()](../settings-and-context/)— how- `configure`and- `context`propagate the adapter choice.
 - Tools, ReAct, and MCP DD page — `Tool`and`ToolCalls`are adapter-formatted but module-driven.
 
 # Citations

@@ -3,12 +3,12 @@ type: Web Page
 title: Privacy-Conscious Delegation - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/papillon
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Privacy-Conscious Delegation
 
-Please refer to this tutorial from the PAPILLON authors using DSPy.
+Please refer to [this tutorial from the PAPILLON authors](https://colab.research.google.com/github/Columbia-NLP-Lab/PAPILLON/blob/main/papillon_tutorial.ipynb) using DSPy.
 
 This tutorial demonstrates a few aspects of using DSPy in a more advanced context:
 

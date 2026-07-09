@@ -3,12 +3,12 @@ type: Web Page
 title: Advanced Tool Use - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/tool_use
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tutorial: Advanced Tool Use
 
-Let's walk through a quick example of building and prompt-optimizing a DSPy agent for advanced tool use. We'll do this for the challenging task ToolHop but with an even stricter evaluation criteria.
+Let's walk through a quick example of building and prompt-optimizing a DSPy agent for advanced tool use. We'll do this for the challenging task [ToolHop](https://arxiv.org/abs/2501.02506) but with an even stricter evaluation criteria.
 
 Install the latest DSPy via `pip install -U dspy` and follow along. You will also need to `pip install func_timeout datasets`. This tutorial uses `dspy.SIMBA`, which requires numpy: `pip install dspy[numpy]`.
 
@@ -16,7 +16,7 @@ Install the latest DSPy via `pip install -U dspy` and follow along. You will als
 
 ### MLflow DSPy Integration
 
-MLflow is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
+[MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
 
 - Install MLflow
 
@@ -40,7 +40,7 @@ mlflow.set_experiment("DSPy")
 ```
 mlflow.dspy.autolog()
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 In this tutorial, we'll demonstrate the new experimental `dspy.SIMBA` prompt optimizer, which tends to be powerful for larger LLMs and harder tasks. Using this, we'll improve our agent from 35% accuracy to 60%.
 

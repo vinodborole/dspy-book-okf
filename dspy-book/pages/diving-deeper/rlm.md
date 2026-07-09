@@ -3,7 +3,7 @@ type: Web Page
 title: 'RLM: exploring large contexts with code - DSPy'
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/rlm
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # RLM: exploring large contexts with code
@@ -111,9 +111,9 @@ A property returning the user-provided tools as a name-to-
 
 `Tool` dict, excluding the built-in `llm_query` and `llm_query_batched`. Use it to confirm what the model can call.## Cross-links
 
-- Built-in module variants — where RLM sits among the other non-`Predict`modules.
-- Tools, ReAct, and MCP — the tool-wrapping machinery RLM reuses.
-- `dspy.RLM`API reference — full parameter table, built-in tool list, and worked examples.
+- [Built-in module variants](../built-in-module-variants/)— where RLM sits among the other non-- `Predict`modules.
+- [Tools, ReAct, and MCP](../tools-react-and-mcp/)— the tool-wrapping machinery RLM reuses.
+- `dspy.RLM`API reference
 
 # Citations
 

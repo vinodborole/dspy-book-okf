@@ -3,7 +3,7 @@ type: Web Page
 title: Entity Extraction - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/entity_extraction
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tutorial: Entity Extraction
@@ -16,7 +16,7 @@ This tutorial demonstrates how to perform **entity extraction** using the CoNLL-
 
 By the end of this tutorial, you'll understand how to structure tasks in DSPy using signatures and modules, evaluate your system's performance, and improve its quality with optimizers.
 
-Install the latest version of DSPy and follow along. If you're looking instead for a conceptual overview of DSPy, this recent lecture is a good place to start.
+Install the latest version of DSPy and follow along. If you're looking instead for a conceptual overview of DSPy, this [recent lecture](https://www.youtube.com/live/JEMYuzrKLUw) is a good place to start.
 
 ```
 # Install the latest version of DSPy
@@ -28,7 +28,7 @@ Install the latest version of DSPy and follow along. If you're looking instead f
 
 ### MLflow DSPy Integration
 
-MLflow is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
+[MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
 
 - Install MLflow
 
@@ -52,7 +52,7 @@ mlflow.set_experiment("DSPy")
 ```
 mlflow.dspy.autolog()
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 ## Load and Prepare the Dataset
 
@@ -152,7 +152,7 @@ class PeopleExtraction(dspy.Signature):
     extracted_people: list[str] = dspy.OutputField(desc="all tokens referring to specific people extracted from the tokenized text")
 people_extractor = dspy.ChainOfThought(PeopleExtraction)
 ```
-Here, we tell DSPy to use OpenAI's `gpt-4o-mini` model in our program. To authenticate, DSPy reads your `OPENAI_API_KEY`. You can easily swap this out for other providers or local models.
+Here, we tell DSPy to use OpenAI's `gpt-4o-mini` model in our program. To authenticate, DSPy reads your `OPENAI_API_KEY`. You can easily swap this out for [other providers or local models](https://github.com/stanfordnlp/dspy/blob/main/examples/migration.ipynb).
 
 ```
 lm = dspy.LM(model="openai/gpt-4o-mini")
@@ -257,7 +257,7 @@ with mlflow.start_run(run_name="extractor_evaluation"):
         artifact_file="eval_results.json",
     )
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 ## Optimize the Model
 
@@ -375,7 +375,7 @@ with mlflow.start_run(run_name="optimized_extractor"):
 # Load the program back from MLflow
 loaded = mlflow.dspy.load_model(model_info.model_uri)
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 ## Conclusion
 

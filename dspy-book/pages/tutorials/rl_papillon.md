@@ -3,18 +3,18 @@ type: Web Page
 title: RL for Privacy-Conscious Delegation - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/rl_papillon
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tutorial: Online RL over a Multi-Module DSPy Program
 
 WARNING: This feature is new and extremely EXPERIMENTAL. Unlike almost everything else in DSPy, it's currently in pure proof of concept and development mode, but we release it to encourage community involvement.
 
-In this tutorial, we optimize the LM weights of PAPILLON with `ArborGRPO`, a generalization of the popular GRPO online RL algorithm of LLMs to sophisticated multi-module LM programs.
+In this tutorial, we optimize the LM weights of [PAPILLON](https://dspy.ai/tutorials/papillon/) with `ArborGRPO`, a generalization of the popular GRPO online RL algorithm of LLMs to sophisticated multi-module LM programs.
 
 PAPILLON is a system for privacy-preserving delegation, where we will teach a tiny model (1.5B parameters) to use an "untrusted" external LLM, which is more powerful but may save your private data, to balance high-quality and private chat.
 
-For this tutorial, you will also need DSPy's Arbor RL framework which you can install with:
+For this tutorial, you will also need [DSPy's Arbor RL framework](https://github.com/Ziems/arbor) which you can install with:
 
 ```
 > pip install -U arbor-ai

@@ -3,14 +3,14 @@ type: Web Page
 title: Image Generation Prompt iteration - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/image_generation_prompting
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Image Generation Prompt iteration
 
-This is based off of a tweet from @ThorondorLLC
+This is based off of a tweet from [@ThorondorLLC](https://x.com/ThorondorLLC)
 
-Tweet is here
+Tweet is [here](https://x.com/ThorondorLLC/status/1880048546382221313)
 
 This will take an initial desired prompt, and iteratively refine it until the image generated matches the desired prompt.
 
@@ -23,7 +23,7 @@ You can install DSPy via:
 ```
 pip install -U dspy
 ```
-For this example, we'll use Flux Pro from FAL. You can get an API key here
+For this example, we'll use Flux Pro from FAL. You can get an API key [here](https://fal.com/flux-pro)
 
 We will also need to install Pillow and dotenv.
 

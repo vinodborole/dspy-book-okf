@@ -3,7 +3,7 @@ type: Web Page
 title: Settings and context() - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/settings-and-context
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Settings and `context()`
@@ -141,7 +141,7 @@ A single `threading.Lock` guards `_ensure_configure_allowed`. The read path does
 
 ## Cross-links
 
-- Saving and loading — settings serialization sits next to module serialization.
+- [Saving and loading](../saving-and-loading/)— settings serialization sits next to module serialization.
 - Reference: `clients.md`— LM-instance knobs (`temperature`,`max_tokens`,`api_base`, retries) that intentionally don’t live in settings.
 
 # Citations

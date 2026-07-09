@@ -3,7 +3,7 @@ type: Web Page
 title: GEPA for AIME (Math) - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/gepa_aime
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tutorial: GEPA for AIME (Math)
@@ -14,7 +14,7 @@ In this tutorial, we optimize GPT-4.1 Mini's Chain of Thought (`dspy.ChainOfThou
 
 ### MLflow DSPy Integration
 
-MLflow is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. MLflow's autologging capability automatically tracks progress of GEPA optimization, as well as visualizes prompts and module executions as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
+[MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. MLflow's autologging capability automatically tracks progress of GEPA optimization, as well as visualizes prompts and module executions as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
 
 **Visualize module executions as traces**
 
@@ -51,7 +51,7 @@ mlflow.dspy.autolog(
     log_traces=True
 )
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 ```
 api_key = input("Enter your OpenAI API key: ")

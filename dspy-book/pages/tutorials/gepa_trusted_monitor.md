@@ -3,7 +3,7 @@ type: Web Page
 title: GEPA for Code Backdoor Classification (AI control) - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/gepa_trusted_monitor
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tutorial: GEPA for Trusted Monitoring (AI Control + Classification)
@@ -14,9 +14,9 @@ In this tutorial, we optimize a GPT-4.1 Nano classifier to identify backdoors in
 
 AI control is a subfield of AI safety. It focuses on finding strategies for deploying untrusted, highly capable language models (LMs) while maintaining safety. One common approach is to use a weaker LM to monitor the output and classify possible attacks based on suspicion scores. To evaluate a so-called "trusted monitor", we measure safety: the true positive rate at a given false positive rate. This represents the likelihood that we could catch an attack, given that we can only afford to misclassify ~1% of non-attacks.
 
-You can read more about AI control in the seminal paper, AI Control: Improving Safety Despite Intentional Subversion, and more about the results using DSPy in Prompt optimization can enable AI control research.
+You can read more about AI control in the seminal paper, [AI Control: Improving Safety Despite Intentional Subversion](https://arxiv.org/abs/2312.06942), and more about the results using DSPy in [Prompt optimization can enable AI control research](https://www.lesswrong.com/posts/bALBxf3yGGx4bvvem/prompt-optimization-can-enable-ai-control-research).
 
-We will use the UK AISI's Control Arena library to retrieve the dataset, and later to evaluate the safety before and after optimization.
+We will use the UK AISI's [Control Arena](https://controlarena.com/) library to retrieve the dataset, and later to evaluate the safety before and after optimization.
 
 ```
 !pip install -q control-arena==8.0.0 inspect-ai==0.3.137 plotly kaleido nbformat

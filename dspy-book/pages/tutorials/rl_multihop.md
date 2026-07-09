@@ -3,14 +3,14 @@ type: Web Page
 title: RL for Multi-Hop Research - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/rl_multihop
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tutorial: Online RL for Multi-Hop Research
 
 WARNING: This feature is new and extremely EXPERIMENTAL. Unlike almost everything else in DSPy, it's currently in pure proof of concept and development mode, but we release it to encourage community involvement.
 
-For this tutorial, you will also need DSPy's Arbor RL framework which you can install with:
+For this tutorial, you will also need [DSPy's Arbor RL framework](https://github.com/Ziems/arbor) which you can install with:
 
 ```
 > pip install -U arbor-ai

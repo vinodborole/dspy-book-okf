@@ -3,7 +3,7 @@ type: Web Page
 title: Saving and Loading - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/saving
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tutorial: Saving and Loading your DSPy program
@@ -24,16 +24,6 @@ the state to a pickle file.
 
 Let’s say we have compiled a program with some data, and we want to save the program for future usage:
 
-```
-import dspy
-from dspy.datasets.gsm8k import GSM8K, gsm8k_metric
-dspy.configure(lm=dspy.LM("openai/gpt-4o-mini"))
-gsm8k = GSM8K()
-gsm8k_trainset = gsm8k.train[:10]
-dspy_program = dspy.ChainOfThought("question -> answer")
-optimizer = dspy.BootstrapFewShot(metric=gsm8k_metric, max_bootstrapped_demos=4, max_labeled_demos=4, max_rounds=5)
-compiled_dspy_program = optimizer.compile(dspy_program, trainset=gsm8k_trainset)
-```
 To save the state of your program to json file:
 
 To save the state of your program to a pickle file:
@@ -44,30 +34,12 @@ Loading `.pkl` files can execute arbitrary code and may be dangerous. Only load 
 
 `allow_pickle=True` parameter when loading.To load your saved state, you need to **recreate the same program**, then load the state using the `load` method.
 
-```
-loaded_dspy_program = dspy.ChainOfThought("question -> answer") # Recreate the same program.
-loaded_dspy_program.load("./dspy_program/program.json")
-assert len(compiled_dspy_program.demos) == len(loaded_dspy_program.demos)
-for original_demo, loaded_demo in zip(compiled_dspy_program.demos, loaded_dspy_program.demos):
-    # Loaded demo is a dict, while the original demo is a dspy.Example.
-    assert original_demo.toDict() == loaded_demo
-assert str(compiled_dspy_program.signature) == str(loaded_dspy_program.signature)
-```
 Or load the state from a pickle file:
 
 Security Warning
 
 Remember to use `allow_pickle=True` when loading pickle files, and only load from trusted sources.
 
-```
-loaded_dspy_program = dspy.ChainOfThought("question -> answer") # Recreate the same program.
-loaded_dspy_program.load("./dspy_program/program.pkl", allow_pickle=True)
-assert len(compiled_dspy_program.demos) == len(loaded_dspy_program.demos)
-for original_demo, loaded_demo in zip(compiled_dspy_program.demos, loaded_dspy_program.demos):
-    # Loaded demo is a dict, while the original demo is a dspy.Example.
-    assert original_demo.toDict() == loaded_demo
-assert str(compiled_dspy_program.signature) == str(loaded_dspy_program.signature)
-```
 ## Whole Program Saving
 
 Security Notice: Whole Program Saving Uses Pickle
@@ -83,14 +55,6 @@ with the program itself.
 
 To load the saved program, directly use `dspy.load` method:
 
-```
-loaded_dspy_program = dspy.load("./dspy_program/")
-assert len(compiled_dspy_program.demos) == len(loaded_dspy_program.demos)
-for original_demo, loaded_demo in zip(compiled_dspy_program.demos, loaded_dspy_program.demos):
-    # Loaded demo is a dict, while the original demo is a dspy.Example.
-    assert original_demo.toDict() == loaded_demo
-assert str(compiled_dspy_program.signature) == str(loaded_dspy_program.signature)
-```
 With whole program saving, you don’t need to recreate the program, but can directly load the architecture along with the state. You can pick the suitable saving approach based on your needs.
 
 ### Serializing Imported Modules
@@ -108,17 +72,6 @@ module contents are preserved with the saved program.
 
 For example, if your program uses custom modules:
 
-```
-import dspy
-import my_custom_module
-compiled_dspy_program = dspy.ChainOfThought(my_custom_module.custom_signature)
-# Save the program with the custom module
-compiled_dspy_program.save(
-    "./dspy_program/",
-    save_program=True,
-    modules_to_serialize=[my_custom_module]
-)
-```
 This ensures that the required modules are properly serialized and available when loading the program later. Any number of
 modules can be passed to `modules_to_serialize`. If you don’t specify `modules_to_serialize`, no additional modules will be
 registered for serialization.

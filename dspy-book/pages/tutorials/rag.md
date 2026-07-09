@@ -3,24 +3,24 @@ type: Web Page
 title: Retrieval-Augmented Generation (RAG) - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/rag
-timestamp: '2026-07-07T10:31:54.390135+00:00'
+timestamp: '2026-07-09T12:16:40.130937+00:00'
 ---
 
 # Tutorial: Retrieval-Augmented Generation (RAG)
 
 Let's walk through a quick example of **basic question answering** with and without **retrieval-augmented generation** (RAG) in DSPy. Specifically, let's build **a system for answering Tech questions**, e.g. about Linux or iPhone apps.
 
-Install the latest DSPy via `pip install -U dspy` and follow along. If you're looking instead for a conceptual overview of DSPy, this recent lecture is a good place to start. You also need to run `pip install datasets`. This tutorial uses `dspy.Embedder` and `dspy.retrievers.Embeddings`, which require numpy: `pip install dspy[numpy]`.
+Install the latest DSPy via `pip install -U dspy` and follow along. If you're looking instead for a conceptual overview of DSPy, this [recent lecture](https://www.youtube.com/live/JEMYuzrKLUw) is a good place to start. You also need to run `pip install datasets`. This tutorial uses `dspy.Embedder` and `dspy.retrievers.Embeddings`, which require numpy: `pip install dspy[numpy]`.
 
 ## Configuring the DSPy environment.
 
-Let's tell DSPy that we will use OpenAI's `gpt-4o-mini` in our modules. To authenticate, DSPy will look into your `OPENAI_API_KEY`. You can easily swap this out for other providers or local models.
+Let's tell DSPy that we will use OpenAI's `gpt-4o-mini` in our modules. To authenticate, DSPy will look into your `OPENAI_API_KEY`. You can easily swap this out for [other providers or local models](https://github.com/stanfordnlp/dspy/blob/main/examples/migration.ipynb).
 
 ## Recommended: Set up MLflow Tracing to understand what's happening under the hood.
 
 ### MLflow DSPy Integration
 
-MLflow is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
+[MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
 
 - Install MLflow
 
@@ -46,7 +46,7 @@ mlflow.dspy.autolog()
 ```
 Once you have completed the steps above, you can see traces for each program execution on the notebook. They provide great visibility into the model's behavior and helps you understand the DSPy's concepts better throughout the tutorial.
 
-To kearn more about the integration, visit MLflow DSPy Documentation as well.
+To kearn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 ```
 import dspy
@@ -57,7 +57,7 @@ dspy.configure(lm=lm)
 
 You can always prompt the LM directly via `lm(prompt="prompt")` or `lm(messages=[...])`. However, DSPy gives you `Modules` as a better way to define your LM functions.
 
-The simplest module is `dspy.Predict`. It takes a DSPy Signature, i.e. a structured input/output schema, and gives you back a callable function for the behavior you specified. Let's use the "in-line" notation for signatures to declare a module that takes a `question` (of type `str`) as input and produces a `response` as an output.
+The simplest module is `dspy.Predict`. It takes a [DSPy Signature](/learn/programming/signatures), i.e. a structured input/output schema, and gives you back a callable function for the behavior you specified. Let's use the "in-line" notation for signatures to declare a module that takes a `question` (of type `str`) as input and produces a `response` as an output.
 
 ```
 qa = dspy.Predict('question: str -> response: str')
@@ -107,7 +107,7 @@ That said, you're likely here because you want to build a high-quality system an
 
 To measure the quality of your DSPy system, you need (1) a bunch of input values, like `question`s for example, and (2) a `metric` that can score the quality of an output from your system. Metrics vary widely. Some metrics need ground-truth labels of ideal outputs, e.g. for classification or question answering. Other metrics are self-supervised, e.g. checking faithfulness or lack of hallucination, perhaps using a DSPy program as a judge of these qualities.
 
-Let's load a dataset of questions and their (pretty long) gold answers. Since we started this notebook with the goal of building **a system for answering Tech questions**, we obtained a bunch of StackExchange-based questions and their correct answers from the RAG-QA Arena dataset.
+Let's load a dataset of questions and their (pretty long) gold answers. Since we started this notebook with the goal of building **a system for answering Tech questions**, we obtained a bunch of StackExchange-based questions and their correct answers from the [RAG-QA Arena](https://arxiv.org/abs/2407.13998) dataset.
 
 ```
 import orjson
@@ -161,7 +161,7 @@ len(trainset), len(devset), len(testset)
 
 What kind of metric can suit our question-answering task? There are many choices, but since the answers are long, we may ask: How well does the system response *cover* all key facts in the gold response? And the other way around, how well is the system response *not saying things* that aren't in the gold response?
 
-That metric is essentially a **semantic F1**, so let's load a `SemanticF1` metric from DSPy. This metric is actually implemented as a very simple DSPy module using whatever LM we're working with.
+That metric is essentially a **semantic F1**, so let's load a `SemanticF1` metric from DSPy. This metric is actually implemented as a [very simple DSPy module](https://github.com/stanfordnlp/dspy/blob/main/dspy/evaluate/auto_evaluation.py#L21) using whatever LM we're working with.
 
 ```
 from dspy.evaluate import SemanticF1
@@ -233,7 +233,7 @@ with mlflow.start_run(run_name="rag_evaluation"):
         artifact_file="eval_results.json",
     )
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 So far, we built a very simple chain-of-thought module for question answering and evaluated it on a small dataset.
 
@@ -328,7 +328,7 @@ tp = dspy.MIPROv2(metric=metric, auto="medium", num_threads=24)  # use fewer thr
 optimized_rag = tp.compile(RAG(), trainset=trainset,
                            max_bootstrapped_demos=2, max_labeled_demos=2)
 ```
-The prompt optimization process here is pretty systematic, you can learn about it for example in this paper. Importantly, it's not a magic button. It's very possible that it can overfit your training set for instance and not generalize well to a held-out set, making it essential that we iteratively validate our programs.
+The prompt optimization process here is pretty systematic, you can learn about it for example in [this paper](https://arxiv.org/abs/2406.11695). Importantly, it's not a magic button. It's very possible that it can overfit your training set for instance and not generalize well to a held-out set, making it essential that we iteratively validate our programs.
 
 Let's check on an example here, asking the same question to the baseline `rag = RAG()` program, which was not optimized, and to the `optimized_rag = MIPROv2(..)(..)` program, after prompt optimization.
 
@@ -344,7 +344,7 @@ print(pred.response)
 ```
 The Command + Tab shortcut on macOS is designed to switch between currently open applications, but it does not directly restore minimized or hidden windows. When you use Command + Tab, it cycles through the applications that are actively running, and minimized windows do not count as active. To manage minimized windows, you can use other shortcuts or methods. For example, you can use Command + Option + H + M to hide all other applications and minimize the most recently used one. Alternatively, you can navigate to the application you want to restore using Command + Tab and then manually click on the minimized window in the Dock to bring it back to focus.
 
-You can use `dspy.inspect_history(n=2)` to view the RAG prompt before optimization and after optimization.
+You can use `dspy.inspect_history(n=2)` to view the RAG prompt [before optimization](https://gist.github.com/okhat/5d04648f2226e72e66e26a8cb1456ee4) and [after optimization](https://gist.github.com/okhat/79405b8889b4b07da577ee19f1a3479a).
 
 Concretely, in one of the runs of this notebook, the optimized prompt does the following (note that it may be different on a later rerun).
 
@@ -417,7 +417,7 @@ with mlflow.start_run(run_name="optimized_rag"):
 # Load the program back from MLflow
 loaded = mlflow.dspy.load_model(model_info.model_uri)
 ```
-To learn more about the integration, visit MLflow DSPy Documentation as well.
+To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 ## What's next?
 
@@ -427,8 +427,8 @@ But DSPy gives you paths to continue iterating on the quality of your system and
 
 In general, you have the following tools:
 
-- Explore better system architectures for your program, e.g. what if we ask the LM to generate search queries for the retriever? See, e.g., the STORM pipeline built in DSPy.
-- Explore different prompt optimizers or weight optimizers. See the Optimizers Docs.
+- Explore better system architectures for your program, e.g. what if we ask the LM to generate search queries for the retriever? See, e.g., the [STORM pipeline](https://arxiv.org/abs/2402.14207)built in DSPy.
+- Explore different [prompt optimizers](https://arxiv.org/abs/2406.11695)or[weight optimizers](https://arxiv.org/abs/2407.10930). See the Optimizers Docs.
 - Scale inference time compute using DSPy Optimizers, e.g. via ensembling multiple post-optimization programs.
 - Cut cost by distilling to a smaller LM, via prompt or weight optimization.
 
