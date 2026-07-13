@@ -2,7 +2,7 @@
   "generator": "okf-kit",
   "okf_version": "0.1",
   "root_url": "https://dspy.ai/",
-  "updated_at": "2026-07-09T12:16:40.192420+00:00",
+  "updated_at": "2026-07-13T09:35:07.255719+00:00",
   "config": {
     "max_depth": 3,
     "max_pages": 70,
@@ -1128,9 +1128,9 @@
     ]
   ],
   "last_sync": {
-    "synced_at": "2026-07-09T12:16:40.174404+00:00",
+    "synced_at": "2026-07-13T09:35:07.240668+00:00",
     "added": 0,
-    "changed": 69,
+    "changed": 0,
     "removed": 0,
     "pages": 70
   }
