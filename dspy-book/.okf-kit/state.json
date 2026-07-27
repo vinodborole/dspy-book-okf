@@ -2,7 +2,7 @@
   "generator": "okf-kit",
   "okf_version": "0.1",
   "root_url": "https://dspy.ai/",
-  "updated_at": "2026-07-20T09:22:04.880912+00:00",
+  "updated_at": "2026-07-27T09:58:26.624478+00:00",
   "config": {
     "max_depth": 3,
     "max_pages": 70,
@@ -40,7 +40,7 @@
       "path": "pages/diving-deeper/built-in-module-variants.md",
       "url": "https://dspy.ai/diving-deeper/built-in-module-variants",
       "title": "Built-in module variants - DSPy",
-      "hash": "095070c040d0ed5d1ea9af119c82fcb5e1f6f7ac4ed3c5f81b29ac58bb9d92e8"
+      "hash": "c17f776cca3de536e1d2d321f2fc3c2ba9566bb789f07204a525523585fddede"
     },
     {
       "path": "pages/diving-deeper/choosing-an-optimizer.md",
@@ -70,7 +70,7 @@
       "path": "pages/diving-deeper/rlm.md",
       "url": "https://dspy.ai/diving-deeper/rlm",
       "title": "RLM: exploring large contexts with code - DSPy",
-      "hash": "f2401e3781d69acd6a49db73be5bdc265f0b4a7f9e20f6bc14dd69bd92e1e997"
+      "hash": "33c7054fef1457b4526e71edbbbf1d9f9e671b58eae9451d08a23ec27bbb06cd"
     },
     {
       "path": "pages/diving-deeper/saving-and-loading.md",
@@ -1128,9 +1128,9 @@
     ]
   ],
   "last_sync": {
-    "synced_at": "2026-07-20T09:22:04.863248+00:00",
+    "synced_at": "2026-07-27T09:58:26.609309+00:00",
     "added": 0,
-    "changed": 0,
+    "changed": 2,
     "removed": 0,
     "pages": 70
   }
