@@ -3,7 +3,7 @@ type: Web Page
 title: Debugging & Observability - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/observability
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Tutorial: Debugging and Observability in DSPy
@@ -27,7 +27,7 @@ Oh, this is incorrect. He no longer plays for the Hokkaido Nippon-Ham Fighters; 
 DSPy provides the `inspect_history()` utility, which prints out all LLM invocations made so far:
 
 `inspect_history` has some limitations:
-- In real-world systems, other components like retrievers, tools, and custom modules play significant roles, but `inspect_history`only logs LLM calls.
+- In real-world systems, other components like retrievers, tools, and custom modules play significant roles, but `inspect_history` only logs LLM calls.
 - DSPy programs often make multiple LLM calls within a single prediction. Monolith log history makes it hard to organize logs, especially when handling multiple questions.
 - Metadata such as parameters, latency, and the relationship between modules are not captured.
 
@@ -44,7 +44,7 @@ If you don’t specify a different port via `--port` flag, you MLflow server wil
 Now let’s change our code snippet to enable MLflow tracing. We need to:
 
 - Tell MLflow where the server is hosted.
-- Apply `mlflow.autolog()`so that DSPy tracing is automatically captured.
+- Apply `mlflow.autolog()` so that DSPy tracing is automatically captured.
 
 The full code is as below, now let’s run it again!
 
@@ -73,12 +73,12 @@ Sometimes, you may want to implement a custom logging solution. For instance, yo
 
 | Handlers | Description | 
 |---|---|
-| `on_module_start`/`on_module_end` | Triggered when a `dspy.Module`subclass is invoked. | 
-| `on_lm_start`/`on_lm_end` | Triggered when a `dspy.LM`subclass is invoked. | 
-| `on_adapter_format_start`/`on_adapter_format_end` | Triggered when a `dspy.Adapter`subclass formats the input prompt. | 
-| `on_adapter_parse_start`/`on_adapter_parse_end` | Triggered when a `dspy.Adapter`subclass postprocess the output text from an LM. | 
-| `on_tool_start`/`on_tool_end` | Triggered when a `dspy.Tool`subclass is invoked. | 
-| `on_evaluate_start`/`on_evaluate_end` | Triggered when a `dspy.Evaluate`instance is invoked. | 
+| `on_module_start` /`on_module_end` | Triggered when a `dspy.Module` subclass is invoked. | 
+| `on_lm_start` /`on_lm_end` | Triggered when a `dspy.LM` subclass is invoked. | 
+| `on_adapter_format_start` /`on_adapter_format_end` | Triggered when a `dspy.Adapter` subclass formats the input prompt. | 
+| `on_adapter_parse_start` /`on_adapter_parse_end` | Triggered when a `dspy.Adapter` subclass postprocess the output text from an LM. | 
+| `on_tool_start` /`on_tool_end` | Triggered when a `dspy.Tool` subclass is invoked. | 
+| `on_evaluate_start` /`on_evaluate_end` | Triggered when a `dspy.Evaluate` instance is invoked. | 
 
 Here’s an example of custom callback that logs the intermediate steps of a ReAct agent:
 

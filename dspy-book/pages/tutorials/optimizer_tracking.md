@@ -3,7 +3,7 @@ type: Web Page
 title: Tracking DSPy Optimizers - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/optimizer_tracking
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Tracking DSPy Optimizers with MLflow
@@ -13,28 +13,28 @@ This tutorial demonstrates how to use MLflow to track and analyze your DSPy opti
 Through the autologging capability, MLflow tracks the following information:
 
 - 
-**Optimizer Parameters**- Number of few-shot examples
-- Number of candidates
-- Other configuration settings
- 
+**Optimizer Parameters**
+  - Number of few-shot examples
+  - Number of candidates
+  - Other configuration settings
 - 
-**Program States**- Initial instructions and few-shot examples
-- Optimized instructions and few-shot examples
-- Intermediate instructions and few-shot examples during optimization
- 
+**Program States**
+  - Initial instructions and few-shot examples
+  - Optimized instructions and few-shot examples
+  - Intermediate instructions and few-shot examples during optimization
 - 
-**Datasets**- Training data used
-- Evaluation data used
- 
+**Datasets**
+  - Training data used
+  - Evaluation data used
 - 
-**Performance Progression**- Overall metric progression
-- Performance at each evaluation step
- 
+**Performance Progression**
+  - Overall metric progression
+  - Performance at each evaluation step
 - 
-**Traces**- Program execution traces
-- Model responses
-- Intermediate prompts
- 
+**Traces**
+  - Program execution traces
+  - Model responses
+  - Intermediate prompts
 
 ## Getting Started
 
@@ -81,8 +81,8 @@ You can load the optimized program directly from the MLflow tracking server for 
 ## Troubleshooting
 
 - If traces aren’t appearing, ensure `log_traces_from_compile=True`
-- For large datasets, consider setting `log_traces_from_compile=False`to avoid memory issues
-- Use `mlflow.get_run(run_id)`to programmatically access MLflow run data
+- For large datasets, consider setting `log_traces_from_compile=False` to avoid memory issues
+- Use `mlflow.get_run(run_id)` to programmatically access MLflow run data
 
 For more features, explore the [MLflow Documentation](https://mlflow.org/docs/latest/llms/dspy).
 

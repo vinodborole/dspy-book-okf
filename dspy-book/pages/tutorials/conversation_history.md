@@ -3,7 +3,7 @@ type: Web Page
 title: Managing Conversation History - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/conversation_history
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Managing Conversation History
@@ -16,8 +16,8 @@ The `dspy.History` class can be used as an input field type, containing a `messa
 
 There are two key steps when using the conversation history:
 
-- **Include a field of type**- `dspy.History`in your Signature.
-- **Maintain a history instance at runtime, appending new conversation turns to it.**Each entry should include all relevant input and output field information.
+- **Include a field of type `dspy.History` in your Signature.**
+- **Maintain a history instance at runtime, appending new conversation turns to it.** Each entry should include all relevant input and output field information.
 
 A sample run might look like this:
 

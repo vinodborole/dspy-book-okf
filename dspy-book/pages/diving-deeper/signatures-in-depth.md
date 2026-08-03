@@ -3,7 +3,7 @@ type: Web Page
 title: Signatures in depth - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/signatures-in-depth
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Signatures in depth
@@ -100,23 +100,23 @@ The metaclass behind `Signature`. You won’t subclass or instantiate it. What i
 
 ### Introspecting a signature
 
-** Signature.input_fields / Signature.output_fields / Signature.fields** → 
+**`Signature.input_fields` / `Signature.output_fields` / `Signature.fields`** → `dict[str, FieldInfo]`
 
-`dict[str, FieldInfo]`Dicts keyed by field name. The
+Dicts keyed by field name. The `FieldInfo`‘s `.annotation` is the declared type; `json_schema_extra` carries DSPy’s metadata, including the `__dspy_field_type` tag and the `IS_TYPE_UNDEFINED` marker (set when a string-form field has no explicit type — Predict uses it to coerce `None` to an empty string).
 
-`FieldInfo`‘s `.annotation` is the declared type; `json_schema_extra` carries DSPy’s metadata, including the `__dspy_field_type` tag and the `IS_TYPE_UNDEFINED` marker (set when a string-form field has no explicit type — Predict uses it to coerce `None` to an empty string).** Signature.instructions** → 
+**`Signature.instructions`** → `str`
 
-`str`The cleandoc’d docstring. The property is settable, but prefer
+The cleandoc’d docstring. The property is settable, but prefer `with_instructions(...)` so you get a fresh class.
 
-`with_instructions(...)` so you get a fresh class.** Signature.signature** → 
+**`Signature.signature`** → `str`
 
-`str`Round-trips the class to its string form (e.g.,
+Round-trips the class to its string form (e.g., `"location, season, mood -> haiku"`) for display. Useful in logs and inspection; not used for parsing.
 
-`"location, season, mood -> haiku"`) for display. Useful in logs and inspection; not used for parsing.** Signature.equals(other)** → 
+**`Signature.equals(other)`** → `bool`
 
-`bool`Compares instructions and every field’s
+Compares instructions and every field’s `json_schema_extra`. This is the equality predicate optimizers and tests use. Plain `==` compares class identity, which is usually not what you want.
 
-`json_schema_extra`. This is the equality predicate optimizers and tests use. Plain `==` compares class identity, which is usually not what you want.### Mutating a signature
+### Mutating a signature
 
 Every method here returns a new Signature class via deep-copy.
 
@@ -146,22 +146,22 @@ Silently no-ops when the field is absent. Check `name in cls.fields` first if yo
 
 ### Persisting a signature
 
-** Signature.dump_state()** → 
+**`Signature.dump_state()`** → `dict`
 
-`dict`**→ Signature class**
+**`Signature.load_state(state)`** → Signature class
 
-`Signature.load_state(state)`Round-trip the parts that change across optimization runs: instructions, plus each field’s annotation, prefix, desc, and
+Round-trip the parts that change across optimization runs: instructions, plus each field’s annotation, prefix, desc, and `__dspy_field_type` tag. The Signature class itself isn’t serialized — the assumption is that the consuming process re-instantiates it first (usually via the parent module’s saved state). `Module.save()` and `dspy.load()` use these under the hood; you rarely call them directly.
 
-`__dspy_field_type` tag. The Signature class itself isn’t serialized — the assumption is that the consuming process re-instantiates it first (usually via the parent module’s saved state). `Module.save()` and `dspy.load()` use these under the hood; you rarely call them directly.### Naming utility
+### Naming utility
 
-** dspy.infer_prefix(attribute_name)** → 
+**`dspy.infer_prefix(attribute_name)`** → `str`
 
-`str`Splits the name on camelCase and snake_case boundaries and capitalizes the result. The metaclass calls it when a field omits
+Splits the name on camelCase and snake_case boundaries and capitalizes the result. The metaclass calls it when a field omits `prefix=`. Rarely useful on its own.
 
-`prefix=`. Rarely useful on its own.## Cross-links
+## Cross-links
 
-- [Adapters: how signatures become prompts](../adapters/)— what- `desc`,- `prefix`, and types look like on the wire, and where- `parse_value`does its work.
-- [Modules: composing your own](../modules/)— how- `Predict`,- `ChainOfThought`, and your own subclasses consume signatures.
+- [Adapters: how signatures become prompts](../adapters/) — what`desc` ,`prefix` , and types look like on the wire, and where`parse_value` does its work.
+- [Modules: composing your own](../modules/) — how`Predict` ,`ChainOfThought` , and your own subclasses consume signatures.
 - GEPA and the Optimizers selection guide — how the docstring gets rewritten and why field names stay fixed.
 
 # Citations

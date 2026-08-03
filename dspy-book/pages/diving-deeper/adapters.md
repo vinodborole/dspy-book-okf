@@ -3,7 +3,7 @@ type: Web Page
 title: 'Adapters: how signatures become prompts - DSPy'
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/adapters
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Adapters: how signatures become prompts
@@ -102,14 +102,14 @@ Public entry. The flow inside is preprocess → format → LM call → postproce
 
 Turns the signature, demos, and inputs into chat messages. The pieces it composes from:
 
-- `format_system_message(signature)`— the system message: field descriptions + format template + instructions.
-- `format_field_description(signature)`— the per-field list with types and constraints.
-- `format_field_structure(signature)`— the explanation of the marker format.
-- `format_task_description(signature)`—- `signature.instructions`.
-- `format_demos(signature, demos)`— each demo becomes a user/assistant pair.
-- `format_user_message_content(signature, inputs)`— the current call’s inputs.
-- `format_assistant_message_content(signature, outputs)`— used inside demos.
-- `format_conversation_history(signature, history)`— when a field has type- `dspy.History`, expand it into turn messages instead of stuffing it into one field’s value.
+- `format_system_message(signature)` — the system message: field descriptions + format template + instructions.
+- `format_field_description(signature)` — the per-field list with types and constraints.
+- `format_field_structure(signature)` — the explanation of the marker format.
+- `format_task_description(signature)` —`signature.instructions` .
+- `format_demos(signature, demos)` — each demo becomes a user/assistant pair.
+- `format_user_message_content(signature, inputs)` — the current call’s inputs.
+- `format_assistant_message_content(signature, outputs)` — used inside demos.
+- `format_conversation_history(signature, history)` — when a field has type`dspy.History` , expand it into turn messages instead of stuffing it into one field’s value.
 
 `Adapter.parse(signature, completion)` → `dict`
 
@@ -129,11 +129,11 @@ Strategy: if the annotation is `str`, pass through. If it’s an `Enum` or `Lite
 
 Other helpers in the same file you’ll see in tracebacks:
 
-- `format_field_value(field_info, value, assume_text=True)`— the inverse of parse: serializes a typed value for the prompt.
-- `serialize_for_json(value)`— Pydantic-aware JSON serialization, used by JSONAdapter.
-- `translate_field_type(field_info)`— generates the constraint string the prompt shows (“greater than: 0”).
-- `get_field_description_string(fields)`— the field-list rendering.
-- `find_enum_member(enum_cls, raw)`— resolves an enum by name or value.
+- `format_field_value(field_info, value, assume_text=True)` — the inverse of parse: serializes a typed value for the prompt.
+- `serialize_for_json(value)` — Pydantic-aware JSON serialization, used by JSONAdapter.
+- `translate_field_type(field_info)` — generates the constraint string the prompt shows (“greater than: 0”).
+- `get_field_description_string(fields)` — the field-list rendering.
+- `find_enum_member(enum_cls, raw)` — resolves an enum by name or value.
 
 ### Custom type wrappers
 
@@ -143,17 +143,17 @@ Types adapters know how to render and parse beyond Python’s standard ones. Eac
 
 The base class. Subclass it (it’s a `pydantic.BaseModel`) and implement `format()` to plug in a new type. Adapters wrap the output of `format()` with `<<CUSTOM-TYPE-START-IDENTIFIER>>...<<END-IDENTIFIER>>` so multi-modal content can be inserted into a single message stream and later split out.
 
-`dspy.Image(url, download=False, verify=True)`
+`dspy.Image(source)`
 
-URL, local path, bytes, or PIL image. `format()` returns the provider’s image content block (`{"type": "image_url", "image_url": {"url": ...}}`). `download=True` fetches the image and base64-encodes it, useful when the LM provider can’t reach the URL.
+URL reference, data URI, bytes, or PIL image. `format()` returns the provider’s image content block (`{"type": "image_url", "image_url": {"url": ...}}`). Ordinary construction and adapter parsing never access the filesystem or network. Use `Image.from_path(path)` to read a local file or `Image.from_url(url)` to download and base64-encode a remote resource. The deprecated direct call `Image(url, download=True)` also downloads for compatibility through 3.3; migrate it to `Image.from_url(url)`.
 
-`dspy.Audio(data, audio_format)`
+`dspy.Audio(source)`
 
-Base64 audio data plus format string (`"wav"`, `"mp3"`). Renders as the provider’s audio content block.
+A data URI, in-memory bytes, or array data; raw base64 must be passed as `Audio(data=..., audio_format=...)`. Renders as the provider’s audio content block. Use `Audio.from_path(path)` or `Audio.from_url(url)` for resource loading.
 
 `dspy.File(file_data=None, file_id=None, filename=None)`
 
-Either a data URI or a file ID (some providers preupload files and reference them by ID).
+Either in-memory bytes, a data URI, or a file ID (some providers preupload files and reference them by ID). Use `File.from_path(path)` to read a local file.
 
 `dspy.Code(code, language="python")`
 
@@ -179,17 +179,36 @@ The list of tool calls the LM produced, parsed from native function-calling resp
 
 Declared as a default native response type. When the provider returns citations natively (e.g., Anthropic), adapters extract them through the type’s `parse_lm_response`.
 
+### Migrating resource loading in 3.3
+
+In DSPy 3.3, constructing or validating `Image`, `Audio`, and `File` values no longer interprets locator-shaped strings as instructions to read a local file or fetch a remote URL. This keeps LM output parsing and other validation paths from implicitly granting access to the host. Resource loading now requires an explicit factory:
+
+| Before 3.3 | 3.3 replacement | Behavior | 
+|---|---|---|
+| `Image(path)` | `Image.from_path(path)` | Read and embed a local image | 
+| `Image(url, download=True)` | `Image.from_url(url)` | Download and embed a remote image | 
+| `Image.from_url(url)` or`Image.from_url(url, download=False)` | `Image(url)` | Keep a non-downloading URL reference | 
+| `Audio(path)` | `Audio.from_path(path)` | Read and embed a local audio file | 
+| `Audio(url)` | `Audio.from_url(url)` | Download and embed remote audio | 
+| `File(path)` | `File.from_path(path)` | Read and embed a local file | 
+| `Image.from_file(path)` | `Image.from_path(path)` | Replace the deprecated alias | 
+| `Audio.from_file(path)` | `Audio.from_path(path)` | Replace the deprecated alias | 
+
+Safe in-memory inputs such as data URIs, bytes, PIL images, audio arrays, and structured dictionaries remain supported. The deprecated direct call `Image(url, download=True)` continues to work with a warning through 3.3; `Image.from_file()`, `Image.from_PIL()`, and `Audio.from_file()` are also scheduled for removal in 3.4.
+
+`Image.from_url()` and `Audio.from_url()` perform synchronous, caller-initiated HTTP requests and follow redirects. They do not validate destinations against an SSRF allowlist, so applications must validate or allowlist URLs derived from untrusted input before calling them.
+
 ### Configuring which adapter to use
 
-- `dspy.configure(adapter=dspy.JSONAdapter())`
-- `with dspy.context(adapter=dspy.XMLAdapter()): ...`
-- **No automatic LM-based selection.**ChatAdapter is the default and stays the default until you set otherwise. Some teleprompts (e.g.,- `BootstrapFinetune`) accept an- `adapter`dict keyed by LM, so different LMs in a finetuning loop can use different adapters.
+- **`dspy.configure(adapter=dspy.JSONAdapter())`** — process-wide default.
+- **`with dspy.context(adapter=dspy.XMLAdapter()): ...`** — scoped override.
+- **No automatic LM-based selection.** ChatAdapter is the default and stays the default until you set otherwise. Some teleprompts (e.g.,`BootstrapFinetune` ) accept an`adapter` dict keyed by LM, so different LMs in a finetuning loop can use different adapters.
 
 ## Cross-links
 
-- [Signatures in depth](../signatures-in-depth/)— what the adapter consumes.
-- [Settings and context()](../settings-and-context/)— how- `configure`and- `context`propagate the adapter choice.
-- Tools, ReAct, and MCP DD page — `Tool`and`ToolCalls`are adapter-formatted but module-driven.
+- [Signatures in depth](../signatures-in-depth/) — what the adapter consumes.
+- [Settings and context()](../settings-and-context/) — how`configure` and`context` propagate the adapter choice.
+- Tools, ReAct, and MCP DD page — `Tool` and`ToolCalls` are adapter-formatted but module-driven.
 
 # Citations
 

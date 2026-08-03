@@ -3,7 +3,7 @@ type: Web Page
 title: 'Optimizers: choosing one - DSPy'
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/choosing-an-optimizer
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Optimizers: choosing one
@@ -74,63 +74,59 @@ Grouped by what each optimizer tunes.
 
 The two-line baselines. Try one of these before reaching for anything heavier.
 
-** dspy.LabeledFewShot(k=16)**
-No LM calls during 
+**`dspy.LabeledFewShot(k=16)`**
+No LM calls during `.compile()`. Samples up to `k` examples from the trainset (random by default, deterministic when `sample=False`) and attaches them as demos to each predictor. Reach for it as the honest baseline: if `LabeledFewShot` already gets you where you need to be, heavier optimization is wasted effort.
 
-`.compile()`. Samples up to `k` examples from the trainset (random by default, deterministic when `sample=False`) and attaches them as demos to each predictor. Reach for it as the honest baseline: if `LabeledFewShot` already gets you where you need to be, heavier optimization is wasted effort.** dspy.BootstrapFewShot(metric=None, metric_threshold=None, teacher_settings=None, max_bootstrapped_demos=4, max_labeled_demos=16, max_rounds=1)**
-Runs the program (or a 
+**`dspy.BootstrapFewShot(metric=None, metric_threshold=None, teacher_settings=None, max_bootstrapped_demos=4, max_labeled_demos=16, max_rounds=1)`**
+Runs the program (or a `teacher` you supply) on training examples, scores each completion with the metric, and keeps the traces where the metric passes. Those successful traces become the demos. The combined set mixes up to `max_bootstrapped_demos` bootstrapped traces with up to `max_labeled_demos` raw labeled examples per predictor. Almost always beats zero-shot when the metric is reliable; the safe first try.
 
-`teacher` you supply) on training examples, scores each completion with the metric, and keeps the traces where the metric passes. Those successful traces become the demos. The combined set mixes up to `max_bootstrapped_demos` bootstrapped traces with up to `max_labeled_demos` raw labeled examples per predictor. Almost always beats zero-shot when the metric is reliable; the safe first try.### Search across demo sets
+### Search across demo sets
 
 When one bootstrap pass isn’t enough.
 
-** dspy.BootstrapFewShotWithRandomSearch(metric, max_bootstrapped_demos=4, max_labeled_demos=16, max_rounds=1, num_candidate_programs=16, num_threads=None, stop_at_score=None)**
-Aliased as 
+**`dspy.BootstrapFewShotWithRandomSearch(metric, max_bootstrapped_demos=4, max_labeled_demos=16, max_rounds=1, num_candidate_programs=16, num_threads=None, stop_at_score=None)`**
+Aliased as `dspy.BootstrapRS`. Runs `BootstrapFewShot` `num_candidate_programs` times with different random seeds, evaluates each candidate on a valset, and returns the highest-scoring one. The randomness comes from which traces get bootstrapped first — different seeds discover different demo subsets. `stop_at_score` short-circuits when a candidate clears a target.
 
-`dspy.BootstrapRS`. Runs `BootstrapFewShot` `num_candidate_programs` times with different random seeds, evaluates each candidate on a valset, and returns the highest-scoring one. The randomness comes from which traces get bootstrapped first — different seeds discover different demo subsets. `stop_at_score` short-circuits when a candidate clears a target.** dspy.KNNFewShot(k, trainset, vectorizer, **bootstrap_kwargs)**
-The demos are chosen at 
+**`dspy.KNNFewShot(k, trainset, vectorizer, **bootstrap_kwargs)`**
+The demos are chosen at *inference* time, not compile time. At construction, the trainset is embedded via `vectorizer` and cached. On each call, the input is embedded, the `k` nearest training examples are retrieved, and those become the demos for that single call. Worth the indirection when no single demo set generalizes across the input distribution.
 
-*inference*time, not compile time. At construction, the trainset is embedded via
-
-`vectorizer` and cached. On each call, the input is embedded, the `k` nearest training examples are retrieved, and those become the demos for that single call. Worth the indirection when no single demo set generalizes across the input distribution.### Optimize instructions
+### Optimize instructions
 
 When the prompt wording — not the examples — is what’s holding you back.
 
-** dspy.COPRO(prompt_model=None, metric=None, breadth=10, depth=3, init_temperature=1.4, track_stats=False)**
-A breadth-first proposer. At each of 
+**`dspy.COPRO(prompt_model=None, metric=None, breadth=10, depth=3, init_temperature=1.4, track_stats=False)`**
+A breadth-first proposer. At each of `depth` levels, COPRO uses `prompt_model` to generate `breadth` candidate instructions per predictor, scores them against the trainset, and keeps the best. Total LM cost is roughly `breadth × depth × num_predictors`. Lightweight; especially good when demos are already strong and you only need to fix wording.
 
-`depth` levels, COPRO uses `prompt_model` to generate `breadth` candidate instructions per predictor, scores them against the trainset, and keeps the best. Total LM cost is roughly `breadth × depth × num_predictors`. Lightweight; especially good when demos are already strong and you only need to fix wording.** dspy.GEPA(metric, auto=None, max_full_evals=None, max_metric_calls=None, reflection_lm=None, skip_perfect_score=True, instruction_proposer=None, use_merge=True, num_threads=None)**
-Evolutionary instruction search guided by reflection. GEPA maintains a population of programs, runs each on the trainset, reads the per-predictor 
-
-`feedback` from the metric, and uses `reflection_lm` to propose edits informed by that feedback. It returns the best candidate from a Pareto frontier. Wins on prompt-only optimization when you have a strong reflection LM and a feedback-shaped metric; see [GEPA in depth](../gepa-in-depth/)for the full mechanics.
+**`dspy.GEPA(metric, auto=None, max_full_evals=None, max_metric_calls=None, reflection_lm=None, skip_perfect_score=True, instruction_proposer=None, use_merge=True, num_threads=None)`**
+Evolutionary instruction search guided by reflection. GEPA maintains a population of programs, runs each on the trainset, reads the per-predictor `feedback` from the metric, and uses `reflection_lm` to propose edits informed by that feedback. It returns the best candidate from a Pareto frontier. Wins on prompt-only optimization when you have a strong reflection LM and a feedback-shaped metric; see [GEPA in depth](../gepa-in-depth/) for the full mechanics.
 
 ### Optimize instructions and demos together
 
-** dspy.MIPROv2(metric, prompt_model=None, task_model=None, teacher_settings=None, max_bootstrapped_demos=4, max_labeled_demos=4, auto="light", num_candidates=None, num_threads=None, init_temperature=1.0, track_stats=True)**
-Bayesian-optimization search over the joint instruction + demo space. The 
+**`dspy.MIPROv2(metric, prompt_model=None, task_model=None, teacher_settings=None, max_bootstrapped_demos=4, max_labeled_demos=4, auto="light", num_candidates=None, num_threads=None, init_temperature=1.0, track_stats=True)`**
+Bayesian-optimization search over the joint instruction + demo space. The `prompt_model` (often a stronger LM) proposes instructions; the `task_model` (your student) runs the program. `auto` (`"light"` / `"medium"` / `"heavy"`) translates into a budget for both proposals and evaluations. State of the art when both instructions and demos need tuning together.
 
-`prompt_model` (often a stronger LM) proposes instructions; the `task_model` (your student) runs the program. `auto` (`"light"` / `"medium"` / `"heavy"`) translates into a budget for both proposals and evaluations. State of the art when both instructions and demos need tuning together.** dspy.SIMBA(metric, bsize=32, num_candidates=6, max_steps=8, max_demos=4, prompt_model=None, teacher_settings=None, num_threads=None)**
-Mini-batch SGD-flavored search. Each step samples a 
+**`dspy.SIMBA(metric, bsize=32, num_candidates=6, max_steps=8, max_demos=4, prompt_model=None, teacher_settings=None, num_threads=None)`**
+Mini-batch SGD-flavored search. Each step samples a `bsize` minibatch, finds the worst-scoring examples, and uses `prompt_model` to propose either a natural-language rule (instruction patch) or a new demo to address them. The mini-batch focus makes SIMBA reactive: each step targets the current weak spot rather than the average case.
 
-`bsize` minibatch, finds the worst-scoring examples, and uses `prompt_model` to propose either a natural-language rule (instruction patch) or a new demo to address them. The mini-batch focus makes SIMBA reactive: each step targets the current weak spot rather than the average case.** dspy.InferRules(num_candidates=10, num_rules=10, num_threads=None, **bootstrap_kwargs)**
-Extends 
+**`dspy.InferRules(num_candidates=10, num_rules=10, num_threads=None, **bootstrap_kwargs)`**
+Extends `BootstrapFewShot`. After bootstrapping demos, asks a teacher LM to read them and extract `num_rules` general rules, then appends those rules to the predictor’s instructions. The rules are interpretable — you can read them and decide whether to keep them. Useful when the task has patterns you want stated explicitly rather than inferred from examples.
 
-`BootstrapFewShot`. After bootstrapping demos, asks a teacher LM to read them and extract `num_rules` general rules, then appends those rules to the predictor’s instructions. The rules are interpretable — you can read them and decide whether to keep them. Useful when the task has patterns you want stated explicitly rather than inferred from examples.### Fine-tune the weights
+### Fine-tune the weights
 
-** dspy.BootstrapFinetune(metric=None, multitask=True, train_kwargs=None, adapter=None, exclude_demos=False, num_threads=None)**
-Bootstraps successful traces the same way 
+**`dspy.BootstrapFinetune(metric=None, multitask=True, train_kwargs=None, adapter=None, exclude_demos=False, num_threads=None)`**
+Bootstraps successful traces the same way `BootstrapFewShot` does, then writes them as training data and fine-tunes the student LM on them. Requires an LM with a `.finetune()` method — open-source LMs through providers like Together AI, OpenAI’s fine-tuning API, or a local trainer. `multitask=True` trains one model across all predictors; `False` trains a separate model per predictor.
 
-`BootstrapFewShot` does, then writes them as training data and fine-tunes the student LM on them. Requires an LM with a `.finetune()` method — open-source LMs through providers like Together AI, OpenAI’s fine-tuning API, or a local trainer. `multitask=True` trains one model across all predictors; `False` trains a separate model per predictor.### Compose optimizers
+### Compose optimizers
 
-** dspy.BetterTogether(metric, **optimizers)**
-A meta-optimizer that runs a sequence specified as a string like 
+**`dspy.BetterTogether(metric, **optimizers)`**
+A meta-optimizer that runs a sequence specified as a string like `"p -> w -> p"` — prompt optimization, then weight tuning, then prompt optimization again. The `optimizers` kwargs map letters to optimizer instances (`p=GEPA(...)`, `w=BootstrapFinetune(...)`). Defaults to `BootstrapRS` for `p` and `BootstrapFinetune` for `w`. Reach for it when prompt-only and weight-only have both been tried and you suspect they compose.
 
-`"p -> w -> p"` — prompt optimization, then weight tuning, then prompt optimization again. The `optimizers` kwargs map letters to optimizer instances (`p=GEPA(...)`, `w=BootstrapFinetune(...)`). Defaults to `BootstrapRS` for `p` and `BootstrapFinetune` for `w`. Reach for it when prompt-only and weight-only have both been tried and you suspect they compose.** dspy.Ensemble(reduce_fn=None, size=None, deterministic=False)**
-Not an optimizer in the usual sense — it composes already-compiled programs into one. 
+**`dspy.Ensemble(reduce_fn=None, size=None, deterministic=False)`**
+Not an optimizer in the usual sense — it composes already-compiled programs into one. `.compile(programs)` returns a module that runs each input through every program in parallel and reduces with `reduce_fn` (a custom function; defaults to majority voting via `dspy.majority`). Useful when several optimizer runs each produce a competent candidate and you want to combine them at inference time.
 
-`.compile(programs)` returns a module that runs each input through every program in parallel and reduces with `reduce_fn` (a custom function; defaults to majority voting via `dspy.majority`). Useful when several optimizer runs each produce a competent candidate and you want to combine them at inference time.### Specialized
+### Specialized
 
-** dspy.AvatarOptimizer(metric, max_iters=10, lower_bound=0, upper_bound=1, max_positive_inputs=10, max_negative_inputs=10, optimize_for="max")**
+**`dspy.AvatarOptimizer(metric, max_iters=10, lower_bound=0, upper_bound=1, max_positive_inputs=10, max_negative_inputs=10, optimize_for="max")`**
 Built for agent-style programs. Partitions the trainset by metric into positive examples (high scores) and negative examples (low scores). On each iteration, asks an LM to read positive and negative examples and propose instruction edits that explain the difference, then evaluates the new instructions. Niche but useful when the metric is a clean pass/fail and you need readable agent instructions.
 
 ## Selection cheat sheet
@@ -140,20 +136,20 @@ Built for agent-style programs. Partitions the trainset by metric into positive 
 | Just starting; no idea what helps | `BootstrapFewShot` | 
 | Demos vary in quality across attempts | `BootstrapFewShotWithRandomSearch` | 
 | Large trainset; inputs need different demos | `KNNFewShot` | 
-| Instructions look wrong; demos look fine | `COPRO`or`GEPA` | 
-| Both look weak; you have budget | `MIPROv2`or`GEPA` | 
-| Failure cases share a pattern you can name | `SIMBA`or`InferRules` | 
+| Instructions look wrong; demos look fine | `COPRO` or`GEPA` | 
+| Both look weak; you have budget | `MIPROv2` or`GEPA` | 
+| Failure cases share a pattern you can name | `SIMBA` or`InferRules` | 
 | Prompt-only has plateaued; the model is tunable | `BootstrapFinetune` | 
 | You want to combine prompt + weight tuning | `BetterTogether` | 
 | You have multiple competent programs to combine | `Ensemble` | 
-| Agent / tool-use task | `AvatarOptimizer`or`GEPA` | 
+| Agent / tool-use task | `AvatarOptimizer` or`GEPA` | 
 
 ## Cross-links
 
-- [Metrics and evaluation](../metrics-and-evaluation/)— every optimizer compiles against a metric defined there; the- `Prediction(score, feedback)`shape GEPA expects is documented there.
-- [GEPA in depth](../gepa-in-depth/)— the deep dive on the optimizer above.
-- [BootstrapFewShot family](../bootstrap-fewshot-family/)— the deep dive on- `BootstrapFewShot`and its random-search variants.
-- Fine-tuning with `BootstrapFinetune`— the deep dive on weight tuning.
+- [Metrics and evaluation](../metrics-and-evaluation/) — every optimizer compiles against a metric defined there; the`Prediction(score, feedback)` shape GEPA expects is documented there.
+- [GEPA in depth](../gepa-in-depth/) — the deep dive on the optimizer above.
+- [BootstrapFewShot family](../bootstrap-fewshot-family/) — the deep dive on`BootstrapFewShot` and its random-search variants.
+- Fine-tuning with `BootstrapFinetune` — the deep dive on weight tuning.
 
 # Citations
 

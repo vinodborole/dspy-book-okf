@@ -3,7 +3,7 @@ type: Web Page
 title: Audio - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/audio
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Tutorial: Using Audio in DSPy Programs
@@ -168,7 +168,7 @@ def generate_dspy_audio(raw_line: str, prompt: str) -> dspy.Audio:
             f.write(response.content)
     with open(wav_path, "rb") as f:
         encoded = base64.b64encode(f.read()).decode("utf-8")
-    return dspy.Audio(data=encoded, format="wav")
+    return dspy.Audio(data=encoded, audio_format="wav")
 ```
 Now let's define the DSPy program for generating TTS instructions. For this program, we can use standard text-based LLMs again since we're just generating instructions.
 
@@ -228,7 +228,38 @@ pred = program(raw_line=testset[1].raw_line, target_style=testset[1].target_styl
 print(audio_similarity_metric(testset[1], pred)) #0.5725605487823486
 dspy.inspect_history(n=1)
 ```
-[2025-05-15T22:01:22.667596] System message: Your input fields are: 1. `raw_line` (str) 2. `target_style` (str) Your output fields are: 1. `reasoning` (str) 2. `openai_instruction` (str) All interactions will be structured in the following way, with the appropriate values filled in. [[ ## raw_line ## ]] {raw_line} [[ ## target_style ## ]] {target_style} [[ ## reasoning ## ]] {reasoning} [[ ## openai_instruction ## ]] {openai_instruction} [[ ## completed ## ]] In adhering to this structure, your objective is: Generate an OpenAI TTS instruction that makes the TTS model speak the given line with the target emotion or style. User message: [[ ## raw_line ## ]] It's eleven o'clock [[ ## target_style ## ]] disgust Respond with the corresponding output fields, starting with the field `[[ ## reasoning ## ]]`, then `[[ ## openai_instruction ## ]]`, and then ending with the marker for `[[ ## completed ## ]]`. Response: [[ ## reasoning ## ]] To generate the OpenAI TTS instruction, we need to specify the target emotion or style, which in this case is 'disgust'. We will use the OpenAI TTS instruction format, which includes the text to be spoken and the desired emotion or style. [[ ## openai_instruction ## ]] "Speak the following line with a tone of disgust: It's eleven o'clock" [[ ## completed ## ]]
+[2025-05-15T22:01:22.667596]
+System message:
+Your input fields are:
+1. `raw_line` (str)
+2. `target_style` (str)
+Your output fields are:
+1. `reasoning` (str)
+2. `openai_instruction` (str)
+All interactions will be structured in the following way, with the appropriate values filled in.
+[[ ## raw_line ## ]]
+{raw_line}
+[[ ## target_style ## ]]
+{target_style}
+[[ ## reasoning ## ]]
+{reasoning}
+[[ ## openai_instruction ## ]]
+{openai_instruction}
+[[ ## completed ## ]]
+In adhering to this structure, your objective is: 
+        Generate an OpenAI TTS instruction that makes the TTS model speak the given line with the target emotion or style.
+User message:
+[[ ## raw_line ## ]]
+It's eleven o'clock
+[[ ## target_style ## ]]
+disgust
+Respond with the corresponding output fields, starting with the field `[[ ## reasoning ## ]]`, then `[[ ## openai_instruction ## ]]`, and then ending with the marker for `[[ ## completed ## ]]`.
+Response:
+[[ ## reasoning ## ]]
+To generate the OpenAI TTS instruction, we need to specify the target emotion or style, which in this case is 'disgust'. We will use the OpenAI TTS instruction format, which includes the text to be spoken and the desired emotion or style.
+[[ ## openai_instruction ## ]]
+"Speak the following line with a tone of disgust: It's eleven o'clock"
+[[ ## completed ## ]]
 
 TTS Instruction:
 
@@ -260,7 +291,43 @@ pred = optimized_program(raw_line=testset[1].raw_line, target_style=testset[1].t
 print(audio_similarity_metric(testset[1], pred)) #0.6691027879714966
 dspy.inspect_history(n=1)
 ```
-[2025-05-15T22:09:40.088592] System message: Your input fields are: 1. `raw_line` (str) 2. `target_style` (str) Your output fields are: 1. `reasoning` (str) 2. `openai_instruction` (str) All interactions will be structured in the following way, with the appropriate values filled in. [[ ## raw_line ## ]] {raw_line} [[ ## target_style ## ]] {target_style} [[ ## reasoning ## ]] {reasoning} [[ ## openai_instruction ## ]] {openai_instruction} [[ ## completed ## ]] In adhering to this structure, your objective is: Generate an OpenAI TTS instruction that makes the TTS model speak the given line with the target emotion or style, as if the speaker is a [insert persona relevant to the task, e.g. "irate customer", "angry boss", etc.]. The instruction should specify the tone, pitch, and other characteristics of the speaker's voice to convey the target emotion. User message: [[ ## raw_line ## ]] It's eleven o'clock [[ ## target_style ## ]] disgust Respond with the corresponding output fields, starting with the field `[[ ## reasoning ## ]]`, then `[[ ## openai_instruction ## ]]`, and then ending with the marker for `[[ ## completed ## ]]`. Response: [[ ## reasoning ## ]] To convey disgust, the speaker's voice should be characterized by a high-pitched tone, a slightly nasal quality, and a sense of revulsion. The speaker's words should be delivered with a sense of distaste and aversion, as if the speaker is trying to convey their strong negative emotions. [[ ## openai_instruction ## ]] Generate a text-to-speech synthesis of the input text "It's eleven o'clock" with the following characteristics: - Tone: Disgusted - Pitch: High-pitched, slightly nasal - Emphasis: Emphasize the words to convey a sense of distaste and aversion - Volume: Moderate to loud, with a sense of rising inflection at the end to convey the speaker's strong negative emotions - Speaker: A person who is visibly and audibly disgusted, such as a character who has just been served a spoiled meal. [[ ## completed ## ]]
+[2025-05-15T22:09:40.088592]
+System message:
+Your input fields are:
+1. `raw_line` (str)
+2. `target_style` (str)
+Your output fields are:
+1. `reasoning` (str)
+2. `openai_instruction` (str)
+All interactions will be structured in the following way, with the appropriate values filled in.
+[[ ## raw_line ## ]]
+{raw_line}
+[[ ## target_style ## ]]
+{target_style}
+[[ ## reasoning ## ]]
+{reasoning}
+[[ ## openai_instruction ## ]]
+{openai_instruction}
+[[ ## completed ## ]]
+In adhering to this structure, your objective is: 
+        Generate an OpenAI TTS instruction that makes the TTS model speak the given line with the target emotion or style, as if the speaker is a [insert persona relevant to the task, e.g. "irate customer", "angry boss", etc.]. The instruction should specify the tone, pitch, and other characteristics of the speaker's voice to convey the target emotion.
+User message:
+[[ ## raw_line ## ]]
+It's eleven o'clock
+[[ ## target_style ## ]]
+disgust
+Respond with the corresponding output fields, starting with the field `[[ ## reasoning ## ]]`, then `[[ ## openai_instruction ## ]]`, and then ending with the marker for `[[ ## completed ## ]]`.
+Response:
+[[ ## reasoning ## ]]
+To convey disgust, the speaker's voice should be characterized by a high-pitched tone, a slightly nasal quality, and a sense of revulsion. The speaker's words should be delivered with a sense of distaste and aversion, as if the speaker is trying to convey their strong negative emotions.
+[[ ## openai_instruction ## ]]
+Generate a text-to-speech synthesis of the input text "It's eleven o'clock" with the following characteristics: 
+- Tone: Disgusted
+- Pitch: High-pitched, slightly nasal
+- Emphasis: Emphasize the words to convey a sense of distaste and aversion
+- Volume: Moderate to loud, with a sense of rising inflection at the end to convey the speaker's strong negative emotions
+- Speaker: A person who is visibly and audibly disgusted, such as a character who has just been served a spoiled meal.
+[[ ## completed ## ]]
 
 MIPROv2 Optimized Program Instruction:
 

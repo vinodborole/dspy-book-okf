@@ -3,7 +3,7 @@ type: Web Page
 title: BootstrapFewShot family - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/bootstrap-fewshot-family
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # BootstrapFewShot family
@@ -68,39 +68,39 @@ Every variant above the baseline depends on the metric to filter traces. If the 
 
 Grouped by family role.
 
-`LabeledFewShot` — the no-LM baseline
+### `LabeledFewShot` — the no-LM baseline
 
 `dspy.LabeledFewShot(k=16)``.compile(student, *, trainset, sample=True)`
 
 No teacher, no metric, no bootstrap loop. `.compile` samples up to `min(k, len(trainset))` examples from `trainset` — random (seeded with `Random(0)`) when `sample=True`, deterministic (first-k) when `sample=False` — and attaches the same set to each predictor’s `demos`. Single pass over the trainset; no LM calls.
 
-`BootstrapFewShot` — the core bootstrapper
+### `BootstrapFewShot` — the core bootstrapper
 
 `dspy.BootstrapFewShot(metric=None, metric_threshold=None, teacher_settings=None, max_bootstrapped_demos=4, max_labeled_demos=16, max_rounds=1, max_errors=None)``.compile(student, *, teacher=None, trainset)`
 
 On `.compile`, the optimizer:
 
-- **Initializes the teacher.**If no teacher passed,- `student.deepcopy()`. If the teacher is uncompiled and- `max_labeled_demos > 0`, applies- `LabeledFewShot(k=max_labeled_demos)`so the teacher has demos to bootstrap from.
-- **Walks the trainset.**For each example, runs up to- `max_rounds`attempts. Each round strips the current example from every predictor’s demos, copies the LM with- `rollout_id=round, temperature=1.0`, and calls the teacher.
-- **Scores via the metric.**Calls- `metric(example, prediction, trace)`. A truthy return (or numeric- `>= metric_threshold`when set) marks the trace as passing. Exceptions in the teacher or metric increment an error counter; exceeding- `max_errors`raises.
-- **Extracts demos from passing traces.**For each predictor invocation in the trace, builds a- `dspy.Example(augmented=True, **inputs, **outputs)`and stores it under that predictor’s name.
-- **Assigns demos.**For each predictor: the first- `max_bootstrapped_demos`slots get augmented demos; the rest, up to- `max_labeled_demos`, get raw labeled examples sampled from the unbootstrapped portion of the trainset.
+1. **Initializes the teacher.** If no teacher passed,`student.deepcopy()` . If the teacher is uncompiled and`max_labeled_demos > 0` , applies`LabeledFewShot(k=max_labeled_demos)` so the teacher has demos to bootstrap from.
+2. **Walks the trainset.** For each example, runs up to`max_rounds` attempts. Each round strips the current example from every predictor’s demos, copies the LM with`rollout_id=round, temperature=1.0` , and calls the teacher.
+3. **Scores via the metric.** Calls`metric(example, prediction, trace)` . A truthy return (or numeric`>= metric_threshold` when set) marks the trace as passing. Exceptions in the teacher or metric increment an error counter; exceeding`max_errors` raises.
+4. **Extracts demos from passing traces.** For each predictor invocation in the trace, builds a`dspy.Example(augmented=True, **inputs, **outputs)` and stores it under that predictor’s name.
+5. **Assigns demos.** For each predictor: the first`max_bootstrapped_demos` slots get augmented demos; the rest, up to`max_labeled_demos` , get raw labeled examples sampled from the unbootstrapped portion of the trainset.
 
 Returns a new compiled module; the student is unmodified.
 
-** metric_threshold** is a numeric floor for float-returning metrics. Without it, the metric’s return is coerced to bool. Pass 
+**`metric_threshold`** is a numeric floor for float-returning metrics. Without it, the metric’s return is coerced to bool. Pass `metric_threshold=0.5` to mean “pass if score >= 0.5.”
 
-`metric_threshold=0.5` to mean “pass if score >= 0.5.”** teacher_settings** is a dict merged onto 
+**`teacher_settings`** is a dict merged onto `dspy.settings` for the duration of teacher calls — useful when the teacher needs a different LM or adapter than the student.
 
-`dspy.settings` for the duration of teacher calls — useful when the teacher needs a different LM or adapter than the student.`BootstrapFewShotWithRandomSearch` (`BootstrapRS`) — candidate search
+### `BootstrapFewShotWithRandomSearch` (`BootstrapRS`) — candidate search
 
 `dspy.BootstrapFewShotWithRandomSearch(metric, teacher_settings=None, max_bootstrapped_demos=4, max_labeled_demos=16, max_rounds=1, num_candidate_programs=16, num_threads=None, max_errors=None, stop_at_score=None, metric_threshold=None)``.compile(student, *, teacher=None, trainset, valset=None, restrict=None, labeled_sample=True)`
 
 Generates `num_candidate_programs` candidates and picks the winner. Three of those seeds are pinned baselines:
 
-- `seed=-3`: zero-shot (no demos).
-- `seed=-2`:- `LabeledFewShot(k=max_labeled_demos)`alone.
-- `seed=-1`:- `BootstrapFewShot`with the unshuffled trainset.
+- `seed=-3` : zero-shot (no demos).
+- `seed=-2` :`LabeledFewShot(k=max_labeled_demos)` alone.
+- `seed=-1` :`BootstrapFewShot` with the unshuffled trainset.
 
 The remaining seeds shuffle the trainset and vary the bootstrap demo count. Each candidate gets evaluated on `valset` (defaults to trainset). Returns the highest-scoring candidate, with `best_program.candidate_programs` carrying the full ranked list of `(seed, program, score, subscores)` tuples for inspection.
 
@@ -108,38 +108,38 @@ The remaining seeds shuffle the trainset and vary the bootstrap demo count. Each
 
 `num_threads` parallelizes candidate evaluation, not the bootstrap step.
 
-`KNNFewShot` — inference-time demo retrieval
+### `KNNFewShot` — inference-time demo retrieval
 
 `dspy.KNNFewShot(k, trainset, vectorizer, **bootstrap_kwargs)``.compile(student, *, teacher=None)`
 
 The constructor embeds the entire trainset via `vectorizer` (a `dspy.Embedder`) and stores a `dspy.KNN(k, trainset, vectorizer)` instance. `.compile` overrides the student’s `forward` so each call:
 
-- Embeds the new input.
-- Retrieves the `k`nearest training examples.
-- Constructs a fresh `BootstrapFewShot(**bootstrap_kwargs)`and compiles a one-call program against those`k`examples.
-- Runs the compiled program on the input.
+1. Embeds the new input.
+2. Retrieves the `k` nearest training examples.
+3. Constructs a fresh `BootstrapFewShot(**bootstrap_kwargs)` and compiles a one-call program against those`k` examples.
+4. Runs the compiled program on the input.
 
 The trainset embedding is fixed at construction; changing the trainset means re-constructing the optimizer. Inference cost is amplified: every forward call runs a mini-compilation.
 
-`InferRules` — rule extraction on top of bootstrap
+### `InferRules` — rule extraction on top of bootstrap
 
 `dspy.InferRules(num_candidates=10, num_rules=10, num_threads=None, teacher_settings=None, **bootstrap_kwargs)``.compile(student, *, teacher=None, trainset, valset=None)`
 
 Extends `BootstrapFewShot`. After running the base bootstrap once, it:
 
-- **Copies the bootstrapped student**- `num_candidates`times.
-- **For each copy**, asks the teacher LM to read the bootstrapped demos and produce- `num_rules`natural-language rules per predictor. The rules come from a- `ChainOfThought`over a- `RulesInductionProgram`signature (- `examples_text -> natural_language_rules`).
-- **Appends the rules**to each predictor’s- `signature.instructions`, after a “Please adhere to the following rules…” preamble.
-- **Evaluates each candidate on**and returns the best.- `valset`
+1. **Copies the bootstrapped student**`num_candidates` times.
+2. **For each copy** , asks the teacher LM to read the bootstrapped demos and produce`num_rules` natural-language rules per predictor. The rules come from a`ChainOfThought` over a`RulesInductionProgram` signature (`examples_text -> natural_language_rules` ).
+3. **Appends the rules** to each predictor’s`signature.instructions` , after a “Please adhere to the following rules…” preamble.
+4. **Evaluates each candidate on `valset`** and returns the best.
 
 The rules are visible and editable — you can read them, decide which to keep, and treat the optimizer’s output as a starting point rather than a finished program.
 
 ## Cross-links
 
-- [Optimizers: choosing one](../choosing-an-optimizer/)— the selection guide; describes when each family member wins against optimizers outside the family.
-- [Metrics and evaluation](../metrics-and-evaluation/)— the metric shape every bootstrap variant uses, and the failure-score behavior that keeps one bad example from breaking a long bootstrap.
-- [Modules: composing your own](../modules/)—- `predictor.demos`,- `_compiled`flags, and- `deepcopy()`behavior, all of which the bootstrap family relies on.
-- [GEPA in depth](../gepa-in-depth/)— the instruction-optimization counterpart; combine via- `dspy.BetterTogether`when both knobs need to turn.
+- [Optimizers: choosing one](../choosing-an-optimizer/) — the selection guide; describes when each family member wins against optimizers outside the family.
+- [Metrics and evaluation](../metrics-and-evaluation/) — the metric shape every bootstrap variant uses, and the failure-score behavior that keeps one bad example from breaking a long bootstrap.
+- [Modules: composing your own](../modules/) —`predictor.demos` ,`_compiled` flags, and`deepcopy()` behavior, all of which the bootstrap family relies on.
+- [GEPA in depth](../gepa-in-depth/) — the instruction-optimization counterpart; combine via`dspy.BetterTogether` when both knobs need to turn.
 
 # Citations
 

@@ -3,7 +3,7 @@ type: Web Page
 title: Tools with ReAct - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/getting-started/react-and-tools
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Give the program tools with `dspy.ReAct`
@@ -16,9 +16,9 @@ Our haiku writer is competent, but it could use more information about the locat
 
 A DSPy tool is a standard Python function, with type-hinted parameters and a docstring. DSPy reads the name, parameters, and docstring of a function to assemble the instructions it sends to an LM.
 
-For example, let’s define a tool that lets an agent search Wikipedia using the [ wikipedia](https://pypi.org/project/wikipedia/) library (run 
+For example, let’s define a tool that lets an agent search Wikipedia using the [`wikipedia`](https://pypi.org/project/wikipedia/) library (run `pip install wikipedia`, if you’re following along):
 
-`pip install wikipedia`, if you’re following along):The `dspy.ReAct` module presents it like so:
+The `dspy.ReAct` module presents it like so:
 
 Note how DSPy presents the function name, docstring, and parameters to the model. Writing tools, like signatures, requires being mindful about naming. `wikipedia_search` and the parameter `query` are helpful names, that clearly describe their function and role.
 
@@ -32,9 +32,9 @@ With these two tools and our existing `HaikuBot` signature, we have all we need 
 
 When we called `haiku_bot` it:
 
-- Searched Wikipedia for “Camp Meeker”, which yielded nine relevant results, including “Camp Meeker, California”.
-- Fetched the page content for “Camp Meeker, California”.
-- Called `finish`, then synthesized its outputs.
+1. Searched Wikipedia for “Camp Meeker”, which yielded nine relevant results, including “Camp Meeker, California”.
+2. Fetched the page content for “Camp Meeker, California”.
+3. Called `finish` , then synthesized its outputs.
 
 The code above yields:
 

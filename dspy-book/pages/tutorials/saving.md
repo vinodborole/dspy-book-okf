@@ -3,15 +3,15 @@ type: Web Page
 title: Saving and Loading - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/saving
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Tutorial: Saving and Loading your DSPy program
 
 This guide demonstrates how to save and load your DSPy program. At a high level, there are two ways to save your DSPy program:
 
-- Save the state of the program only, similar to weights-only saving in PyTorch.
-- Save the whole program, including both the architecture and the state, which is supported by `dspy>=2.6.0`.
+1. Save the state of the program only, similar to weights-only saving in PyTorch.
+2. Save the whole program, including both the architecture and the state, which is supported by `dspy>=2.6.0` .
 
 ## State-only Saving
 
@@ -30,9 +30,9 @@ To save the state of your program to a pickle file:
 
 Security Warning: Pickle Files Can Execute Arbitrary Code
 
-Loading `.pkl` files can execute arbitrary code and may be dangerous. Only load pickle files from trusted sources in secure environments. **Prefer using  .json files whenever possible**. If you must use pickle files, ensure you trust the source and use the 
+Loading `.pkl` files can execute arbitrary code and may be dangerous. Only load pickle files from trusted sources in secure environments. **Prefer using `.json` files whenever possible**. If you must use pickle files, ensure you trust the source and use the `allow_pickle=True` parameter when loading.
 
-`allow_pickle=True` parameter when loading.To load your saved state, you need to **recreate the same program**, then load the state using the `load` method.
+To load your saved state, you need to **recreate the same program**, then load the state using the `load` method.
 
 Or load the state from a pickle file:
 

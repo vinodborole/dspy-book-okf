@@ -3,7 +3,7 @@ type: Web Page
 title: Financial Analysis with Yahoo Finance - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/yahoo_finance_react
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Financial Analysis with DSPy ReAct and Yahoo Finance News
@@ -28,9 +28,9 @@ A financial agent that fetches news, analyzes sentiment, and provides investment
 
 When you run the agent with a query like “What’s the latest news about Apple?”, it will:
 
-- Use the Yahoo Finance News tool to fetch recent Apple news
-- Get current stock price data
-- Analyze the information and provide insights
+1. Use the Yahoo Finance News tool to fetch recent Apple news
+2. Get current stock price data
+3. Analyze the information and provide insights
 
 **Sample Response:**
 
@@ -40,10 +40,10 @@ Many Langchain tools use async operations for better performance. For details on
 
 ## Key Benefits
 
-- **Tool Integration**: Seamlessly combine LangChain tools with DSPy ReAct
-- **Real-time Data**: Access current market data and news
-- **Extensible**: Easy to add more financial analysis tools
-- **Intelligent Reasoning**: ReAct framework provides step-by-step analysis
+- **Tool Integration** : Seamlessly combine LangChain tools with DSPy ReAct
+- **Real-time Data** : Access current market data and news
+- **Extensible** : Easy to add more financial analysis tools
+- **Intelligent Reasoning** : ReAct framework provides step-by-step analysis
 
 This tutorial shows how DSPy’s ReAct framework works with LangChain’s financial tools to create intelligent market analysis agents.
 

@@ -3,7 +3,7 @@ type: Web Page
 title: Use MCP in DSPy - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/mcp
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Tutorial: Use MCP tools in DSPy
@@ -66,10 +66,10 @@ create a file named `dspy_mcp_agent.py`, and follow the guide to add code to it.
 ### Gather Tools from MCP Servers
 
 We first need to gather all available tools from the MCP server and make them
-usable by DSPy. DSPy provides an API [ dspy.Tool](https://dspy.ai/api/primitives/Tool/)
-as the standard tool interface. Let’s convert all the MCP tools to 
+usable by DSPy. DSPy provides an API [`dspy.Tool`](https://dspy.ai/api/primitives/Tool/)
+as the standard tool interface. Let’s convert all the MCP tools to `dspy.Tool`.
 
-`dspy.Tool`.We need to create an MCP client instance to communicate with the MCP server, fetch all available
+We need to create an MCP client instance to communicate with the MCP server, fetch all available
 tools, and convert them to `dspy.Tool` using the static method `from_mcp_tool`:
 
 With the code above, we have successfully collected all available MCP tools and converted them to DSPy tools.

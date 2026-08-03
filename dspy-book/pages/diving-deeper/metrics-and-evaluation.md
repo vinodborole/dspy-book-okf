@@ -3,7 +3,7 @@ type: Web Page
 title: Metrics and evaluation - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/metrics-and-evaluation
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Metrics and evaluation
@@ -67,57 +67,58 @@ How DSPy calls your metric and what it expects back.
 **The call signature** — `metric(gold, pred, trace=None, pred_name=None, pred_trace=None)`
 `gold` is the labeled `dspy.Example`; `pred` is the `dspy.Prediction` the program produced. `trace` is a list of `(predictor, inputs, outputs)` triples covering the whole execution — filled in by optimizers when they want the metric to see how the program got there. `pred_name` and `pred_trace` narrow the same view to one predictor; GEPA uses these when scoring a single step of a multi-step program.
 
-** dspy.Prediction(score, feedback)** — the score-with-feedback return shape
-A 
+**`dspy.Prediction(score, feedback)`** — the score-with-feedback return shape
+A `Prediction` with at least a `score` field, optionally a `feedback` field. `Evaluate` reads only `score`; GEPA reads both. Returning `Prediction(score=...)` from a plain metric works fine — `feedback` is optional, and the wrapper costs almost nothing when you only want a score.
 
-`Prediction` with at least a `score` field, optionally a `feedback` field. `Evaluate` reads only `score`; GEPA reads both. Returning `Prediction(score=...)` from a plain metric works fine — `feedback` is optional, and the wrapper costs almost nothing when you only want a score.### Built-in metrics for strings and tokens
+### Built-in metrics for strings and tokens
 
 The standard library of rule-based metrics, in `dspy/evaluate/metrics.py`.
 
-** dspy.evaluate.normalize_text(s: str) → str**
-NFD-unicode, lowercase, strip the English articles 
+**`dspy.evaluate.normalize_text(s: str)` → `str`**
+NFD-unicode, lowercase, strip the English articles `a` / `an` / `the`, strip punctuation, collapse whitespace. The single canonical normalization shared by every string-comparison metric below.
 
-`a` / `an` / `the`, strip punctuation, collapse whitespace. The single canonical normalization shared by every string-comparison metric below.** dspy.evaluate.EM(prediction, answers_list) → bool**
-Exact match after 
+**`dspy.evaluate.EM(prediction, answers_list)` → `bool`**
+Exact match after `normalize_text` is applied to both sides. Returns `True` if any reference in `answers_list` matches. Raises if `answers_list` isn’t a list. The smallest metric primitive; useful as a building block in custom wrappers.
 
-`normalize_text` is applied to both sides. Returns `True` if any reference in `answers_list` matches. Raises if `answers_list` isn’t a list. The smallest metric primitive; useful as a building block in custom wrappers.** dspy.evaluate.answer_exact_match(example, pred, trace=None, frac=1.0) → bool**
-The metric-shaped wrapper. Reads 
+**`dspy.evaluate.answer_exact_match(example, pred, trace=None, frac=1.0)` → `bool`**
+The metric-shaped wrapper. Reads `pred.answer` and `example.answer`, normalizes both, and dispatches to `EM` when `frac >= 1.0` or to F1-thresholded matching when `frac < 1.0`. Handles `example.answer` being a single string or a list of acceptable references.
 
-`pred.answer` and `example.answer`, normalizes both, and dispatches to `EM` when `frac >= 1.0` or to F1-thresholded matching when `frac < 1.0`. Handles `example.answer` being a single string or a list of acceptable references.** dspy.evaluate.answer_passage_match(example, pred, trace=None) → bool**
-Retrieval evaluation. Returns 
+**`dspy.evaluate.answer_passage_match(example, pred, trace=None)` → `bool`**
+Retrieval evaluation. Returns `True` if any passage in `pred.context` contains any reference from `example.answer`. Uses a DPR-style normalizer for passages (which preserves more text) while still using `normalize_text` for answers.
 
-`True` if any passage in `pred.context` contains any reference from `example.answer`. Uses a DPR-style normalizer for passages (which preserves more text) while still using `normalize_text` for answers.** F1 / HotPotF1** — token-level scorers (internal)
+**`F1` / `HotPotF1`** — token-level scorers (internal)
+`F1` does token-level F1 over normalized strings, picking the max across references. `HotPotF1` adds one HotPotQA-specific rule: if either normalized side is `yes` / `no` / `noanswer` and the two disagree, return `0`. Both feed into `answer_exact_match` and are rarely called directly.
 
-`F1` does token-level F1 over normalized strings, picking the max across references. `HotPotF1` adds one HotPotQA-specific rule: if either normalized side is `yes` / `no` / `noanswer` and the two disagree, return `0`. Both feed into `answer_exact_match` and are rarely called directly.### LLM-as-judge metrics
+### LLM-as-judge metrics
 
 For tasks where rule-based scoring can’t capture the right notion of correctness. Both live in `dspy/evaluate/auto_evaluation.py` and are `dspy.Module` subclasses.
 
-** dspy.evaluate.SemanticF1(threshold=0.66, decompositional=False)**
-A Module. 
+**`dspy.evaluate.SemanticF1(threshold=0.66, decompositional=False)`**
+A Module. `forward(example, pred, trace=None)` runs a `ChainOfThought` over `SemanticRecallPrecision` (or the decompositional variant) and asks the LM for `precision` and `recall` against `example.response` and `pred.response`. Computes `f1_score(precision, recall)`. Returns `Prediction(score=f1)` at eval time and `Prediction(score=(f1 >= threshold))` at optimization time — the same instance serves both modes.
 
-`forward(example, pred, trace=None)` runs a `ChainOfThought` over `SemanticRecallPrecision` (or the decompositional variant) and asks the LM for `precision` and `recall` against `example.response` and `pred.response`. Computes `f1_score(precision, recall)`. Returns `Prediction(score=f1)` at eval time and `Prediction(score=(f1 >= threshold))` at optimization time — the same instance serves both modes.** dspy.evaluate.CompleteAndGrounded(threshold=0.66)**
-Runs two 
+**`dspy.evaluate.CompleteAndGrounded(threshold=0.66)`**
+Runs two `ChainOfThought` calls: one for completeness (does `pred.response` cover `example.response`?), one for groundedness (is `pred.response` supported by `pred.context`?). Returns `Prediction(score=f1_score(groundedness, completeness))` with the same trace-based binarization as `SemanticF1`. Designed for retrieval-augmented programs.
 
-`ChainOfThought` calls: one for completeness (does `pred.response` cover `example.response`?), one for groundedness (is `pred.response` supported by `pred.context`?). Returns `Prediction(score=f1_score(groundedness, completeness))` with the same trace-based binarization as `SemanticF1`. Designed for retrieval-augmented programs.**The general LLM-judge pattern.** Write a `dspy.Signature` whose outputs include `score: float` (and optionally `feedback: str`). Wrap it in a `dspy.Module` whose `forward(example, pred, trace=None)` calls the judge predictor and returns `Prediction(score, feedback)`. Use the `trace is None` toggle when you want different behavior inside optimization. That’s the whole recipe — both built-in judges are 20-line modules over this shape.
+**The general LLM-judge pattern.** Write a `dspy.Signature` whose outputs include `score: float` (and optionally `feedback: str`). Wrap it in a `dspy.Module` whose `forward(example, pred, trace=None)` calls the judge predictor and returns `Prediction(score, feedback)`. Use the `trace is None` toggle when you want different behavior inside optimization. That’s the whole recipe — both built-in judges are 20-line modules over this shape.
 
 ### The Evaluate harness
 
 The runner that takes a program + metric + dataset and produces a score.
 
-** dspy.Evaluate(*, devset, metric=None, num_threads=None, display_progress=False, display_table=False, max_errors=None, provide_traceback=None, failure_score=0.0, save_as_csv=None, save_as_json=None)**
-Keyword-only constructor. 
+**`dspy.Evaluate(*, devset, metric=None, num_threads=None, display_progress=False, display_table=False, max_errors=None, provide_traceback=None, failure_score=0.0, save_as_csv=None, save_as_json=None)`**
+Keyword-only constructor. `metric` can be passed here or deferred to the call. `display_table=N` truncates the displayed DataFrame to `N` rows; `display_table=True` shows the whole thing; `False` shows nothing. `save_as_csv` / `save_as_json` write per-example results to disk for later inspection. Passing the removed `return_outputs` kwarg raises a `ValueError`.
 
-`metric` can be passed here or deferred to the call. `display_table=N` truncates the displayed DataFrame to `N` rows; `display_table=True` shows the whole thing; `False` shows nothing. `save_as_csv` / `save_as_json` write per-example results to disk for later inspection. Passing the removed `return_outputs` kwarg raises a `ValueError`.** Evaluate.__call__(program, metric=None, devset=None, ...)** → 
+**`Evaluate.__call__(program, metric=None, devset=None, ...)`** → `EvaluationResult`
+Submits `(program, example)` pairs to a `ParallelExecutor`. Each worker re-applies the parent’s `thread_local_overrides` and runs `program(**example.inputs())`, then calls the metric with `(example, prediction)`. The aggregate becomes `.score`: percent of `True` for boolean returns, mean for float returns, mean of `score` for `Prediction` returns. Per-example results land in `.results` as `(example, prediction, score)` triples.
 
-`EvaluationResult`
-Submits `(program, example)` pairs to a `ParallelExecutor`. Each worker re-applies the parent’s `thread_local_overrides` and runs `program(**example.inputs())`, then calls the metric with `(example, prediction)`. The aggregate becomes `.score`: percent of `True` for boolean returns, mean for float returns, mean of `score` for `Prediction` returns. Per-example results land in `.results` as `(example, prediction, score)` triples.** dspy.evaluate.EvaluationResult**
-A 
+**`dspy.evaluate.EvaluationResult`**
+A `dspy.Prediction` subclass with two fields: `.score` (aggregate) and `.results` (list of triples). `repr` shows the score and the result count rather than dumping the full list, so logging an `EvaluationResult` doesn’t print a megabyte of output.
 
-`dspy.Prediction` subclass with two fields: `.score` (aggregate) and `.results` (list of triples). `repr` shows the score and the result count rather than dumping the full list, so logging an `EvaluationResult` doesn’t print a megabyte of output.## Cross-links
+## Cross-links
 
-- [Settings and](../settings-and-context/)— how- `context()`- `Evaluate`‘s workers inherit a- `dspy.context(...)`override around the call.
-- [Built-in module variants](../built-in-module-variants/)—- `dspy.Parallel`and- `Module.batch`use the same- `ParallelExecutor`under the hood.
-- [Optimizers: choosing one](../choosing-an-optimizer/)— every optimizer compiles against a metric defined here; the- `Prediction(score, feedback)`shape GEPA expects is documented above.
+- [Settings and `context()`](../settings-and-context/) — how`Evaluate` ‘s workers inherit a`dspy.context(...)` override around the call.
+- [Built-in module variants](../built-in-module-variants/) —`dspy.Parallel` and`Module.batch` use the same`ParallelExecutor` under the hood.
+- [Optimizers: choosing one](../choosing-an-optimizer/) — every optimizer compiles against a metric defined here; the`Prediction(score, feedback)` shape GEPA expects is documented above.
 
 # Citations
 

@@ -3,7 +3,7 @@ type: Web Page
 title: Memory-Enabled ReAct Agents - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/mem0_react_agent
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Building Memory-Enabled Agents with DSPy ReAct and Mem0
@@ -14,11 +14,11 @@ This tutorial demonstrates how to build intelligent conversational agents that c
 
 By the end of this tutorial, you’ll have a memory-enabled agent that can:
 
-- **Remember user preferences**and past conversations
-- **Store and retrieve factual information**about users and topics
-- **Use memory to inform decisions**and provide personalized responses
-- **Handle complex multi-turn conversations**with context awareness
-- **Manage different types of memories**(facts, preferences, experiences)
+- **Remember user preferences** and past conversations
+- **Store and retrieve factual information** about users and topics
+- **Use memory to inform decisions** and provide personalized responses
+- **Handle complex multi-turn conversations** with context awareness
+- **Manage different types of memories** (facts, preferences, experiences)
 
 ## Prerequisites
 
@@ -48,13 +48,13 @@ Let’s create a simple interface to interact with our memory-enabled agent:
 
 ## Next Steps
 
-- **Implement memory persistence**with databases (PostgreSQL, MongoDB)
-- **Add memory categorization**and tagging for better organization
-- **Create memory expiration policies**for data management
-- **Build multi-user memory isolation**for production applications
-- **Add memory analytics**and insights
-- **Integrate with vector databases**for enhanced semantic search
-- **Implement memory compression**for long-term storage efficiency
+- **Implement memory persistence** with databases (PostgreSQL, MongoDB)
+- **Add memory categorization** and tagging for better organization
+- **Create memory expiration policies** for data management
+- **Build multi-user memory isolation** for production applications
+- **Add memory analytics** and insights
+- **Integrate with vector databases** for enhanced semantic search
+- **Implement memory compression** for long-term storage efficiency
 
 This tutorial demonstrates how DSPy’s ReAct framework can be enhanced with Mem0’s memory capabilities to create intelligent, context-aware agents that can learn and remember information across interactions, making them more useful for real-world applications.
 

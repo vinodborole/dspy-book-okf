@@ -3,7 +3,7 @@ type: Web Page
 title: Setting up DSPy - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/getting-started/installation
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Setting up DSPy
@@ -18,7 +18,7 @@ Behind the scenes, DSPy uses the [LiteLLM](https://docs.litellm.ai/docs/#litellm
 
 For this tutorial, we could replace the `"openai/gpt-5-nano"` model string and our OpenAI API key with options from Anthropic, Google, OpenRouter, and more. All the examples below will work with any LiteLLM model string, without code changes.
 
-Once we have an `LM`, calling `dspy.configure(lm=lm)` sets our `LM` as the default provider for every DSPy program in the process. This sets our `LM` globally, but we can selectively override this with [ dspy.context](../../diving-deeper/settings-and-context/) when more granular control is needed.
+Once we have an `LM`, calling `dspy.configure(lm=lm)` sets our `LM` as the default provider for every DSPy program in the process. This sets our `LM` globally, but we can selectively override this with [`dspy.context`](../../diving-deeper/settings-and-context/) when more granular control is needed.
 
 Let’s ensure everything works by manually calling the model:
 

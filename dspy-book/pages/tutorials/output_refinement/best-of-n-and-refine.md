@@ -3,7 +3,7 @@ type: Web Page
 title: Output Refinement - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/output_refinement/best-of-n-and-refine
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Output Refinement: BestOfN and Refine
@@ -36,8 +36,8 @@ Like `BestOfN`, `Refine` will try up to `N` times by default, even if errors occ
 
 Both modules serve similar purposes but differ in their approach:
 
-- `BestOfN`simply tries different rollout IDs and selects the best resulting prediction as defined by the- `reward_fn`.
-- `Refine`adds an feedback loop, using the lm to generate a detailed feedback about the module’s own performance using the previous prediction and the code in the- `reward_fn`. This feedback is then used as hints for subsequent runs.
+- `BestOfN` simply tries different rollout IDs and selects the best resulting prediction as defined by the`reward_fn` .
+- `Refine` adds a feedback loop, using the lm to generate a detailed feedback about the module’s own performance using the previous prediction and the code in the`reward_fn` . This feedback is then used as hints for subsequent runs.
 
 ## Practical Examples
 

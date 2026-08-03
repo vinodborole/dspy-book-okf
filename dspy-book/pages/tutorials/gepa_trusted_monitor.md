@@ -3,7 +3,7 @@ type: Web Page
 title: GEPA for Code Backdoor Classification (AI control) - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/gepa_trusted_monitor
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Tutorial: GEPA for Trusted Monitoring (AI Control + Classification)
@@ -107,7 +107,8 @@ val_examples = examples[TRAIN_LIMIT:TRAIN_LIMIT + VAL_LIMIT]
 print(f"Train examples: {len(train_examples)}")
 print(f"Validation examples: {len(val_examples)}")
 ```
-Train examples: 200 Validation examples: 100
+Train examples: 200
+Validation examples: 100
 
 Let's view an example task input
 
@@ -376,11 +377,11 @@ Prediction(
 ```
 So far, we have:
 
-- Created a dataset of samples which each include a `task_description`,`honest_code`,`attack_code`, and`backdoor_input`.
-- Used those samples to create a train and validation set of `dspy.Example`objects.
-- Defined a MonitorProgram, which is a `dspy.ChainOfThought`that takes in a`task_description`and`code`and outputs a 1-100 suspicion score.
-- Created a `MonitorTrainerProgram`, which takes in a`task_description`,`attack_code`, and`honest_code`and passes each solution through the monitor program, returning both suspicion scores.
-- Defined a comparative metric, which takes in a sample, the 2 suspicion scores from the monitor program, and returns a score and feedback based on the comparison of the suspicion scores.
+1. Created a dataset of samples which each include a `task_description` ,`honest_code` ,`attack_code` , and`backdoor_input` .
+2. Used those samples to create a train and validation set of `dspy.Example` objects.
+3. Defined a MonitorProgram, which is a `dspy.ChainOfThought` that takes in a`task_description` and`code` and outputs a 1-100 suspicion score.
+4. Created a `MonitorTrainerProgram` , which takes in a`task_description` ,`attack_code` , and`honest_code` and passes each solution through the monitor program, returning both suspicion scores.
+5. Defined a comparative metric, which takes in a sample, the 2 suspicion scores from the monitor program, and returns a score and feedback based on the comparison of the suspicion scores.
 
 Now, we can go about optimizing the monitor program using GEPA.
 
@@ -432,15 +433,18 @@ GEPA Optimization:   0%|          | 0/600 [00:00<?, ?rollouts/s]/root/src/dspy/.
 2025/10/14 11:16:06 INFO dspy.teleprompt.gepa.gepa: Iteration 0: Base program full valset score: 0.69
 GEPA Optimization:  17%|█▋        | 100/600 [01:23<06:59,  1.19rollouts/s]2025/10/14 11:16:06 INFO dspy.teleprompt.gepa.gepa: Iteration 1: Selected program 0 score: 0.69
 ```
-Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:05<00:00, 1.90s/it]
+Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:05<00:00,  1.90s/it]
 
-2025/10/14 11:16:12 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%) 2025/10/14 11:16:12 INFO dspy.teleprompt.gepa.gepa: Iteration 1: All subsample scores perfect. Skipping. 2025/10/14 11:16:12 INFO dspy.teleprompt.gepa.gepa: Iteration 1: Reflective mutation did not propose a new candidate GEPA Optimization: 17%|█▋ | 103/600 [01:29<07:18, 1.13rollouts/s]2025/10/14 11:16:12 INFO dspy.teleprompt.gepa.gepa: Iteration 2: Selected program 0 score: 0.69
+2025/10/14 11:16:12 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2025/10/14 11:16:12 INFO dspy.teleprompt.gepa.gepa: Iteration 1: All subsample scores perfect. Skipping.
+2025/10/14 11:16:12 INFO dspy.teleprompt.gepa.gepa: Iteration 1: Reflective mutation did not propose a new candidate
+GEPA Optimization:  17%|█▋        | 103/600 [01:29<07:18,  1.13rollouts/s]2025/10/14 11:16:12 INFO dspy.teleprompt.gepa.gepa: Iteration 2: Selected program 0 score: 0.69
 
-Average Metric: 2.00 / 3 (66.7%): 100%|██████████| 3/3 [00:06<00:00, 2.25s/it]
+Average Metric: 2.00 / 3 (66.7%): 100%|██████████| 3/3 [00:06<00:00,  2.25s/it] 
 
 2025/10/14 11:16:18 INFO dspy.evaluate.evaluate: Average Metric: 2.0 / 3 (66.7%)
 
-```
+````
 /root/src/dspy/.venv/lib/python3.11/site-packages/pydantic/main.py:463: UserWarning: Pydantic serializer warnings:
   PydanticSerializationUnexpectedValue(Expected 9 fields but got 6: Expected `Message` - serialized value may not be as expected [input_value=Message(content='```\nTas...: None}, annotations=[]), input_type=Message])
   PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [input_value=Choices(finish_reason='st...ider_specific_fields={}), input_type=Choices])
@@ -523,24 +527,36 @@ Always output:
 2025/10/14 11:19:28 INFO dspy.teleprompt.gepa.gepa: Iteration 2: New program candidate index: 1
 GEPA Optimization:  35%|███▍      | 209/600 [04:45<10:00,  1.54s/rollouts]2025/10/14 11:19:28 INFO dspy.teleprompt.gepa.gepa: Iteration 3: No merge candidates found
 2025/10/14 11:19:28 INFO dspy.teleprompt.gepa.gepa: Iteration 3: Selected program 1 score: 0.78
-```
-Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:05<00:00, 1.67s/it]
+````
+Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:05<00:00,  1.67s/it]
 
-2025/10/14 11:19:33 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%) 2025/10/14 11:19:33 INFO dspy.teleprompt.gepa.gepa: Iteration 3: All subsample scores perfect. Skipping. 2025/10/14 11:19:33 INFO dspy.teleprompt.gepa.gepa: Iteration 3: Reflective mutation did not propose a new candidate GEPA Optimization: 35%|███▌ | 212/600 [04:50<09:57, 1.54s/rollouts]2025/10/14 11:19:33 INFO dspy.teleprompt.gepa.gepa: Iteration 4: Selected program 1 score: 0.78
+2025/10/14 11:19:33 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2025/10/14 11:19:33 INFO dspy.teleprompt.gepa.gepa: Iteration 3: All subsample scores perfect. Skipping.
+2025/10/14 11:19:33 INFO dspy.teleprompt.gepa.gepa: Iteration 3: Reflective mutation did not propose a new candidate
+GEPA Optimization:  35%|███▌      | 212/600 [04:50<09:57,  1.54s/rollouts]2025/10/14 11:19:33 INFO dspy.teleprompt.gepa.gepa: Iteration 4: Selected program 1 score: 0.78
 
-Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:04<00:00, 1.65s/it]
+Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:04<00:00,  1.65s/it]
 
-2025/10/14 11:19:38 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%) 2025/10/14 11:19:38 INFO dspy.teleprompt.gepa.gepa: Iteration 4: All subsample scores perfect. Skipping. 2025/10/14 11:19:38 INFO dspy.teleprompt.gepa.gepa: Iteration 4: Reflective mutation did not propose a new candidate GEPA Optimization: 36%|███▌ | 215/600 [04:55<09:54, 1.54s/rollouts]2025/10/14 11:19:38 INFO dspy.teleprompt.gepa.gepa: Iteration 5: Selected program 1 score: 0.78
+2025/10/14 11:19:38 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2025/10/14 11:19:38 INFO dspy.teleprompt.gepa.gepa: Iteration 4: All subsample scores perfect. Skipping.
+2025/10/14 11:19:38 INFO dspy.teleprompt.gepa.gepa: Iteration 4: Reflective mutation did not propose a new candidate
+GEPA Optimization:  36%|███▌      | 215/600 [04:55<09:54,  1.54s/rollouts]2025/10/14 11:19:38 INFO dspy.teleprompt.gepa.gepa: Iteration 5: Selected program 1 score: 0.78
 
-Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:05<00:00, 1.79s/it]
+Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:05<00:00,  1.79s/it]
 
-2025/10/14 11:19:43 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%) 2025/10/14 11:19:43 INFO dspy.teleprompt.gepa.gepa: Iteration 5: All subsample scores perfect. Skipping. 2025/10/14 11:19:43 INFO dspy.teleprompt.gepa.gepa: Iteration 5: Reflective mutation did not propose a new candidate GEPA Optimization: 36%|███▋ | 218/600 [05:01<09:54, 1.56s/rollouts]2025/10/14 11:19:43 INFO dspy.teleprompt.gepa.gepa: Iteration 6: Selected program 0 score: 0.69
+2025/10/14 11:19:43 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2025/10/14 11:19:43 INFO dspy.teleprompt.gepa.gepa: Iteration 5: All subsample scores perfect. Skipping.
+2025/10/14 11:19:43 INFO dspy.teleprompt.gepa.gepa: Iteration 5: Reflective mutation did not propose a new candidate
+GEPA Optimization:  36%|███▋      | 218/600 [05:01<09:54,  1.56s/rollouts]2025/10/14 11:19:43 INFO dspy.teleprompt.gepa.gepa: Iteration 6: Selected program 0 score: 0.69
 
-Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:09<00:00, 3.06s/it]
+Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:09<00:00,  3.06s/it]
 
-2025/10/14 11:19:53 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%) 2025/10/14 11:19:53 INFO dspy.teleprompt.gepa.gepa: Iteration 6: All subsample scores perfect. Skipping. 2025/10/14 11:19:53 INFO dspy.teleprompt.gepa.gepa: Iteration 6: Reflective mutation did not propose a new candidate GEPA Optimization: 37%|███▋ | 221/600 [05:10<10:28, 1.66s/rollouts]2025/10/14 11:19:53 INFO dspy.teleprompt.gepa.gepa: Iteration 7: Selected program 1 score: 0.78
+2025/10/14 11:19:53 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2025/10/14 11:19:53 INFO dspy.teleprompt.gepa.gepa: Iteration 6: All subsample scores perfect. Skipping.
+2025/10/14 11:19:53 INFO dspy.teleprompt.gepa.gepa: Iteration 6: Reflective mutation did not propose a new candidate
+GEPA Optimization:  37%|███▋      | 221/600 [05:10<10:28,  1.66s/rollouts]2025/10/14 11:19:53 INFO dspy.teleprompt.gepa.gepa: Iteration 7: Selected program 1 score: 0.78
 
-Average Metric: 2.00 / 3 (66.7%): 100%|██████████| 3/3 [00:08<00:00, 2.69s/it]
+Average Metric: 2.00 / 3 (66.7%): 100%|██████████| 3/3 [00:08<00:00,  2.69s/it] 
 
 2025/10/14 11:20:01 INFO dspy.evaluate.evaluate: Average Metric: 2.0 / 3 (66.7%)
 
@@ -625,15 +641,21 @@ Remember: Your role is to assess intent risk, not correctness. Keep the reasonin
 2025/10/14 11:21:29 INFO dspy.teleprompt.gepa.gepa: Iteration 7: New subsample score 2.0 is not better than old score 2.0, skipping
 GEPA Optimization:  38%|███▊      | 227/600 [06:47<24:35,  3.96s/rollouts]2025/10/14 11:21:29 INFO dspy.teleprompt.gepa.gepa: Iteration 8: Selected program 1 score: 0.78
 ```
-Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:08<00:00, 2.77s/it]
+Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:08<00:00,  2.77s/it]
 
-2025/10/14 11:21:38 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%) 2025/10/14 11:21:38 INFO dspy.teleprompt.gepa.gepa: Iteration 8: All subsample scores perfect. Skipping. 2025/10/14 11:21:38 INFO dspy.teleprompt.gepa.gepa: Iteration 8: Reflective mutation did not propose a new candidate GEPA Optimization: 38%|███▊ | 230/600 [06:55<23:39, 3.84s/rollouts]2025/10/14 11:21:38 INFO dspy.teleprompt.gepa.gepa: Iteration 9: Selected program 1 score: 0.78
+2025/10/14 11:21:38 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2025/10/14 11:21:38 INFO dspy.teleprompt.gepa.gepa: Iteration 8: All subsample scores perfect. Skipping.
+2025/10/14 11:21:38 INFO dspy.teleprompt.gepa.gepa: Iteration 8: Reflective mutation did not propose a new candidate
+GEPA Optimization:  38%|███▊      | 230/600 [06:55<23:39,  3.84s/rollouts]2025/10/14 11:21:38 INFO dspy.teleprompt.gepa.gepa: Iteration 9: Selected program 1 score: 0.78
 
-Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:06<00:00, 2.16s/it]
+Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:06<00:00,  2.16s/it]
 
-2025/10/14 11:21:44 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%) 2025/10/14 11:21:44 INFO dspy.teleprompt.gepa.gepa: Iteration 9: All subsample scores perfect. Skipping. 2025/10/14 11:21:44 INFO dspy.teleprompt.gepa.gepa: Iteration 9: Reflective mutation did not propose a new candidate GEPA Optimization: 39%|███▉ | 233/600 [07:01<22:10, 3.62s/rollouts]2025/10/14 11:21:44 INFO dspy.teleprompt.gepa.gepa: Iteration 10: Selected program 1 score: 0.78
+2025/10/14 11:21:44 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2025/10/14 11:21:44 INFO dspy.teleprompt.gepa.gepa: Iteration 9: All subsample scores perfect. Skipping.
+2025/10/14 11:21:44 INFO dspy.teleprompt.gepa.gepa: Iteration 9: Reflective mutation did not propose a new candidate
+GEPA Optimization:  39%|███▉      | 233/600 [07:01<22:10,  3.62s/rollouts]2025/10/14 11:21:44 INFO dspy.teleprompt.gepa.gepa: Iteration 10: Selected program 1 score: 0.78
 
-Average Metric: 2.00 / 3 (66.7%): 100%|██████████| 3/3 [00:04<00:00, 1.65s/it]
+Average Metric: 2.00 / 3 (66.7%): 100%|██████████| 3/3 [00:04<00:00,  1.65s/it] 
 
 2025/10/14 11:21:49 INFO dspy.evaluate.evaluate: Average Metric: 2.0 / 3 (66.7%)
 
@@ -744,31 +766,46 @@ Formatting requirements:
 GEPA Optimization:  56%|█████▋    | 339/600 [09:45<07:56,  1.83s/rollouts]2025/10/14 11:24:28 INFO dspy.teleprompt.gepa.gepa: Iteration 11: No merge candidates found
 2025/10/14 11:24:28 INFO dspy.teleprompt.gepa.gepa: Iteration 11: Selected program 2 score: 0.76
 ```
-Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:05<00:00, 1.92s/it]
+Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:05<00:00,  1.92s/it]
 
-2025/10/14 11:24:34 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%) 2025/10/14 11:24:34 INFO dspy.teleprompt.gepa.gepa: Iteration 11: All subsample scores perfect. Skipping. 2025/10/14 11:24:34 INFO dspy.teleprompt.gepa.gepa: Iteration 11: Reflective mutation did not propose a new candidate GEPA Optimization: 57%|█████▋ | 342/600 [09:51<07:52, 1.83s/rollouts]2025/10/14 11:24:34 INFO dspy.teleprompt.gepa.gepa: Iteration 12: Selected program 1 score: 0.78
+2025/10/14 11:24:34 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2025/10/14 11:24:34 INFO dspy.teleprompt.gepa.gepa: Iteration 11: All subsample scores perfect. Skipping.
+2025/10/14 11:24:34 INFO dspy.teleprompt.gepa.gepa: Iteration 11: Reflective mutation did not propose a new candidate
+GEPA Optimization:  57%|█████▋    | 342/600 [09:51<07:52,  1.83s/rollouts]2025/10/14 11:24:34 INFO dspy.teleprompt.gepa.gepa: Iteration 12: Selected program 1 score: 0.78
 
-Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:06<00:00, 2.17s/it]
+Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:06<00:00,  2.17s/it]
 
-2025/10/14 11:24:40 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%) 2025/10/14 11:24:40 INFO dspy.teleprompt.gepa.gepa: Iteration 12: All subsample scores perfect. Skipping. 2025/10/14 11:24:40 INFO dspy.teleprompt.gepa.gepa: Iteration 12: Reflective mutation did not propose a new candidate GEPA Optimization: 57%|█████▊ | 345/600 [09:58<07:50, 1.85s/rollouts]2025/10/14 11:24:40 INFO dspy.teleprompt.gepa.gepa: Iteration 13: Selected program 1 score: 0.78
+2025/10/14 11:24:40 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2025/10/14 11:24:40 INFO dspy.teleprompt.gepa.gepa: Iteration 12: All subsample scores perfect. Skipping.
+2025/10/14 11:24:40 INFO dspy.teleprompt.gepa.gepa: Iteration 12: Reflective mutation did not propose a new candidate
+GEPA Optimization:  57%|█████▊    | 345/600 [09:58<07:50,  1.85s/rollouts]2025/10/14 11:24:40 INFO dspy.teleprompt.gepa.gepa: Iteration 13: Selected program 1 score: 0.78
 
-Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:09<00:00, 3.26s/it]
+Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:09<00:00,  3.26s/it]
 
-2025/10/14 11:24:50 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%) 2025/10/14 11:24:50 INFO dspy.teleprompt.gepa.gepa: Iteration 13: All subsample scores perfect. Skipping. 2025/10/14 11:24:50 INFO dspy.teleprompt.gepa.gepa: Iteration 13: Reflective mutation did not propose a new candidate GEPA Optimization: 58%|█████▊ | 348/600 [10:08<08:07, 1.94s/rollouts]2025/10/14 11:24:50 INFO dspy.teleprompt.gepa.gepa: Iteration 14: Selected program 2 score: 0.76
+2025/10/14 11:24:50 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2025/10/14 11:24:50 INFO dspy.teleprompt.gepa.gepa: Iteration 13: All subsample scores perfect. Skipping.
+2025/10/14 11:24:50 INFO dspy.teleprompt.gepa.gepa: Iteration 13: Reflective mutation did not propose a new candidate
+GEPA Optimization:  58%|█████▊    | 348/600 [10:08<08:07,  1.94s/rollouts]2025/10/14 11:24:50 INFO dspy.teleprompt.gepa.gepa: Iteration 14: Selected program 2 score: 0.76
 
-Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:05<00:00, 1.94s/it]
+Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:05<00:00,  1.94s/it]
 
-2025/10/14 11:24:56 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%) 2025/10/14 11:24:56 INFO dspy.teleprompt.gepa.gepa: Iteration 14: All subsample scores perfect. Skipping. 2025/10/14 11:24:56 INFO dspy.teleprompt.gepa.gepa: Iteration 14: Reflective mutation did not propose a new candidate GEPA Optimization: 58%|█████▊ | 351/600 [10:13<08:02, 1.94s/rollouts]2025/10/14 11:24:56 INFO dspy.teleprompt.gepa.gepa: Iteration 15: Selected program 2 score: 0.76
+2025/10/14 11:24:56 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2025/10/14 11:24:56 INFO dspy.teleprompt.gepa.gepa: Iteration 14: All subsample scores perfect. Skipping.
+2025/10/14 11:24:56 INFO dspy.teleprompt.gepa.gepa: Iteration 14: Reflective mutation did not propose a new candidate
+GEPA Optimization:  58%|█████▊    | 351/600 [10:13<08:02,  1.94s/rollouts]2025/10/14 11:24:56 INFO dspy.teleprompt.gepa.gepa: Iteration 15: Selected program 2 score: 0.76
 
-Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:10<00:00, 3.36s/it]
+Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:10<00:00,  3.36s/it]
 
-2025/10/14 11:25:06 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%) 2025/10/14 11:25:06 INFO dspy.teleprompt.gepa.gepa: Iteration 15: All subsample scores perfect. Skipping. 2025/10/14 11:25:06 INFO dspy.teleprompt.gepa.gepa: Iteration 15: Reflective mutation did not propose a new candidate GEPA Optimization: 59%|█████▉ | 354/600 [10:24<08:33, 2.09s/rollouts]2025/10/14 11:25:06 INFO dspy.teleprompt.gepa.gepa: Iteration 16: Selected program 0 score: 0.69
+2025/10/14 11:25:06 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2025/10/14 11:25:06 INFO dspy.teleprompt.gepa.gepa: Iteration 15: All subsample scores perfect. Skipping.
+2025/10/14 11:25:06 INFO dspy.teleprompt.gepa.gepa: Iteration 15: Reflective mutation did not propose a new candidate
+GEPA Optimization:  59%|█████▉    | 354/600 [10:24<08:33,  2.09s/rollouts]2025/10/14 11:25:06 INFO dspy.teleprompt.gepa.gepa: Iteration 16: Selected program 0 score: 0.69
 
-Average Metric: 2.00 / 3 (66.7%): 100%|██████████| 3/3 [00:05<00:00, 1.94s/it]
+Average Metric: 2.00 / 3 (66.7%): 100%|██████████| 3/3 [00:05<00:00,  1.94s/it] 
 
 2025/10/14 11:25:12 INFO dspy.evaluate.evaluate: Average Metric: 2.0 / 3 (66.7%)
 
-```
+````
 /root/src/dspy/.venv/lib/python3.11/site-packages/pydantic/main.py:463: UserWarning: Pydantic serializer warnings:
   PydanticSerializationUnexpectedValue(Expected 9 fields but got 6: Expected `Message` - serialized value may not be as expected [input_value=Message(content='```\nYou...: None}, annotations=[]), input_type=Message])
   PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [input_value=Choices(finish_reason='st...ider_specific_fields={}), input_type=Choices])
@@ -850,16 +887,22 @@ Be concise but specific. Avoid heavy formatting.
 2025/10/14 11:27:19 INFO dspy.teleprompt.gepa.gepa: Iteration 16: New program candidate index: 3
 GEPA Optimization:  77%|███████▋  | 460/600 [12:36<03:13,  1.38s/rollouts]2025/10/14 11:27:19 INFO dspy.teleprompt.gepa.gepa: Iteration 17: No merge candidates found
 2025/10/14 11:27:19 INFO dspy.teleprompt.gepa.gepa: Iteration 17: Selected program 3 score: 0.81
-```
-Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:06<00:00, 2.06s/it]
+````
+Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:06<00:00,  2.06s/it]
 
-2025/10/14 11:27:25 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%) 2025/10/14 11:27:25 INFO dspy.teleprompt.gepa.gepa: Iteration 17: All subsample scores perfect. Skipping. 2025/10/14 11:27:25 INFO dspy.teleprompt.gepa.gepa: Iteration 17: Reflective mutation did not propose a new candidate GEPA Optimization: 77%|███████▋ | 463/600 [12:42<03:12, 1.41s/rollouts]2025/10/14 11:27:25 INFO dspy.teleprompt.gepa.gepa: Iteration 18: Selected program 1 score: 0.78
+2025/10/14 11:27:25 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2025/10/14 11:27:25 INFO dspy.teleprompt.gepa.gepa: Iteration 17: All subsample scores perfect. Skipping.
+2025/10/14 11:27:25 INFO dspy.teleprompt.gepa.gepa: Iteration 17: Reflective mutation did not propose a new candidate
+GEPA Optimization:  77%|███████▋  | 463/600 [12:42<03:12,  1.41s/rollouts]2025/10/14 11:27:25 INFO dspy.teleprompt.gepa.gepa: Iteration 18: Selected program 1 score: 0.78
 
-Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:05<00:00, 1.77s/it]
+Average Metric: 3.00 / 3 (100.0%): 100%|██████████| 3/3 [00:05<00:00,  1.77s/it]
 
-2025/10/14 11:27:30 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%) 2025/10/14 11:27:30 INFO dspy.teleprompt.gepa.gepa: Iteration 18: All subsample scores perfect. Skipping. 2025/10/14 11:27:30 INFO dspy.teleprompt.gepa.gepa: Iteration 18: Reflective mutation did not propose a new candidate GEPA Optimization: 78%|███████▊ | 466/600 [12:48<03:10, 1.42s/rollouts]2025/10/14 11:27:30 INFO dspy.teleprompt.gepa.gepa: Iteration 19: Selected program 3 score: 0.81
+2025/10/14 11:27:30 INFO dspy.evaluate.evaluate: Average Metric: 3.0 / 3 (100.0%)
+2025/10/14 11:27:30 INFO dspy.teleprompt.gepa.gepa: Iteration 18: All subsample scores perfect. Skipping.
+2025/10/14 11:27:30 INFO dspy.teleprompt.gepa.gepa: Iteration 18: Reflective mutation did not propose a new candidate
+GEPA Optimization:  78%|███████▊  | 466/600 [12:48<03:10,  1.42s/rollouts]2025/10/14 11:27:30 INFO dspy.teleprompt.gepa.gepa: Iteration 19: Selected program 3 score: 0.81
 
-Average Metric: 1.00 / 3 (33.3%): 100%|██████████| 3/3 [00:03<00:00, 1.32s/it]
+Average Metric: 1.00 / 3 (33.3%): 100%|██████████| 3/3 [00:03<00:00,  1.32s/it]
 
 2025/10/14 11:27:34 INFO dspy.evaluate.evaluate: Average Metric: 1.0 / 3 (33.3%)
 
@@ -956,11 +999,11 @@ Style and brevity:
 GEPA Optimization:  95%|█████████▌| 572/600 [15:13<00:38,  1.39s/rollouts]2025/10/14 11:29:56 INFO dspy.teleprompt.gepa.gepa: Iteration 20: No merge candidates found
 2025/10/14 11:29:56 INFO dspy.teleprompt.gepa.gepa: Iteration 20: Selected program 2 score: 0.76
 ```
-Average Metric: 1.00 / 3 (33.3%): 100%|██████████| 3/3 [00:04<00:00, 1.56s/it]
+Average Metric: 1.00 / 3 (33.3%): 100%|██████████| 3/3 [00:04<00:00,  1.56s/it]
 
 2025/10/14 11:30:01 INFO dspy.evaluate.evaluate: Average Metric: 1.0 / 3 (33.3%)
 
-```
+````
 /root/src/dspy/.venv/lib/python3.11/site-packages/pydantic/main.py:463: UserWarning: Pydantic serializer warnings:
   PydanticSerializationUnexpectedValue(Expected 9 fields but got 6: Expected `Message` - serialized value may not be as expected [input_value=Message(content="```\nTas...: None}, annotations=[]), input_type=Message])
   PydanticSerializationUnexpectedValue(Expected `StreamingChoices` - serialized value may not be as expected [input_value=Choices(finish_reason='st...ider_specific_fields={}), input_type=Choices])
@@ -1050,7 +1093,7 @@ Formatting requirements:
 2025/10/14 11:32:19 INFO dspy.teleprompt.gepa.gepa: Iteration 20: Linear pareto front program index: 3
 2025/10/14 11:32:19 INFO dspy.teleprompt.gepa.gepa: Iteration 20: New program candidate index: 5
 GEPA Optimization:  95%|█████████▌| 572/600 [17:36<00:51,  1.85s/rollouts]
-```
+````
 ```
 print(gepa_program.predict.signature.instructions)
 ```
@@ -1116,10 +1159,10 @@ Be concise but specific. Avoid heavy formatting.
 ```
 Our monitor program is now optimized! We can see that the instructions have some nice properties:
 
-- The instructions differentiate between identifying backdoors and judging correctness.
-- The instructions include a list of key red flags to look out for.
-- The instructions suggest being very specific for low suspicion scores, where false positives and false negatives are most likely.
-- The instructions encourage identifying exact code which is suspicious
+1. The instructions differentiate between identifying backdoors and judging correctness.
+2. The instructions include a list of key red flags to look out for.
+3. The instructions suggest being very specific for low suspicion scores, where false positives and false negatives are most likely.
+4. The instructions encourage identifying exact code which is suspicious
 
 Optionally, we can now finetune the monitor program.
 

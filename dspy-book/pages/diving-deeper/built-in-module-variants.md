@@ -3,7 +3,7 @@ type: Web Page
 title: Built-in module variants - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/built-in-module-variants
-timestamp: '2026-07-27T09:58:26.606457+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Built-in module variants
@@ -64,56 +64,52 @@ Grouped by what you’re trying to do.
 
 For when one LM call has too much variance. Sample several, then pick or combine.
 
-** dspy.BestOfN(module, N, reward_fn, threshold, fail_count=None)**
-On 
+**`dspy.BestOfN(module, N, reward_fn, threshold, fail_count=None)`**
+On `forward(**kwargs)`, `BestOfN` deep-copies the wrapped module per attempt, swaps in a fresh LM with `rollout_id = start + i` and `temperature=1.0`, and runs the call inside a `dspy.context(trace=[])` block so the per-attempt trace is isolated. It scores `reward_fn(kwargs, pred)`, keeps the best so far, and short-circuits when a reward meets `threshold`. After the loop, the winning attempt’s trace is merged back into the parent `dspy.settings.trace` — so a caller inspecting the trace sees the winning path, not all `N`. Failures decrement `fail_count` (defaults to `N`); exhausting it re-raises.
 
-`forward(**kwargs)`, `BestOfN` deep-copies the wrapped module per attempt, swaps in a fresh LM with `rollout_id = start + i` and `temperature=1.0`, and runs the call inside a `dspy.context(trace=[])` block so the per-attempt trace is isolated. It scores `reward_fn(kwargs, pred)`, keeps the best so far, and short-circuits when a reward meets `threshold`. After the loop, the winning attempt’s trace is merged back into the parent `dspy.settings.trace` — so a caller inspecting the trace sees the winning path, not all `N`. Failures decrement `fail_count` (defaults to `N`); exhausting it re-raises.** dspy.Refine(module, N, reward_fn, threshold, fail_count=None)**
-Same shape as 
+**`dspy.Refine(module, N, reward_fn, threshold, fail_count=None)`**
+Same shape as `BestOfN`, with feedback generation between attempts. After a failed attempt, `Refine` builds a snapshot — the module’s source code, per-predictor signatures, per-predictor I/O from the trace, the reward function’s source — and feeds it to an internal `dspy.Predict(OfferFeedback)`. That call returns advice keyed by module name. On the next attempt, `Refine` wraps the active adapter so each sub-predictor’s signature gains a `hint_` input field carrying its slice of the advice. The wrapping is scoped via `dspy.context(adapter=...)`, so the wrapped adapter exists only for that attempt and the hints don’t leak into the final trace.
 
-`BestOfN`, with feedback generation between attempts. After a failed attempt, `Refine` builds a snapshot — the module’s source code, per-predictor signatures, per-predictor I/O from the trace, the reward function’s source — and feeds it to an internal `dspy.Predict(OfferFeedback)`. That call returns advice keyed by module name. On the next attempt, `Refine` wraps the active adapter so each sub-predictor’s signature gains a `hint_` input field carrying its slice of the advice. The wrapping is scoped via `dspy.context(adapter=...)`, so the wrapped adapter exists only for that attempt and the hints don’t leak into the final trace.** dspy.majority(prediction_or_completions, normalize=default_normalize, field=None)**
-A standalone function. Accepts a 
+**`dspy.majority(prediction_or_completions, normalize=default_normalize, field=None)`**
+A standalone function. Accepts a `Prediction` (it uses `prediction.completions`), a `Completions` object, or a plain list. The `field` defaults to the *last* output field of the signature — the convention being that the last field is the answer. Values pass through `normalize` (lowercase + whitespace by default) and the most-common normalized value wins; ties go to the earlier completion. Returns a single-completion `Prediction` wrapping the winner.
 
-`Prediction` (it uses `prediction.completions`), a `Completions` object, or a plain list. The `field` defaults to the *last*output field of the signature — the convention being that the last field is the answer. Values pass through
+### Comparing pre-generated drafts
 
-`normalize` (lowercase + whitespace by default) and the most-common normalized value wins; ties go to the earlier completion. Returns a single-completion `Prediction` wrapping the winner.### Comparing pre-generated drafts
+**`dspy.MultiChainComparison(signature, M=3, temperature=0.7, **config)`**
+The constructor mutates the input signature: it prepends one output field (a synthesized `rationale`) and appends M input fields named `reasoning_attempt_1` through `reasoning_attempt_M`. It then builds an internal `Predict` over the modified signature. At call time, `forward(completions, **kwargs)` reads each completion’s `rationale` (or `reasoning`) and the last output field, formats them as one-line attempt strings, and supplies them as the new inputs. The LM is asked to reason holistically across attempts and produce one synthesized answer in the original output field. The number of supplied completions must equal `M`; an assertion enforces this.
 
-** dspy.MultiChainComparison(signature, M=3, temperature=0.7, **config)**
-The constructor mutates the input signature: it prepends one output field (a synthesized 
-
-`rationale`) and appends M input fields named `reasoning_attempt_1` through `reasoning_attempt_M`. It then builds an internal `Predict` over the modified signature. At call time, `forward(completions, **kwargs)` reads each completion’s `rationale` (or `reasoning`) and the last output field, formats them as one-line attempt strings, and supplies them as the new inputs. The LM is asked to reason holistically across attempts and produce one synthesized answer in the original output field. The number of supplied completions must equal `M`; an assertion enforces this.### Generating and running code
+### Generating and running code
 
 For tasks where the answer is best computed, not narrated.
 
 Each module accepts an `interpreter_factory` that is called once per invocation; DSPy shuts down the returned interpreter even when the invocation raises. Passing an interpreter as the first positional argument when calling the module, such as `program(interpreter, **inputs)`, instead uses that caller-owned instance without shutting it down. Caller-owned reuse is sequential; use the factory path for concurrent invocations. A `PythonInterpreter` override must also stay on the thread where it was first used.
 
-** dspy.ProgramOfThought(signature, max_iters=3, interpreter_factory=PythonInterpreter)**
-Holds three internal 
+**`dspy.ProgramOfThought(signature, max_iters=3, interpreter_factory=PythonInterpreter)`**
+Holds three internal `ChainOfThought` predictors: `code_generate` produces Python, `code_regenerate` rewrites it after a recoverable execution error, and `generate_output` extracts the declared output fields from the run’s printed result. The forward loop asks `code_generate` for code, runs it through the `PythonInterpreter`, and feeds `CodeExecutionError` or `SyntaxError` back to `code_regenerate` for up to `max_iters` rounds. A terminal `CodeInterpreterError` propagates immediately. Once execution succeeds, `generate_output` produces the signature’s output fields. If `max_iters` is exhausted, the module raises.
 
-`ChainOfThought` predictors: `code_generate` produces Python, `code_regenerate` rewrites it after a recoverable execution error, and `generate_output` extracts the declared output fields from the run’s printed result. The forward loop asks `code_generate` for code, runs it through the `PythonInterpreter`, and feeds `CodeExecutionError` or `SyntaxError` back to `code_regenerate` for up to `max_iters` rounds. A terminal `CodeInterpreterError` propagates immediately. Once execution succeeds, `generate_output` produces the signature’s output fields. If `max_iters` is exhausted, the module raises.** dspy.CodeAct(signature, tools, max_iters=5, interpreter_factory=PythonInterpreter)**
-Multiple inheritance from 
+**`dspy.CodeAct(signature, tools, max_iters=5, interpreter_factory=PythonInterpreter)`**
+Multiple inheritance from `ReAct` and `ProgramOfThought`. Tools must be plain `def` functions, not callable objects — the module reads `inspect.getsource(tool.func)` and injects each definition into the sandbox at the start of every `forward`. Each iteration: an inner `codeact` predictor produces Python plus a `finished` boolean; the interpreter runs the code; the trajectory dict gains a `generated_code_i` and `code_output_i` (or `observation_i` on a parse or recoverable execution error). Terminal interpreter failures propagate. The loop exits when the LM sets `finished=True` or `max_iters` is reached. A `ChainOfThought` extractor then reads the trajectory and produces the declared outputs.
 
-`ReAct` and `ProgramOfThought`. Tools must be plain `def` functions, not callable objects — the module reads `inspect.getsource(tool.func)` and injects each definition into the sandbox at the start of every `forward`. Each iteration: an inner `codeact` predictor produces Python plus a `finished` boolean; the interpreter runs the code; the trajectory dict gains a `generated_code_i` and `code_output_i` (or `observation_i` on a parse or recoverable execution error). Terminal interpreter failures propagate. The loop exits when the LM sets `finished=True` or `max_iters` is reached. A `ChainOfThought` extractor then reads the trajectory and produces the declared outputs.** dspy.RLM(signature, max_iters=20, max_llm_calls=50, max_output_chars=10_000, verbose=False, tools=None, sub_lm=None, interpreter_factory=PythonInterpreter)**
-Experimental. A REPL-style code agent that exposes two built-in tools — 
+**`dspy.RLM(signature, max_iters=20, max_llm_calls=50, max_output_chars=10_000, verbose=False, tools=None, sub_lm=None, interpreter_factory=PythonInterpreter)`**
+Experimental. A REPL-style code agent that exposes two built-in tools — `llm_query` and `llm_query_batched` — so generated code can call a separate `sub_lm` mid-execution. A shared counter across iterations enforces `max_llm_calls`; tool names are validated as Python identifiers; `SandboxSerializable` inputs encode into the sandbox so large contexts don’t have to be re-marshalled each turn. If the loop ends without an explicit submission, the extractor pass produces the final outputs from the trajectory.
 
-`llm_query` and `llm_query_batched` — so generated code can call a separate `sub_lm` mid-execution. A shared counter across iterations enforces `max_llm_calls`; tool names are validated as Python identifiers; `SandboxSerializable` inputs encode into the sandbox so large contexts don’t have to be re-marshalled each turn. If the loop ends without an explicit submission, the extractor pass produces the final outputs from the trajectory.### Running modules in parallel
+### Running modules in parallel
 
-** dspy.Parallel(num_threads=None, max_errors=None, access_examples=True, return_failed_examples=False, provide_traceback=None, disable_progress_bar=False, timeout=120, straggler_limit=3)**
-Wraps 
+**`dspy.Parallel(num_threads=None, max_errors=None, access_examples=True, return_failed_examples=False, provide_traceback=None, disable_progress_bar=False, timeout=120, straggler_limit=3)`**
+Wraps `ParallelExecutor` and submits each `(module, example)` pair to a thread pool. The example can be a `dspy.Example` (unpacked via `.inputs()` when `access_examples=True`), a `dict` (unpacked as kwargs), a tuple (unpacked positionally), or a list (passed through when the module is itself a `Parallel`). The executor snapshots the parent’s `thread_local_overrides` and re-applies it inside each worker, so a surrounding `dspy.context(...)` is honored. Returns predictions in input order; with `return_failed_examples=True`, returns a `(results, failed_examples, exceptions)` tuple.
 
-`ParallelExecutor` and submits each `(module, example)` pair to a thread pool. The example can be a `dspy.Example` (unpacked via `.inputs()` when `access_examples=True`), a `dict` (unpacked as kwargs), a tuple (unpacked positionally), or a list (passed through when the module is itself a `Parallel`). The executor snapshots the parent’s `thread_local_overrides` and re-applies it inside each worker, so a surrounding `dspy.context(...)` is honored. Returns predictions in input order; with `return_failed_examples=True`, returns a `(results, failed_examples, exceptions)` tuple.### Related modules covered elsewhere
+### Related modules covered elsewhere
 
-** dspy.KNN** is a retrieval helper, not a generation module — see the Retrievers reference page.
+**`dspy.KNN`** is a retrieval helper, not a generation module — see the Retrievers reference page.
 
-** dspy.ReAct** is the canonical tool-using loop and has its own page: 
+**`dspy.ReAct`** is the canonical tool-using loop and has its own page: [Tools, ReAct, and MCP](../tools-react-and-mcp/). The wrapping machinery there is what `CodeAct` and `RLM` reuse.
 
-[Tools, ReAct, and MCP](../tools-react-and-mcp/). The wrapping machinery there is what
+## Cross-links
 
-`CodeAct` and `RLM` reuse.## Cross-links
-
-- [Modules: composing your own](../modules/)— every variant here is a- `dspy.Module`(except- `Parallel`and- `majority`), so the composition rules apply.
-- [Tools, ReAct, and MCP](../tools-react-and-mcp/)—- `CodeAct`and- `RLM`use the same tool-wrapping machinery as- `ReAct`.
-- [RLM: exploring large contexts with code](../rlm/)— the deep dive on the experimental REPL-driven module summarized above.
-- [Settings and](../settings-and-context/)— how- `context()`- `Parallel`and- `Module.batch`snapshot the active overrides into each worker.
+- [Modules: composing your own](../modules/) — every variant here is a`dspy.Module` (except`Parallel` and`majority` ), so the composition rules apply.
+- [Tools, ReAct, and MCP](../tools-react-and-mcp/) —`CodeAct` and`RLM` use the same tool-wrapping machinery as`ReAct` .
+- [RLM: exploring large contexts with code](../rlm/) — the deep dive on the experimental REPL-driven module summarized above.
+- [Settings and `context()`](../settings-and-context/) — how`Parallel` and`Module.batch` snapshot the active overrides into each worker.
 
 # Citations
 

@@ -2,7 +2,7 @@
   "generator": "okf-kit",
   "okf_version": "0.1",
   "root_url": "https://dspy.ai/",
-  "updated_at": "2026-07-27T09:58:26.624478+00:00",
+  "updated_at": "2026-08-03T09:53:06.662442+00:00",
   "config": {
     "max_depth": 3,
     "max_pages": 70,
@@ -16,91 +16,91 @@
       "path": "pages/api.md",
       "url": "https://dspy.ai/api",
       "title": "API Reference - DSPy",
-      "hash": "62176b2e07887709083203c77cf5b68293a3c17074a6a5040d444019f80ffe47"
+      "hash": "bdacdc34450589b6debd9e3cfd59c7505958461f67644c0f71bb9ea7ad0dd481"
     },
     {
       "path": "pages/community/use-cases.md",
       "url": "https://dspy.ai/community/use-cases",
       "title": "Use Cases - DSPy",
-      "hash": "9a7a0705fb404976e17588c3fddc36b3381692ce3d2a00c7041abd3a06a348a5"
+      "hash": "84736d13dcd2f66a4513723dea34cf575dddf98c828d2ee63d52d1ffaf18e8ca"
     },
     {
       "path": "pages/diving-deeper/adapters.md",
       "url": "https://dspy.ai/diving-deeper/adapters",
       "title": "Adapters: how signatures become prompts - DSPy",
-      "hash": "901f8015287c30b1c24573e8bf4c121e34bcb8cab9b4bc0e299af8806ab8feb8"
+      "hash": "11df776c13c469793185b6c3cdc2b653a647805a9071c4440579c81d8190b088"
     },
     {
       "path": "pages/diving-deeper/bootstrap-fewshot-family.md",
       "url": "https://dspy.ai/diving-deeper/bootstrap-fewshot-family",
       "title": "BootstrapFewShot family - DSPy",
-      "hash": "2cd4db60585bc87e2c42502a513d0d9da47023481661a65ab14a04faa1c31852"
+      "hash": "e34022e3aa81cb1ada7011cc9f9b3db163e9ea391de5d52e8c9fe63d6898ea57"
     },
     {
       "path": "pages/diving-deeper/built-in-module-variants.md",
       "url": "https://dspy.ai/diving-deeper/built-in-module-variants",
       "title": "Built-in module variants - DSPy",
-      "hash": "c17f776cca3de536e1d2d321f2fc3c2ba9566bb789f07204a525523585fddede"
+      "hash": "d187e13436b5665a6e78318c51c876f48c1888db27544b951790fb5fbe687d46"
     },
     {
       "path": "pages/diving-deeper/choosing-an-optimizer.md",
       "url": "https://dspy.ai/diving-deeper/choosing-an-optimizer",
       "title": "Optimizers: choosing one - DSPy",
-      "hash": "6266654da42c7e82f3a25ca6ff3a811b45327fc09c6ab23dd0dab0c62443915e"
+      "hash": "8fdd5e9afff7d1633c12f9cfd6ecd565e0a433a97ce4357c4ae0f6f1feee5ab5"
     },
     {
       "path": "pages/diving-deeper/gepa-in-depth.md",
       "url": "https://dspy.ai/diving-deeper/gepa-in-depth",
       "title": "GEPA in depth - DSPy",
-      "hash": "4fcf4f225e283e6d3da470e06b695315855c14bbd1b504d9b781552cba3a9327"
+      "hash": "a997e23425692c3ebad0703d56a321b64695c3b402f390dfa24dc881e11804fa"
     },
     {
       "path": "pages/diving-deeper/metrics-and-evaluation.md",
       "url": "https://dspy.ai/diving-deeper/metrics-and-evaluation",
       "title": "Metrics and evaluation - DSPy",
-      "hash": "ed150ea16a09a122893042b5ae7846be7cc068861784b1734a338f118cd2da25"
+      "hash": "99c26211f997852e27c2e7cfc5121fc59ddc3e53f4913d636f7b7ef6669c39e8"
     },
     {
       "path": "pages/diving-deeper/modules.md",
       "url": "https://dspy.ai/diving-deeper/modules",
       "title": "Modules: composing your own - DSPy",
-      "hash": "c567c49720061a4a2917888643c9326905650358f3a35f363b5c347915d81aba"
+      "hash": "953f96c8a886b4cb0fcb6c088a79346d079583ecc717f4290df7ebf56105ae14"
     },
     {
       "path": "pages/diving-deeper/rlm.md",
       "url": "https://dspy.ai/diving-deeper/rlm",
       "title": "RLM: exploring large contexts with code - DSPy",
-      "hash": "33c7054fef1457b4526e71edbbbf1d9f9e671b58eae9451d08a23ec27bbb06cd"
+      "hash": "b3c855e0ddb23defb3c9f7666b3a754fab75fffaa6bc12ed44ad158489e994a2"
     },
     {
       "path": "pages/diving-deeper/saving-and-loading.md",
       "url": "https://dspy.ai/diving-deeper/saving-and-loading",
       "title": "Saving and loading - DSPy",
-      "hash": "635faef025bcbdb8d79973d21cc257aad872c5a94972a7df54dfa18d9eaf3b43"
+      "hash": "a6c089995fe030544339cd59e4e30e78f1a4be5cd85d7f5a5134e42c1c8cae88"
     },
     {
       "path": "pages/diving-deeper/settings-and-context.md",
       "url": "https://dspy.ai/diving-deeper/settings-and-context",
       "title": "Settings and context() - DSPy",
-      "hash": "076e2da5147d742f4095806b38a62c7031c97e685767d3c715d2383e0ea21195"
+      "hash": "5b48cda0189740e14f9d5c74ba1c279c6146546f9a32b0fa4f979f054fddcb82"
     },
     {
       "path": "pages/diving-deeper/signatures-in-depth.md",
       "url": "https://dspy.ai/diving-deeper/signatures-in-depth",
       "title": "Signatures in depth - DSPy",
-      "hash": "3812c062e1136db9ece1586b56812769328d18f33c39b84c04c03fca6913c32a"
+      "hash": "3fad052ce3365323c415c6a1b43a05881516028c75c8e0c2f75f5cd31ce8a58a"
     },
     {
       "path": "pages/diving-deeper/tools-react-and-mcp.md",
       "url": "https://dspy.ai/diving-deeper/tools-react-and-mcp",
       "title": "Tools, ReAct, and MCP - DSPy",
-      "hash": "4f0b0db147df03fc9551c71b8b7a255854637ad639e2c93c8a68ad1f4497aace"
+      "hash": "f61c9a7f29ddf52e9862190e3e91468eb76fded115e3b91085e469e8d5f06ef5"
     },
     {
       "path": "pages/faqs.md",
       "url": "https://dspy.ai/faqs",
       "title": "FAQ - DSPy",
-      "hash": "774652188a1e784cb6c9c1d53f6bf46fd4fe06ecc8614960b382ec79e5e24917"
+      "hash": "1152a4845a72c5b233eb1c60c3035abfcdb4e34af0e6b310b2ce8c895733f4da"
     },
     {
       "path": "pages/getting-started/changing-modules.md",
@@ -118,7 +118,7 @@
       "path": "pages/getting-started/composing-modules.md",
       "url": "https://dspy.ai/getting-started/composing-modules",
       "title": "Composing modules - DSPy",
-      "hash": "e49945991246849243705c9ceeb6bb4f5d53a8a1cd2c43ed71d9257df3b333ee"
+      "hash": "70a5b37c3c7997aab3885e03af9d04801a390751670a06b1c48a844ebc7fb496"
     },
     {
       "path": "pages/getting-started/expanding-signatures.md",
@@ -130,37 +130,37 @@
       "path": "pages/getting-started/first-program.md",
       "url": "https://dspy.ai/getting-started/first-program",
       "title": "Your first program - DSPy",
-      "hash": "ae2eaf3822531005bb3e2d7f9d70c4c6870baa92e885ba129474ef9718ae4afc"
+      "hash": "d3ae3368fed97dcf52fea66d6f7147298967d5dd57d8eae3e55fcd55ace039c0"
     },
     {
       "path": "pages/getting-started/gepa-optimization.md",
       "url": "https://dspy.ai/getting-started/gepa-optimization",
       "title": "GEPA optimization - DSPy",
-      "hash": "bec5da646c492c25d0bb42a60aa44045484aafbdd436cb74ed3ac3d712d5f254"
+      "hash": "338f5d6d9a3cbff3cfff63a8053c89a70060599dbf60a2cb22a094f848dc320d"
     },
     {
       "path": "pages/getting-started/installation.md",
       "url": "https://dspy.ai/getting-started/installation",
       "title": "Setting up DSPy - DSPy",
-      "hash": "e3340f1a9712a816bf9f1e78ebf434eda0ecb2219cc2689de34b64191f9a9f30"
+      "hash": "8c9abd69439d351351cdfab116f6aa7b10297691c4e9c20c896da3d3d5e969e6"
     },
     {
       "path": "pages/getting-started/metrics.md",
       "url": "https://dspy.ai/getting-started/metrics",
       "title": "Metrics - DSPy",
-      "hash": "44bb76d2f8e3cbc99db75aeaf2e4e97058697797486f28aafa6edba1a8a38350"
+      "hash": "430558fd82b2d0724253dcf03fe024ff9ad3d5b858b257d72571411ab30385f7"
     },
     {
       "path": "pages/getting-started/program-dont-prompt.md",
       "url": "https://dspy.ai/getting-started/program-dont-prompt",
       "title": "Program, don't prompt - DSPy",
-      "hash": "120cfc60e67bea549e9fbc74703305878f50c1ae9a4800c4482651ef22d20ab3"
+      "hash": "bcd9dd23a779a2177a51c7a0c2f9e17f76582e48118a4cd357d6b2b59b9a48df"
     },
     {
       "path": "pages/getting-started/react-and-tools.md",
       "url": "https://dspy.ai/getting-started/react-and-tools",
       "title": "Tools with ReAct - DSPy",
-      "hash": "d8d5375fb097eaedaed06ad33c0ad3231da77d2537bf14233b6f22eb06a4ce55"
+      "hash": "b264bf5510c359dfbc0c03248323a2460225601ee6a821ed8a98aca898d4f5a7"
     },
     {
       "path": "pages/getting-started/saving-and-loading.md",
@@ -184,13 +184,13 @@
       "path": "pages/tutorials.md",
       "url": "https://dspy.ai/tutorials",
       "title": "Tutorials Overview - DSPy",
-      "hash": "c978f1bc417acb104c60a03e0a48db1fbd021ec3bad08fc44381b0d0d9938397"
+      "hash": "7d3b6c98e92824c0e406c8b35a96e29b2fbcb63894bc2e9b7db4fbc1519eba33"
     },
     {
       "path": "pages/tutorials/agents.md",
       "url": "https://dspy.ai/tutorials/agents",
       "title": "Building RAG as Agent - DSPy",
-      "hash": "4dd7b8ccf48c3747a0e3ba7f39116c3944d55e2c738c4013d93c29b7f1c8e16d"
+      "hash": "e6fdec9b812ac771556ee2fd9f34832bec439157024b908722b633d77973b051"
     },
     {
       "path": "pages/tutorials/async.md",
@@ -202,115 +202,115 @@
       "path": "pages/tutorials/audio.md",
       "url": "https://dspy.ai/tutorials/audio",
       "title": "Audio - DSPy",
-      "hash": "640049bafba14269295a347ff6ff6d8220c5a48a214d7d107e97cd376223d426"
+      "hash": "7abe95926d03756df647a72e28408d27ef2fc32e6e7f2927d0372a513590547e"
     },
     {
       "path": "pages/tutorials/build_ai_program.md",
       "url": "https://dspy.ai/tutorials/build_ai_program",
       "title": "Overview - DSPy",
-      "hash": "e00aaaa8cdc3921d03333472d55b8c5ecd79b6a54326c4fa646d73fb7a212497"
+      "hash": "68d9c9e19eb0a610d3317aab1c32fa413de8e7046684cf678fa6a42592027529"
     },
     {
       "path": "pages/tutorials/cache.md",
       "url": "https://dspy.ai/tutorials/cache",
       "title": "Cache - DSPy",
-      "hash": "4f6af2716792e764040748d5947fb98b767376316d7b65f7e75d28d253700663"
+      "hash": "2cef9065e1c471d5ecb1474ff2c5841d766cfd68b1e1adb352e5264ec14a3357"
     },
     {
       "path": "pages/tutorials/classification.md",
       "url": "https://dspy.ai/tutorials/classification",
       "title": "Classification - DSPy",
-      "hash": "7d87156b9938ad908e843b3a6eb036b21a4ecff6e9b96efcccaa3e36947b8ba3"
+      "hash": "e082e644138d4b7ee5b6b5aa478f2c105e7b4aa7b9836c2db6bf5be4ca50bcbd"
     },
     {
       "path": "pages/tutorials/classification_finetuning.md",
       "url": "https://dspy.ai/tutorials/classification_finetuning",
       "title": "Classification Finetuning - DSPy",
-      "hash": "1ec9a4b966099262eafc30506b01906648745baee1bb811b51e4f6bfc079563a"
+      "hash": "1de6ed57adffe5aa27dfb1ed3809d9945479915261c547948f25b54d6fa01e3c"
     },
     {
       "path": "pages/tutorials/conversation_history.md",
       "url": "https://dspy.ai/tutorials/conversation_history",
       "title": "Managing Conversation History - DSPy",
-      "hash": "3de88dd861be70b8021461de4907760f7d4d563fa8be2dfbf5f6ee5eaa5aece4"
+      "hash": "868e4ca42b3ba01948fd8cf64026ffef66b036a1bd0e3c57acdcc7ed18b9ef8f"
     },
     {
       "path": "pages/tutorials/core_development.md",
       "url": "https://dspy.ai/tutorials/core_development",
       "title": "Overview - DSPy",
-      "hash": "961ea3bb0a23ad2b0c3c53d42557f8e1ed586d168edcb2ac5042732e6268cf43"
+      "hash": "79f0467355587abd4156a02c42671fc95bf9e811f9b8900eadaf6005322c5253"
     },
     {
       "path": "pages/tutorials/custom_module.md",
       "url": "https://dspy.ai/tutorials/custom_module",
       "title": "Building AI Applications by Customizing DSPy Modules - DSPy",
-      "hash": "ef835cdb3ca673e57937ae73657fa7e1004a8e602b0cf0a59044ee50ecca3615"
+      "hash": "5c745b866c89932b252f03eae71a16b6fd14c0901858661e8926beddeb6b217c"
     },
     {
       "path": "pages/tutorials/customer_service_agent.md",
       "url": "https://dspy.ai/tutorials/customer_service_agent",
       "title": "Building AI Agents with DSPy - DSPy",
-      "hash": "5ae5146537c0289a6142455125c496e7f54c615baa31cfab661b5cbcb19f8b55"
+      "hash": "51956acdd28f40a2131b22b9a9fc1be72837365cd86f4723dd8f65daa2ce168d"
     },
     {
       "path": "pages/tutorials/deployment.md",
       "url": "https://dspy.ai/tutorials/deployment",
       "title": "Deployment - DSPy",
-      "hash": "faddc59b2900cb1dcb8e36f781a98613a90d480ad98cc8ffb684cbf73c8af34c"
+      "hash": "73f2ed9714c29aafe73ee0fd176358030e50f366a12621dda5de6b18420266a6"
     },
     {
       "path": "pages/tutorials/email_extraction.md",
       "url": "https://dspy.ai/tutorials/email_extraction",
       "title": "Email Information Extraction - DSPy",
-      "hash": "7caaf6d1d7d3cbad281d8855d7b8723f7a9af20cf1dbedc34ef2afaeba4715fa"
+      "hash": "3286580a27d46ce96a41136516368a747b46cd49204a2d083b613c44e464564e"
     },
     {
       "path": "pages/tutorials/entity_extraction.md",
       "url": "https://dspy.ai/tutorials/entity_extraction",
       "title": "Entity Extraction - DSPy",
-      "hash": "b307735e254b2fee8d5de96fd6798b26af4e97fd6031b93566af2f2f76eff80f"
+      "hash": "5ad726ce395dbe283d207a26f0ec61073b41de9b619f2d1cd3fb87b7ebc4d7dc"
     },
     {
       "path": "pages/tutorials/games.md",
       "url": "https://dspy.ai/tutorials/games",
       "title": "Finetuning Agents - DSPy",
-      "hash": "489cfc26fd46c1f2177eb4b0ee0f8d07cef14a7811d9be2c209c798d9a438b9a"
+      "hash": "9725566f48e463969cedcf4b7160d6b2b19304d8e7512d95bf814b07f4b0e46b"
     },
     {
       "path": "pages/tutorials/gepa_ai_program.md",
       "url": "https://dspy.ai/tutorials/gepa_ai_program",
       "title": "Overview - DSPy",
-      "hash": "7f64b1f68721947172b89b163844f1b0fc8c6be5c60780456fa3a7841d739b51"
+      "hash": "37b417576fc2849577926b286a8e3ef7316964b5a2953d2940becb682ed55e44"
     },
     {
       "path": "pages/tutorials/gepa_aime.md",
       "url": "https://dspy.ai/tutorials/gepa_aime",
       "title": "GEPA for AIME (Math) - DSPy",
-      "hash": "880ef627f88b3e6d1cde2713ceb78a91a5bfd1edc509fa75afae23a38d643415"
+      "hash": "f04d7c8a28d4141f2b077d06ab04fc6256f9b12f10cd371393ba1dee84705bdf"
     },
     {
       "path": "pages/tutorials/gepa_facilitysupportanalyzer.md",
       "url": "https://dspy.ai/tutorials/gepa_facilitysupportanalyzer",
       "title": "GEPA for Structured Information Extraction for Enterprise Tasks - DSPy",
-      "hash": "1818f1b54b3628ec27c06f8396254899af38a7bb08da65377137a17cf9f59f6a"
+      "hash": "1b438701d731398cdea580f1451dd2ac798aa10554a0c9c7caf60422487df58a"
     },
     {
       "path": "pages/tutorials/gepa_papillon.md",
       "url": "https://dspy.ai/tutorials/gepa_papillon",
       "title": "GEPA for Privacy-Conscious Delegation - DSPy",
-      "hash": "ce0d4aabfdec286cdcf6db64a7f91f545cff0c3c12bfb85e331f27eb4946fc01"
+      "hash": "e036dbd1ed0e57887c37c97507a93bdda7f719212c13cbb4e731d2b7cbb2590f"
     },
     {
       "path": "pages/tutorials/gepa_trusted_monitor.md",
       "url": "https://dspy.ai/tutorials/gepa_trusted_monitor",
       "title": "GEPA for Code Backdoor Classification (AI control) - DSPy",
-      "hash": "1dbdf57734062e9d5d446a2582cf6cb9e9c7898b15b46057dba2b74a66e6b4e8"
+      "hash": "52557b7254707475f755b88998cbd11ce84fbf80b49f6e54010aad71e77cb108"
     },
     {
       "path": "pages/tutorials/image_generation_prompting.md",
       "url": "https://dspy.ai/tutorials/image_generation_prompting",
       "title": "Image Generation Prompt iteration - DSPy",
-      "hash": "681f42a4d9a66c294f4b77edb13d1a4430a319ccfc394d3d2735d85bbf3904c2"
+      "hash": "2149c939a26a1945e69128f5efba54163fec3f12ca72d59a21b17ea3646ad39d"
     },
     {
       "path": "pages/tutorials/llms_txt_generation.md",
@@ -322,67 +322,67 @@
       "path": "pages/tutorials/math.md",
       "url": "https://dspy.ai/tutorials/math",
       "title": "Math Reasoning - DSPy",
-      "hash": "810dc97d45314748d47a950cbf92989aa348c3118ba36e69501f57035cbbbaac"
+      "hash": "6db9d7ab7821db6b58ae971f9a427027096c02e41699196a5e83e976e68a7217"
     },
     {
       "path": "pages/tutorials/mcp.md",
       "url": "https://dspy.ai/tutorials/mcp",
       "title": "Use MCP in DSPy - DSPy",
-      "hash": "8d144a9be7b862a6080fc1ff970cc8e0d795b5663e36aafc17a5bb842cf71d06"
+      "hash": "22eb3ad480dcc86fe92cc6d1fd81651db0c3ccffb2a44bb024b6cebfdd6017ac"
     },
     {
       "path": "pages/tutorials/mem0_react_agent.md",
       "url": "https://dspy.ai/tutorials/mem0_react_agent",
       "title": "Memory-Enabled ReAct Agents - DSPy",
-      "hash": "8560a8281bd55b085a6f2916ec14e7da7624b0254cf699a0c4f3ea4dc87c0806"
+      "hash": "a81487699943e33e352ecc710c289799d2cd8b5aaa97d3ddff32f630827b4745"
     },
     {
       "path": "pages/tutorials/multihop_search.md",
       "url": "https://dspy.ai/tutorials/multihop_search",
       "title": "Multi-Hop RAG - DSPy",
-      "hash": "f6a8cc2b083157de374f5b18b67a2d9b83f7c3e56a048ad1ed7970eb3b3a7e8e"
+      "hash": "9efd56b7ae312e7c396bcff86f0214a6b44360d9fa22380717a1e95da26df733"
     },
     {
       "path": "pages/tutorials/observability.md",
       "url": "https://dspy.ai/tutorials/observability",
       "title": "Debugging & Observability - DSPy",
-      "hash": "c35c32db6d83bf15fdcc9a573a8a216f3e2e55895b7cac26e0f12000b97d851f"
+      "hash": "4524e8214ebad76d5e45037523735de08cc98dc49cd6c282d2451b4468d3cc59"
     },
     {
       "path": "pages/tutorials/optimize_ai_program.md",
       "url": "https://dspy.ai/tutorials/optimize_ai_program",
       "title": "Overview - DSPy",
-      "hash": "0dcf2e3d9d4a50ec2000e11c1fe144a3c339ed8e35e914aab70a378b0b9dd98f"
+      "hash": "3ce75c901a73eef6807355904851e7ed5319a12ab8c20962ec14c4e19ae8920d"
     },
     {
       "path": "pages/tutorials/optimizer_tracking.md",
       "url": "https://dspy.ai/tutorials/optimizer_tracking",
       "title": "Tracking DSPy Optimizers - DSPy",
-      "hash": "6a3bbdad630d40dc83024d2fe3e41cac7bc1e5a1c42889a626add84b789bbf80"
+      "hash": "9708b2eec21b13744a78cba3103328bb516e5cf422506bfdf2d59e9ec5c2701f"
     },
     {
       "path": "pages/tutorials/output_refinement/best-of-n-and-refine.md",
       "url": "https://dspy.ai/tutorials/output_refinement/best-of-n-and-refine",
       "title": "Output Refinement - DSPy",
-      "hash": "096d848b82e04ab3fdef0e6050ad25087201eac1fce482e8ac3c78683adbb7e3"
+      "hash": "205a9e40dcdc2a762bdc4308ba5952c1fe4aac5e006e12b20bb685f41bafb677"
     },
     {
       "path": "pages/tutorials/papillon.md",
       "url": "https://dspy.ai/tutorials/papillon",
       "title": "Privacy-Conscious Delegation - DSPy",
-      "hash": "12b0234269332fb7e0d330998cf9af06931b65ab956852d075edb1a68854cfaa"
+      "hash": "c40cdefee1bbe2ea83e3b6a203542bc6fff79ca097ea6f1e69deda2418760da6"
     },
     {
       "path": "pages/tutorials/program_of_thought.md",
       "url": "https://dspy.ai/tutorials/program_of_thought",
       "title": "Program Of Thought - DSPy",
-      "hash": "b818c2e9486d9c0fa054367308530d9e893ecbee23b1e90ec473aab2cf780717"
+      "hash": "0f466e4a99065eab0e5f0d5129ab5ef59279f742af3ae03fc3d51f89c37d3c32"
     },
     {
       "path": "pages/tutorials/rag.md",
       "url": "https://dspy.ai/tutorials/rag",
       "title": "Retrieval-Augmented Generation (RAG) - DSPy",
-      "hash": "098e5c73d0d911dcee0d5d574ce7f0e7b5e13a5788c37f8f6b258d77f65981ab"
+      "hash": "813a514f853f018207a270d35b0f8d20f9427f15271f1e04e65f1bcb613972d4"
     },
     {
       "path": "pages/tutorials/real_world_examples.md",
@@ -394,7 +394,7 @@
       "path": "pages/tutorials/rl_ai_program.md",
       "url": "https://dspy.ai/tutorials/rl_ai_program",
       "title": "Overview - DSPy",
-      "hash": "bbd83ead5b875e1fb1b30a4d53d4a7958ce0db53278e00099bd02a0329570339"
+      "hash": "e47695b2f111212cb65a55525280764b9744a4311ca160c459243adc39565e7b"
     },
     {
       "path": "pages/tutorials/rl_multihop.md",
@@ -406,31 +406,31 @@
       "path": "pages/tutorials/rl_papillon.md",
       "url": "https://dspy.ai/tutorials/rl_papillon",
       "title": "RL for Privacy-Conscious Delegation - DSPy",
-      "hash": "fce464e9edae53dc4ac0d54d1cbf848d545414e0dcd4256f0393ce785cddb463"
+      "hash": "f00bd7d408da641a092d081573e8c05a12bdba283d623e8b490db8a7e25a3f04"
     },
     {
       "path": "pages/tutorials/saving.md",
       "url": "https://dspy.ai/tutorials/saving",
       "title": "Saving and Loading - DSPy",
-      "hash": "dad96ca1005a5f749735e331456a3bbecd46f5eeeee732209c32f5a8b52b64eb"
+      "hash": "352c80b2d93b4b7c5601f2120da88ebede929c6d0b8a82b40a5965a363f77b4e"
     },
     {
       "path": "pages/tutorials/streaming.md",
       "url": "https://dspy.ai/tutorials/streaming",
       "title": "Streaming - DSPy",
-      "hash": "dba3ceb87ce1a9afd787e9717d3fc37908c8035f80c3fe8d2b80444b567db519"
+      "hash": "9639f08dc739a8901d8633b96eaab86a5f70c06a48046e023caf3ee2250be726"
     },
     {
       "path": "pages/tutorials/tool_use.md",
       "url": "https://dspy.ai/tutorials/tool_use",
       "title": "Advanced Tool Use - DSPy",
-      "hash": "aaf6d9ca7609f25166b73cd2e29864f099175dc947e0daf2eca892a015750b6d"
+      "hash": "8797b9088664895694e4914c2024aa80766f0bb21283010068c7599625ba438d"
     },
     {
       "path": "pages/tutorials/yahoo_finance_react.md",
       "url": "https://dspy.ai/tutorials/yahoo_finance_react",
       "title": "Financial Analysis with Yahoo Finance - DSPy",
-      "hash": "fa30162b0df9325d07c683c3de491e2586c5b8bf6344c078944dd8f861c7a037"
+      "hash": "e38c8a8c8b495e8c978c5fb76255c0743e330803ae3f7c2897860b3c3bd40ebf"
     }
   ],
   "edges": [
@@ -1128,9 +1128,9 @@
     ]
   ],
   "last_sync": {
-    "synced_at": "2026-07-27T09:58:26.609309+00:00",
+    "synced_at": "2026-08-03T09:53:06.644608+00:00",
     "added": 0,
-    "changed": 2,
+    "changed": 60,
     "removed": 0,
     "pages": 70
   }

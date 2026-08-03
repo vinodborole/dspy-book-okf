@@ -3,7 +3,7 @@ type: Web Page
 title: GEPA for AIME (Math) - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/gepa_aime
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Tutorial: GEPA for AIME (Math)
@@ -22,24 +22,24 @@ In this tutorial, we optimize GPT-4.1 Mini's Chain of Thought (`dspy.ChainOfThou
 
 **Setup MLflow**
 
-- Install MLflow
+1. Install MLflow
 
 ```
 %pip install mlflow>=3.0.0
 ```
-- Start MLflow UI in a separate terminal
+1. Start MLflow UI in a separate terminal
 
 ```
 mlflow ui --port 5000 --backend-store-uri sqlite:///mlruns.db
 ```
-- Connect the notebook to MLflow
+1. Connect the notebook to MLflow
 
 ```
 import mlflow
 mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("DSPy")
 ```
-- Enabling autologging.
+1. Enabling autologging.
 
 ```
 mlflow.dspy.autolog(
@@ -193,22 +193,23 @@ evaluate = dspy.Evaluate(
 )
 evaluate(program)
 ```
-Average Metric: 70.00 / 150 (46.7%): 100%|██████████████████████████████████████████████████████████████████████████████████████████████████| 150/150 [00:01<00:00, 119.75it/s] 2025/08/12 21:49:36 INFO dspy.evaluate.evaluate: Average Metric: 70 / 150 (46.7%)
+Average Metric: 70.00 / 150 (46.7%): 100%|██████████████████████████████████████████████████████████████████████████████████████████████████| 150/150 [00:01<00:00, 119.75it/s]
+2025/08/12 21:49:36 INFO dspy.evaluate.evaluate: Average Metric: 70 / 150 (46.7%)
 
 2025/08/12 21:49:36 INFO dspy.evaluate.evaluate: Average Metric: 70 / 150 (46.7%)
 
-| problem | example_answer | reasoning | pred_answer | metric | |
+|  | problem | example_answer | reasoning | pred_answer | metric | 
 |---|---|---|---|---|---|
-| 0 | Find the sum of all integer bases $b>9$ for which $17_b$ is a divi... | 70 | We are looking for integer bases \( b > 9 \) such that \( 17_b \) ... | 70 | ✔️ [1] | 
-| 1 | On $\triangle ABC$ points $A, D, E$, and $B$ lie in that order on ... | 588 | Let's analyze the problem step-by-step. We have triangle \( ABC \)... | 588 | ✔️ [1] | 
+| 0 | Find the sum of all integer bases $b>9$ for which $17_b$ is a divi... | 70 | We are looking for integer bases $ b > 9 $ such that $ 17_b $ ... | 70 | ✔️ [1] | 
+| 1 | On $\triangle ABC$ points $A, D, E$, and $B$ lie in that order on ... | 588 | Let's analyze the problem step-by-step. We have triangle $ ABC $... | 588 | ✔️ [1] | 
 | 2 | The 9 members of a baseball team went to an ice-cream parlor after... | 16 | We have 9 players, each choosing one of three flavors: chocolate (... | 16 | ✔️ [1] | 
-| 3 | Find the number of ordered pairs $(x,y)$, where both $x$ and $y$ a... | 117 | We start with the given equation: \[12x^2 - xy - 6y^2 = 0.\] Our g... | 117 | ✔️ [1] | 
-| 4 | There are $8!= 40320$ eight-digit positive integers that use each ... | 279 | We are given that there are \(8! = 40320\) eight-digit numbers tha... | 279 | ✔️ [1] | 
+| 3 | Find the number of ordered pairs $(x,y)$, where both $x$ and $y$ a... | 117 | We start with the given equation:  $$ 12x^2 - xy - 6y^2 = 0. $$  Our g... | 117 | ✔️ [1] | 
+| 4 | There are $8!= 40320$ eight-digit positive integers that use each ... | 279 | We are given that there are $8! = 40320$ eight-digit numbers tha... | 279 | ✔️ [1] | 
 | ... | ... | ... | ... | ... | ... | 
-| 145 | Let $S$ be the set of vertices of a regular $24$-gon. Find the num... | 113 | We have a regular 24-gon with vertex set \( S \) of size 24. We wa... | 1666 | |
+| 145 | Let $S$ be the set of vertices of a regular $24$-gon. Find the num... | 113 | We have a regular 24-gon with vertex set $ S $ of size 24. We wa... | 1666 |  | 
 | 146 | Let $A_1 A_2 A_3 \ldots A_{11}$ be an $11$-sided non-convex simple... | 19 | Let's analyze the problem step-by-step. We are given an 11-sided p... | 19 | ✔️ [1] | 
-| 147 | Let $x_1, x_2, x_3, \ldots$ be a sequence of rational numbers defi... | 248 | We have the sequence: \[ x_1 = \frac{25}{11}, \quad x_{k+1} = \fra... | 589 | |
-| 148 | Let $\triangle ABC$ be a right triangle with $\angle A = 90^\circ$... | 104 | Given a right triangle \(\triangle ABC\) with \(\angle A = 90^\cir... | 98 | |
+| 147 | Let $x_1, x_2, x_3, \ldots$ be a sequence of rational numbers defi... | 248 | We have the sequence: \[ x_1 = \frac{25}{11}, \quad x_{k+1} = \fra... | 589 |  | 
+| 148 | Let $\triangle ABC$ be a right triangle with $\angle A = 90^\circ$... | 104 | Given a right triangle $\triangle ABC$ with \(\angle A = 90^\cir... | 98 |  | 
 | 149 | There are exactly three positive real numbers $k$ such that the fu... | 240 | We are given the function \[ f(x) = \frac{(x - 18)(x - 72)(x - 98)... | 240 | ✔️ [1] | 
 
 150 rows × 5 columns
@@ -1749,19 +1750,19 @@ Average Metric: 85.00 / 150 (56.7%): 100%|████████████�
 
 2025/08/12 23:53:14 INFO dspy.evaluate.evaluate: Average Metric: 85 / 150 (56.7%)
 
-| problem | example_answer | reasoning | pred_answer | metric | |
+|  | problem | example_answer | reasoning | pred_answer | metric | 
 |---|---|---|---|---|---|
-| 0 | Find the sum of all integer bases $b>9$ for which $17_b$ is a divi... | 70 | - Interpret the numbers in base \( b \): \[ 17_b = 1 \cdot b + 7 =... | 70 | ✔️ [1] | 
-| 1 | On $\triangle ABC$ points $A, D, E$, and $B$ lie in that order on ... | 588 | 1. Set up coordinate system: - Place \( A \) at the origin \((0,0)... | 588 | ✔️ [1] | 
+| 0 | Find the sum of all integer bases $b>9$ for which $17_b$ is a divi... | 70 | - Interpret the numbers in base $ b $: \[ 17_b = 1 \cdot b + 7 =... | 70 | ✔️ [1] | 
+| 1 | On $\triangle ABC$ points $A, D, E$, and $B$ lie in that order on ... | 588 | 1. Set up coordinate system: - Place $ A $ at the origin \((0,0)... | 588 | ✔️ [1] | 
 | 2 | The 9 members of a baseball team went to an ice-cream parlor after... | 16 | - We have 9 players and 3 flavors: Chocolate (C), Vanilla (V), Str... | 16 | ✔️ [1] | 
-| 3 | Find the number of ordered pairs $(x,y)$, where both $x$ and $y$ a... | 117 | We need to find all integer pairs \((x,y)\) with \(x,y \in [-100, ... | 117 | ✔️ [1] | 
-| 4 | There are $8!= 40320$ eight-digit positive integers that use each ... | 279 | - We consider all 8-digit numbers using each of the digits 1 throu... | 567 | |
+| 3 | Find the number of ordered pairs $(x,y)$, where both $x$ and $y$ a... | 117 | We need to find all integer pairs $(x,y)$ with \(x,y \in [-100, ... | 117 | ✔️ [1] | 
+| 4 | There are $8!= 40320$ eight-digit positive integers that use each ... | 279 | - We consider all 8-digit numbers using each of the digits 1 throu... | 567 |  | 
 | ... | ... | ... | ... | ... | ... | 
-| 145 | Let $S$ be the set of vertices of a regular $24$-gon. Find the num... | 113 | - The problem is to find the number of ways to pair up the 24 vert... | 11 | |
-| 146 | Let $A_1 A_2 A_3 \ldots A_{11}$ be an $11$-sided non-convex simple... | 19 | We are given a simple polygon \(A_1 A_2 \dots A_{11}\) with vertic... | 19 | ✔️ [1] | 
-| 147 | Let $x_1, x_2, x_3, \ldots$ be a sequence of rational numbers defi... | 248 | Given the recurrence: \[ x_1 = \frac{25}{11}, \quad x_{k+1} = \fra... | 728 | |
-| 148 | Let $\triangle ABC$ be a right triangle with $\angle A = 90^\circ$... | 104 | - Given the right triangle \( \triangle ABC \) with right angle at... | 104 | ✔️ [1] | 
-| 149 | There are exactly three positive real numbers $k$ such that the fu... | 240 | We are given \[ f(x) = \frac{(x-18)(x-72)(x-98)(x-k)}{x}, \quad x>... | 252 | 
+| 145 | Let $S$ be the set of vertices of a regular $24$-gon. Find the num... | 113 | - The problem is to find the number of ways to pair up the 24 vert... | 11 |  | 
+| 146 | Let $A_1 A_2 A_3 \ldots A_{11}$ be an $11$-sided non-convex simple... | 19 | We are given a simple polygon $A_1 A_2 \dots A_{11}$ with vertic... | 19 | ✔️ [1] | 
+| 147 | Let $x_1, x_2, x_3, \ldots$ be a sequence of rational numbers defi... | 248 | Given the recurrence: \[ x_1 = \frac{25}{11}, \quad x_{k+1} = \fra... | 728 |  | 
+| 148 | Let $\triangle ABC$ be a right triangle with $\angle A = 90^\circ$... | 104 | - Given the right triangle $ \triangle ABC $ with right angle at... | 104 | ✔️ [1] | 
+| 149 | There are exactly three positive real numbers $k$ such that the fu... | 240 | We are given \[ f(x) = \frac{(x-18)(x-72)(x-98)(x-k)}{x}, \quad x>... | 252 |  | 
 
 150 rows × 5 columns
 

@@ -3,7 +3,7 @@ type: Web Page
 title: RL for Privacy-Conscious Delegation - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/rl_papillon
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Tutorial: Online RL over a Multi-Module DSPy Program
@@ -95,8 +95,8 @@ print(f"Loaded {len(trainset)} training examples, {len(devset)} dev examples, an
 
 What does it mean for a PAPILLON system to be successful?
 
-- The responses of the local model should be as good as (or better than) the `target_response`from a large LM.
-- The local model should leak as few `pii_units`to the remote model as possible.
+1. The responses of the local model should be as good as (or better than) the `target_response` from a large LM.
+2. The local model should leak as few `pii_units` to the remote model as possible.
 
 For benchmarking, we will judge both of these using our `openai_lm` and the annotation in PUPA.
 

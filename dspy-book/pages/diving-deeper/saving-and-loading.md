@@ -3,7 +3,7 @@ type: Web Page
 title: Saving and loading - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/saving-and-loading
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Saving and loading
@@ -142,9 +142,9 @@ On load, the runtime compares versions to the current process. A mismatch logs a
 
 ## Cross-links
 
-- [Modules: composing your own](../modules/)—- `Module.save`/- `load`are inherited from- `BaseModule`; the tree-walk that gathers state is the same one optimizers use.
-- [Signatures in depth](../signatures-in-depth/)—- `Signature.dump_state`/- `load_state`are what carry an optimizer’s rewritten instructions through a round-trip.
-- [Settings and](../settings-and-context/)—- `context()`- `dspy.settings.save`/- `dspy.load_settings`are a parallel surface for the settings singleton.
+- [Modules: composing your own](../modules/) —`Module.save` /`load` are inherited from`BaseModule` ; the tree-walk that gathers state is the same one optimizers use.
+- [Signatures in depth](../signatures-in-depth/) —`Signature.dump_state` /`load_state` are what carry an optimizer’s rewritten instructions through a round-trip.
+- [Settings and `context()`](../settings-and-context/) —`dspy.settings.save` /`dspy.load_settings` are a parallel surface for the settings singleton.
 
 # Citations
 

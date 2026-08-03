@@ -3,7 +3,7 @@ type: Web Page
 title: Tools, ReAct, and MCP - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/tools-react-and-mcp
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Tools, ReAct, and MCP
@@ -70,62 +70,62 @@ Grouped by what you’re trying to do.
 
 ### Wrapping a callable as a tool
 
-** dspy.Tool(func, name=None, desc=None, args=None, arg_types=None, arg_desc=None)**
-A Pydantic model with 
+**`dspy.Tool(func, name=None, desc=None, args=None, arg_types=None, arg_desc=None)`**
+A Pydantic model with `func` as its primary field. The constructor calls `_parse_function`, which walks the callable’s signature with `inspect.signature` and `get_type_hints`, derives the JSON schema with `pydantic.TypeAdapter`, and resolves `$ref` paths into inline schemas via `_resolve_json_schema_reference`. Explicit kwargs take precedence: pass `args={...}` and the inference for `args` is skipped, but `arg_types` and `desc` still come from inspection.
 
-`func` as its primary field. The constructor calls `_parse_function`, which walks the callable’s signature with `inspect.signature` and `get_type_hints`, derives the JSON schema with `pydantic.TypeAdapter`, and resolves `$ref` paths into inline schemas via `_resolve_json_schema_reference`. Explicit kwargs take precedence: pass `args={...}` and the inference for `args` is skipped, but `arg_types` and `desc` still come from inspection.** Tool.__call__(**kwargs) / Tool.acall(**kwargs)**
-Both go through 
+**`Tool.__call__(**kwargs)` / `Tool.acall(**kwargs)`**
+Both go through `_validate_and_parse_args`, which JSON-schema-validates each kwarg then wraps it in a one-field Pydantic model to coerce nested types like `list[list[MyModel]]`. `__call__` runs the function and inspects the return: if it’s a coroutine, behavior depends on `settings.allow_tool_async_sync_conversion`. `acall` awaits a coroutine return or returns the synchronous value directly — so the async path tolerates sync tools.
 
-`_validate_and_parse_args`, which JSON-schema-validates each kwarg then wraps it in a one-field Pydantic model to coerce nested types like `list[list[MyModel]]`. `__call__` runs the function and inspects the return: if it’s a coroutine, behavior depends on `settings.allow_tool_async_sync_conversion`. `acall` awaits a coroutine return or returns the synchronous value directly — so the async path tolerates sync tools.** Tool.format_as_litellm_function_call()** → 
+**`Tool.format_as_litellm_function_call()`** → `dict`
+Returns the OpenAI/LiteLLM tool descriptor: `{"type": "function", "function": {"name", "description", "parameters": {"type": "object", "properties": args, "required": list(args)}}}`. Every declared arg is marked `required` — Pydantic-level defaults aren’t surfaced as optional in the function descriptor.
 
-`dict`
-Returns the OpenAI/LiteLLM tool descriptor: `{"type": "function", "function": {"name", "description", "parameters": {"type": "object", "properties": args, "required": list(args)}}}`. Every declared arg is marked `required` — Pydantic-level defaults aren’t surfaced as optional in the function descriptor.** Tool.from_mcp_tool(session, tool)** → 
+**`Tool.from_mcp_tool(session, tool)`** → `Tool`
+Class method. Delegates to `dspy.utils.mcp.convert_mcp_tool`. Takes a live `mcp.ClientSession` and an `mcp.types.Tool` and returns an async DSPy tool wired to that session.
 
-`Tool`
-Class method. Delegates to `dspy.utils.mcp.convert_mcp_tool`. Takes a live `mcp.ClientSession` and an `mcp.types.Tool` and returns an async DSPy tool wired to that session.** Tool.from_langchain(tool)** → 
+**`Tool.from_langchain(tool)`** → `Tool`
+Class method. Wraps a LangChain `BaseTool` so it can be passed to DSPy modules that accept a `tools=` list. Implementation lives in `dspy.utils.langchain_tool`.
 
-`Tool`
-Class method. Wraps a LangChain `BaseTool` so it can be passed to DSPy modules that accept a `tools=` list. Implementation lives in `dspy.utils.langchain_tool`.### The ReAct module
+### The ReAct module
 
-** dspy.ReAct(signature, tools, max_iters=20)**
-On construction, ReAct coerces every entry in 
+**`dspy.ReAct(signature, tools, max_iters=20)`**
+On construction, ReAct coerces every entry in `tools` to a `dspy.Tool`, registers the auto-generated `finish` tool, and builds two internal modules: a `dspy.Predict` over a signature whose outputs are `next_thought`, `next_tool_name` (a `Literal` over the tool names), and `next_tool_args` (a `dict`); and a `dspy.ChainOfThought` extractor whose signature contains the original output fields plus a `trajectory` input. The system instructions are assembled with a numbered tool list and embedded into the predict’s signature.
 
-`tools` to a `dspy.Tool`, registers the auto-generated `finish` tool, and builds two internal modules: a `dspy.Predict` over a signature whose outputs are `next_thought`, `next_tool_name` (a `Literal` over the tool names), and `next_tool_args` (a `dict`); and a `dspy.ChainOfThought` extractor whose signature contains the original output fields plus a `trajectory` input. The system instructions are assembled with a numbered tool list and embedded into the predict’s signature.** ReAct.forward(**inputs) / ReAct.aforward(**inputs)**
-Runs the loop described above. Each iteration formats the trajectory through the current adapter and passes it as the 
+**`ReAct.forward(**inputs)` / `ReAct.aforward(**inputs)`**
+Runs the loop described above. Each iteration formats the trajectory through the current adapter and passes it as the `trajectory` input to the predict; tool exceptions are caught and stringified into the trajectory; the loop exits when the LM picks `finish` or `max_iters` is reached. The extractor then reads the final trajectory and produces the declared outputs. Returns a `dspy.Prediction` carrying both the trajectory and the extracted fields.
 
-`trajectory` input to the predict; tool exceptions are caught and stringified into the trajectory; the loop exits when the LM picks `finish` or `max_iters` is reached. The extractor then reads the final trajectory and produces the declared outputs. Returns a `dspy.Prediction` carrying both the trajectory and the extracted fields.** ReAct.truncate_trajectory(trajectory)**
-Removes the first four keys of the trajectory dict — one complete tool call. Called from 
+**`ReAct.truncate_trajectory(trajectory)`**
+Removes the first four keys of the trajectory dict — one complete tool call. Called from `_call_with_potential_trajectory_truncation` after a `ContextWindowExceededError`, with up to three rounds before the module raises. Override to keep summaries, slide a window, or implement any other policy.
 
-`_call_with_potential_trajectory_truncation` after a `ContextWindowExceededError`, with up to three rounds before the module raises. Override to keep summaries, slide a window, or implement any other policy.### Tool calls in the LM response
+### Tool calls in the LM response
 
 When an adapter supports native function calling, the LM’s output contains structured tool-call objects rather than text markers. These types model that surface.
 
-** dspy.ToolCalls(tool_calls: list[ToolCall])**
-A 
+**`dspy.ToolCalls(tool_calls: list[ToolCall])`**
+A `pydantic.BaseModel` whose single field is a list of `ToolCall` items. A validator accepts several input shapes — a list of dicts, a `{"tool_calls": [...]}` dict, or a single `{"name", "args"}` dict — so adapters parsing from different providers can route through the same constructor.
 
-`pydantic.BaseModel` whose single field is a list of `ToolCall` items. A validator accepts several input shapes — a list of dicts, a `{"tool_calls": [...]}` dict, or a single `{"name", "args"}` dict — so adapters parsing from different providers can route through the same constructor.** ToolCalls.ToolCall(name, args)**
-A single named function call with its arguments. Nested class, accessible as 
+**`ToolCalls.ToolCall(name, args)`**
+A single named function call with its arguments. Nested class, accessible as `dspy.ToolCalls.ToolCall`.
 
-`dspy.ToolCalls.ToolCall`.** ToolCall.execute(functions=None)** → 
+**`ToolCall.execute(functions=None)`** → `Any`
+Looks up the named function in a `{name: func}` dict, a list of `Tool` objects, or — when `functions=None` — the caller’s locals and globals (resolved via `inspect.currentframe().f_back`). Raises `ValueError` when the name isn’t found and `RuntimeError` when the underlying function throws.
 
-`Any`
-Looks up the named function in a `{name: func}` dict, a list of `Tool` objects, or — when `functions=None` — the caller’s locals and globals (resolved via `inspect.currentframe().f_back`). Raises `ValueError` when the name isn’t found and `RuntimeError` when the underlying function throws.** ToolCalls.from_dict_list(tool_calls_dicts)** → 
+**`ToolCalls.from_dict_list(tool_calls_dicts)`** → `ToolCalls`
+Constructor helper. Builds a `ToolCalls` from a list of `{"name", "args"}` dicts — the shape adapters produce from a provider’s native response.
 
-`ToolCalls`
-Constructor helper. Builds a `ToolCalls` from a list of `{"name", "args"}` dicts — the shape adapters produce from a provider’s native response.### MCP bridge
+### MCP bridge
 
-** dspy.utils.mcp.convert_mcp_tool(session, tool)** → 
+**`dspy.utils.mcp.convert_mcp_tool(session, tool)`** → `Tool`
+Builds a `Tool` whose `func` is an `async def` closure: it awaits `session.call_tool(tool.name, arguments=kwargs)` and unpacks the result. The unpacker pulls text from any `TextContent` entries (returning a single string when there’s one, a list otherwise) and returns non-text entries as-is. An `isError=True` response raises `RuntimeError`. The MCP tool’s `inputSchema` is mapped to DSPy’s `args`/`arg_types`/`arg_desc` via `convert_input_schema_to_tool_args`.
 
-`Tool`
-Builds a `Tool` whose `func` is an `async def` closure: it awaits `session.call_tool(tool.name, arguments=kwargs)` and unpacks the result. The unpacker pulls text from any `TextContent` entries (returning a single string when there’s one, a list otherwise) and returns non-text entries as-is. An `isError=True` response raises `RuntimeError`. The MCP tool’s `inputSchema` is mapped to DSPy’s `args`/`arg_types`/`arg_desc` via `convert_input_schema_to_tool_args`.** dspy.utils.mcp.convert_input_schema_to_tool_args(schema)** → 
+**`dspy.utils.mcp.convert_input_schema_to_tool_args(schema)`** → `(args, arg_types, arg_desc)`
+Walks an MCP-style JSON schema and produces the three dicts a `Tool` needs. Resolves `$defs`, picks up `description` fields as `arg_desc`, and translates JSON-schema types to Python types via a `_TYPE_MAPPING` table. Exported in case callers want to write their own bridge against a non-MCP protocol with similar JSON-schema arguments.
 
-`(args, arg_types, arg_desc)`
-Walks an MCP-style JSON schema and produces the three dicts a `Tool` needs. Resolves `$defs`, picks up `description` fields as `arg_desc`, and translates JSON-schema types to Python types via a `_TYPE_MAPPING` table. Exported in case callers want to write their own bridge against a non-MCP protocol with similar JSON-schema arguments.## Cross-links
+## Cross-links
 
-- [Adapters: how signatures become prompts](../adapters/)— where- `Tool`and- `ToolCalls`are formatted onto the wire, and where native function calling is opted into.
-- [Built-in module variants](../built-in-module-variants/)—- `CodeAct`and- `RLM`use the same tool-wrapping machinery in a code-execution context.
-- [RLM: exploring large contexts with code](../rlm/)— how RLM exposes built-in- `llm_query`tools and your own tools inside its sandbox.
-- [Modules: composing your own](../modules/)—- `ReAct`is a- `Module`, so trace, history, and- `set_lm`all apply.
+- [Adapters: how signatures become prompts](../adapters/) — where`Tool` and`ToolCalls` are formatted onto the wire, and where native function calling is opted into.
+- [Built-in module variants](../built-in-module-variants/) —`CodeAct` and`RLM` use the same tool-wrapping machinery in a code-execution context.
+- [RLM: exploring large contexts with code](../rlm/) — how RLM exposes built-in`llm_query` tools and your own tools inside its sandbox.
+- [Modules: composing your own](../modules/) —`ReAct` is a`Module` , so trace, history, and`set_lm` all apply.
 
 # Citations
 

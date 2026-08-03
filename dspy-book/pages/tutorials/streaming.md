@@ -3,22 +3,22 @@ type: Web Page
 title: Streaming - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/streaming
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Streaming
 
 In this guide, we will walk you through how to enable streaming in your DSPy program. DSPy Streaming consists of two parts:
 
-- **Output Token Streaming**: Stream individual tokens as they’re generated, rather than waiting for the complete response.
-- **Intermediate Status Streaming**: Provide real-time updates about the program’s execution state (e.g., “Calling web search…”, “Processing results…”).
+- **Output Token Streaming** : Stream individual tokens as they’re generated, rather than waiting for the complete response.
+- **Intermediate Status Streaming** : Provide real-time updates about the program’s execution state (e.g., “Calling web search…”, “Processing results…”).
 
 ## Output Token Streaming
 
 DSPy’s token streaming feature works with any module in your pipeline, not just the final output. The only requirement is that the streamed field must be of type `str`. To enable token streaming:
 
-- Wrap your program with `dspy.streamify`
-- Create one or more `dspy.streaming.StreamListener`objects to specify which fields to stream
+1. Wrap your program with `dspy.streamify`
+2. Create one or more `dspy.streaming.StreamListener` objects to specify which fields to stream
 
 Here’s a basic example:
 
@@ -48,9 +48,12 @@ To handle these different types and implement custom logic:
 `StreamResponse` (`dspy.streaming.StreamResponse`) is the wrapper class of streaming tokens. It comes with 3
 fields:
 
-- `predict_name`: the name of the predict that holds the- `signature_field_name`. The name is the same name of keys as you run- `your_program.named_predictors()`. In the code above because- `answer`is from the- `predict`itself, so the- `predict_name`shows up as- `self`, which is the only key as your run- `predict.named_predictors()`.
-- `signature_field_name`: the output field that these tokens map to.- `predict_name`and- `signature_field_name`together form the unique identifier of the field. We will demonstrate how to handle multiple fields streaming and duplicated field name later in this guide.
-- `chunk`: the value of the stream chunk.
+- `predict_name` : the name of the predict that holds the`signature_field_name` . The name is the
+  same name of keys as you run`your_program.named_predictors()` . In the code above because`answer` is from
+  the`predict` itself, so the`predict_name` shows up as`self` , which is the only key as your run`predict.named_predictors()` .
+- `signature_field_name` : the output field that these tokens map to.`predict_name` and`signature_field_name` together form the unique identifier of the field. We will demonstrate how to handle multiple fields streaming
+  and duplicated field name later in this guide.
+- `chunk` : the value of the stream chunk.
 
 ### Streaming with Cache
 
@@ -86,9 +89,9 @@ The output will be like:
 
 Status streaming keeps users informed about the program’s progress, especially useful for long-running operations like tool calls or complex AI pipelines. To implement status streaming:
 
-- Create a custom status message provider by subclassing `dspy.streaming.StatusMessageProvider`
-- Override the desired hook methods to provide custom status messages
-- Pass your provider to `dspy.streamify`
+1. Create a custom status message provider by subclassing `dspy.streaming.StatusMessageProvider`
+2. Override the desired hook methods to provide custom status messages
+3. Pass your provider to `dspy.streamify`
 
 Example:
 

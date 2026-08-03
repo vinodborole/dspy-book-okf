@@ -3,7 +3,7 @@ type: Web Page
 title: 'RLM: exploring large contexts with code - DSPy'
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/rlm
-timestamp: '2026-07-27T09:58:26.606457+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # RLM: exploring large contexts with code
@@ -62,62 +62,62 @@ The class carries the `@experimental` decorator. The hard parts are still settli
 
 ### Defining and running an RLM
 
-** dspy.RLM(signature, max_iters=20, max_llm_calls=50, max_output_chars=10_000, verbose=False, tools=None, sub_lm=None, interpreter_factory=PythonInterpreter)**
+**`dspy.RLM(signature, max_iters=20, max_llm_calls=50, max_output_chars=10_000, verbose=False, tools=None, sub_lm=None, interpreter_factory=PythonInterpreter)`**
 The constructor parses the signature and builds the two internal predictors, formatting your task instructions, input names, and output-field types into the action prompt and creating a separate extract signature for the fallback. The budgets and the sandbox configuration are all fixed here, so one instance carries one configuration.
 
-** __call__([interpreter], **inputs) / acall([interpreter], **inputs)**
-The public call validates the inputs against the signature, builds the variable list, opens the interpreter, and runs the loop. Each turn asks the action predictor for code, runs it, and appends the result to history until the model submits or the loop reaches 
+**`__call__([interpreter], **inputs)` / `acall([interpreter], **inputs)`**
+The public call validates the inputs against the signature, builds the variable list, opens the interpreter, and runs the loop. Each turn asks the action predictor for code, runs it, and appends the result to history until the model submits or the loop reaches `max_iters`. `acall()` is the async twin and uses `acall` on the predictors. Both return a `Prediction`. An interpreter passed as the first positional argument is caller-owned: RLM updates its execution context but does not shut it down.
 
-`max_iters`. `acall()` is the async twin and uses `acall` on the predictors. Both return a `Prediction`. An interpreter passed as the first positional argument is caller-owned: RLM updates its execution context but does not shut it down.### Programming the loop with built-in tools
+### Programming the loop with built-in tools
 
 The model writes these into its code blocks. You don’t call them, but knowing them tells you what the model can do.
 
-** llm_query(prompt)**
-One sub-LLM call. It sends the prompt to 
+**`llm_query(prompt)`**
+One sub-LLM call. It sends the prompt to `sub_lm` or the configured LM, increments the counter, and returns the response text. It raises if the prompt is empty or the budget is spent.
 
-`sub_lm` or the configured LM, increments the counter, and returns the response text. It raises if the prompt is empty or the budget is spent.** llm_query_batched(prompts)**
-Concurrent sub-LLM calls over a list, run on an eight-worker thread pool and returned in input order. A failed call comes back as an 
+**`llm_query_batched(prompts)`**
+Concurrent sub-LLM calls over a list, run on an eight-worker thread pool and returned in input order. A failed call comes back as an `[ERROR] ...` string in its slot rather than aborting the batch. This beats a Python loop of `llm_query` when the model has many independent snippets to read.
 
-`[ERROR] ...` string in its slot rather than aborting the batch. This beats a Python loop of `llm_query` when the model has many independent snippets to read.** SUBMIT(...)**
+**`SUBMIT(...)`**
 Ends the run and returns the final outputs. RLM validates the submitted dict against the signature’s output fields and parses each value to its declared type. On a type error or a missing field it feeds the message back to the model for another attempt instead of failing the call.
 
-** print(...)**
-The only way the model sees a result. REPL stdout is captured, truncated to 
+**`print(...)`**
+The only way the model sees a result. REPL stdout is captured, truncated to `max_output_chars`, and shown in the next turn’s history. A code block that computes without printing returns `(no output - did you forget to print?)`, which is why the instructions stress printing.
 
-`max_output_chars`, and shown in the next turn’s history. A code block that computes without printing returns `(no output - did you forget to print?)`, which is why the instructions stress printing.### Budgeting iterations and sub-LLM calls
+### Budgeting iterations and sub-LLM calls
 
-** max_iters, max_llm_calls, max_output_chars**
-Three independent limits. 
+**`max_iters`, `max_llm_calls`, `max_output_chars`**
+Three independent limits. `max_iters` bounds REPL turns before the extract fallback fires. `max_llm_calls` bounds recursive sub-LLM calls across the whole run. `max_output_chars` bounds how much of each REPL output reaches the model, keeping a noisy print from flooding the prompt.
 
-`max_iters` bounds REPL turns before the extract fallback fires. `max_llm_calls` bounds recursive sub-LLM calls across the whole run. `max_output_chars` bounds how much of each REPL output reaches the model, keeping a noisy print from flooding the prompt.** sub_lm**
-The model for 
+**`sub_lm`**
+The model for `llm_query` and `llm_query_batched`. Left unset it falls back to `dspy.settings.lm`, so by default the loop and its sub-calls share one model.
 
-`llm_query` and `llm_query_batched`. Left unset it falls back to `dspy.settings.lm`, so by default the loop and its sub-calls share one model.### Extending the sandbox with tools and inputs
+### Extending the sandbox with tools and inputs
 
-** tools=[...]**
-A list of plain functions or 
+**`tools=[...]`**
+A list of plain functions or `dspy.Tool` objects. RLM normalizes each to a `Tool`, rejects names that aren’t valid identifiers or that collide with the built-ins, and documents their signatures in the action prompt. The model calls them as ordinary Python inside its code.
 
-`dspy.Tool` objects. RLM normalizes each to a `Tool`, rejects names that aren’t valid identifiers or that collide with the built-ins, and documents their signatures in the action prompt. The model calls them as ordinary Python inside its code.** interpreter_factory=...**
-A zero-argument callable that returns a fresh 
+**`interpreter_factory=...`**
+A zero-argument callable that returns a fresh `CodeInterpreter` for one invocation. RLM may call the factory concurrently, and it always shuts down the returned interpreter. A class such as `PythonInterpreter` is already a factory; use `functools.partial` or a callable provider object when construction needs configuration. RLM adds invocation-scoped tools to the returned interpreter’s mutable `tools` dictionary, so remote sandboxes need a `CodeInterpreter` adapter that supports that protocol.
 
-`CodeInterpreter` for one invocation. RLM may call the factory concurrently, and it always shuts down the returned interpreter. A class such as `PythonInterpreter` is already a factory; use `functools.partial` or a callable provider object when construction needs configuration. RLM adds invocation-scoped tools to the returned interpreter’s mutable `tools` dictionary, so remote sandboxes need a `CodeInterpreter` adapter that supports that protocol.** __call__(interpreter, **inputs) / acall(interpreter, **inputs)**
-An escape hatch for a caller-owned interpreter, supplied as the first positional argument. RLM mutates its 
+**`__call__(interpreter, **inputs)` / `acall(interpreter, **inputs)`**
+An escape hatch for a caller-owned interpreter, supplied as the first positional argument. RLM mutates its `tools` dictionary and, when supported, its output-field metadata, but does not shut down or restore the instance. Reuse is supported only for sequential calls to the same RLM instance, so retained variables and tool registrations stay within one program and trust boundary. Use `interpreter_factory` for concurrent invocations. A `PythonInterpreter` override must also stay on the thread where it was first used.
 
-`tools` dictionary and, when supported, its output-field metadata, but does not shut down or restore the instance. Reuse is supported only for sequential calls to the same RLM instance, so retained variables and tool registrations stay within one program and trust boundary. Use `interpreter_factory` for concurrent invocations. A `PythonInterpreter` override must also stay on the thread where it was first used.** dspy.SandboxSerializable**
-The base class for inputs that need custom loading. Implement 
+**`dspy.SandboxSerializable`**
+The base class for inputs that need custom loading. Implement `sandbox_setup`, `to_sandbox`, `sandbox_assignment`, and `rlm_preview`. It also defines a Pydantic schema hook, so a subclass can be a typed field in a signature, as in `data: DataFrame = dspy.InputField()`.
 
-`sandbox_setup`, `to_sandbox`, `sandbox_assignment`, and `rlm_preview`. It also defines a Pydantic schema hook, so a subclass can be a typed field in a signature, as in `data: DataFrame = dspy.InputField()`.### Inspecting the trajectory
+### Inspecting the trajectory
 
 `Prediction` fields: your output fields, `trajectory`, `final_reasoning``forward()` returns a `Prediction` carrying the signature’s output fields plus two debugging fields. `trajectory` is a list of `{reasoning, code, output}` dicts, one per turn. `final_reasoning` is the model’s reasoning on the closing step. Read `trajectory` to see exactly what code ran and why.
 
-** RLM.tools**
-A property returning the user-provided tools as a name-to-
+**`RLM.tools`**
+A property returning the user-provided tools as a name-to-`Tool` dict, excluding the built-in `llm_query` and `llm_query_batched`. Use it to confirm what the model can call.
 
-`Tool` dict, excluding the built-in `llm_query` and `llm_query_batched`. Use it to confirm what the model can call.## Cross-links
+## Cross-links
 
-- [Built-in module variants](../built-in-module-variants/)— where RLM sits among the other non-- `Predict`modules.
-- [Tools, ReAct, and MCP](../tools-react-and-mcp/)— the tool-wrapping machinery RLM reuses.
-- `dspy.RLM`API reference
+- [Built-in module variants](../built-in-module-variants/) — where RLM sits among the other non-`Predict` modules.
+- [Tools, ReAct, and MCP](../tools-react-and-mcp/) — the tool-wrapping machinery RLM reuses.
+- [`dspy.RLM` API reference](../../api/modules/RLM/) — full parameter table, built-in tool list, and worked examples.
 
 # Citations
 

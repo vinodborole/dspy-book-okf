@@ -3,7 +3,7 @@ type: Web Page
 title: Your first program - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/getting-started/first-program
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Writing our first DSPy program
@@ -18,27 +18,23 @@ The simplest way to define a DSPy Signature is with a string of the form `"input
 
 Because we are programming with language models, the names of our variables matter. They both define the interface for our program and give the model a hint at our intent. If we change `haiku` to `limerick`, the model would note our cue and produce a limerick instead. Additionally, our program’s output would be accessible as `result.limerick`, rather than `result.haiku`.
 
-To turn our Signature into a callable function, we use `dspy.Predict`. Predict is a kind of [DSPy  Module](../../diving-deeper/modules/). If Signatures specify 
-
-*what*we want, Modules define
-
-*how*we aim to achieve it. They implement a call-time strategy, manage the control flow, tools, and more.
+To turn our Signature into a callable function, we use `dspy.Predict`. Predict is a kind of [DSPy `Module`](../../diving-deeper/modules/). If Signatures specify *what* we want, Modules define *how* we aim to achieve it. They implement a call-time strategy, manage the control flow, tools, and more. 
 
 `Predict` is the foundational Module. Let’s look at what happens when we call `dspy.Predict(haiku_signature)`:
 
-- The string, `"subject -> haiku"`is parsed into a Signature class, with input and output fields defaulting to type`str`.
-- A default instruction string is generated for the `Signature`instance, in this case: “Given the fields`subject`, produce the fields`haiku`.”
-- A `Predict`module is instantiated with this`Signature`.
+1. The string, `"subject -> haiku"` is parsed into a Signature class, with input and output fields defaulting to type`str` .
+2. A default instruction string is generated for the `Signature` instance, in this case: “Given the fields`subject` , produce the fields`haiku` .”
+3. A `Predict` module is instantiated with this`Signature` .
 
 `haiku_generator` is now callable. Calling `haiku_generator(subject="computer science")` kicks off the following process:
 
-- The DSPy settings are checked to ensure an `LM`is configured.
-- An `Adapter``Signature`and its inputs into messages the`LM`can consume. By default, this is the`ChatAdapter`, but there are JSON, XML, and other variants to format your messages suitable for a given`LM`.
-- The `ChatAdapter`builds the prompt, which includes the`Signature`instructions, the field schema describing the inputs and outputs, formatting instructions, and the provided input (in this case, “computer science”).
-- The messages are sent to the `LM`. Caching is enabled by default so identical calls return cached responses.
-- A response is returned, which the `ChatAdapter`parses to extract the output fields.
-- The `Predict`module returns a`Prediction`object with accessible output fields. Calling`result.haiku`returns the generated haiku.
-- The call is recorded in `LM`history, which can be inspected later with`dspy.inspect_history()`.
+1. The DSPy settings are checked to ensure an `LM` is configured.
+2. An [`Adapter`](../../diving-deeper/adapters/) is used to render the`Signature` and its inputs into messages the`LM` can consume. By default, this is the`ChatAdapter` , but there are JSON, XML, and other variants to format your messages suitable for a given`LM` .
+3. The `ChatAdapter` builds the prompt, which includes the`Signature` instructions, the field schema describing the inputs and outputs, formatting instructions, and the provided input (in this case, “computer science”).
+4. The messages are sent to the `LM` . Caching is enabled by default so identical calls return cached responses.
+5. A response is returned, which the `ChatAdapter` parses to extract the output fields.
+6. The `Predict` module returns a`Prediction` object with accessible output fields. Calling`result.haiku` returns the generated haiku.
+7. The call is recorded in `LM` history, which can be inspected later with`dspy.inspect_history()` .
 
 Running `print(result.haiku)` produces:
 

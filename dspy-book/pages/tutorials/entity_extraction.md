@@ -3,7 +3,7 @@ type: Web Page
 title: Entity Extraction - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/entity_extraction
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Tutorial: Entity Extraction
@@ -30,24 +30,24 @@ Install the latest version of DSPy and follow along. If you're looking instead f
 
 [MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
 
-- Install MLflow
+1. Install MLflow
 
 ```
 %pip install mlflow>=2.20
 ```
-- Start MLflow UI in a separate terminal
+1. Start MLflow UI in a separate terminal
 
 ```
 mlflow ui --port 5000
 ```
-- Connect the notebook to MLflow
+1. Connect the notebook to MLflow
 
 ```
 import mlflow
 mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("DSPy")
 ```
-- Enabling tracing.
+1. Enabling tracing.
 
 ```
 mlflow.dspy.autolog()
@@ -60,9 +60,9 @@ In this section, we prepare the CoNLL-2003 dataset, which is commonly used for e
 
 We will:
 
-- Load the dataset using the Hugging Face `datasets`library.
-- Define a function to extract tokens referring to people.
-- Slice the dataset to create smaller subsets for training and testing.
+1. Load the dataset using the Hugging Face `datasets` library.
+2. Define a function to extract tokens referring to people.
+3. Slice the dataset to create smaller subsets for training and testing.
 
 DSPy expects examples in a structured format, so we'll also transform the dataset into DSPy `Examples` for easy integration.
 
@@ -132,14 +132,14 @@ Then, we configure DSPy to use a particular language model (`gpt-4o-mini`) for a
 
 **Key DSPy Concepts Introduced:**
 
-- **Signatures:**Define structured input/output schemas for your program.
-- **Modules:**Encapsulate program logic in reusable, composable units.
+- **Signatures:** Define structured input/output schemas for your program.
+- **Modules:** Encapsulate program logic in reusable, composable units.
 
 Specifically, we'll:
 
-- Create a `PeopleExtraction`DSPy Signature to specify the input (`tokens`) and output (`extracted_people`) fields.
-- Define a `people_extractor`program that uses DSPy's built-in`dspy.ChainOfThought`module to implement the`PeopleExtraction`signature. The program extracts entities referring to people from a list of input tokens using language model (LM) prompting.
-- Use the `dspy.LM`class and`dspy.configure()`method to configure the language model that DSPy will use when invoking the program.
+- Create a `PeopleExtraction` DSPy Signature to specify the input (`tokens` ) and output (`extracted_people` ) fields.
+- Define a `people_extractor` program that uses DSPy's built-in`dspy.ChainOfThought` module to implement the`PeopleExtraction` signature. The program extracts entities referring to people from a list of input tokens using language model (LM) prompting.
+- Use the `dspy.LM` class and`dspy.configure()` method to configure the language model that DSPy will use when invoking the program.
 
 ```
 from typing import List
@@ -168,8 +168,8 @@ In DSPy, evaluating a program's performance is critical for iterative developmen
 
 **What We'll Do:**
 
-- Define a custom metric (`extraction_correctness_metric`) to evaluate whether the extracted entities match the ground truth.
-- Create an evaluation function (`evaluate_correctness`) to apply this metric to a training or test dataset and compute the overall accuracy.
+- Define a custom metric (`extraction_correctness_metric` ) to evaluate whether the extracted entities match the ground truth.
+- Create an evaluation function (`evaluate_correctness` ) to apply this metric to a training or test dataset and compute the overall accuracy.
 
 The evaluation function uses DSPy's `Evaluate` utility to handle parallelism and visualization of results.
 
@@ -211,13 +211,13 @@ Average Metric: 172.00 / 200 (86.0%): 100%|████████████�
 
 2024/11/18 21:08:04 INFO dspy.evaluate.evaluate: Average Metric: 172 / 200 (86.0%)
 
-| tokens | expected_extracted_people | rationale | extracted_people | extraction_correctness_metric | |
+|  | tokens | expected_extracted_people | rationale | extracted_people | extraction_correctness_metric | 
 |---|---|---|---|---|---|
-| 0 | [SOCCER, -, JAPAN, GET, LUCKY, WIN, ,, CHINA, IN, SURPRISE, DEFEAT... | [CHINA] | We extracted "JAPAN" and "CHINA" as they refer to specific countri... | [JAPAN, CHINA] | |
+| 0 | [SOCCER, -, JAPAN, GET, LUCKY, WIN, ,, CHINA, IN, SURPRISE, DEFEAT... | [CHINA] | We extracted "JAPAN" and "CHINA" as they refer to specific countri... | [JAPAN, CHINA] |  | 
 | 1 | [Nadim, Ladki] | [Nadim, Ladki] | We extracted the tokens "Nadim" and "Ladki" as they refer to speci... | [Nadim, Ladki] | ✔️ [True] | 
 | 2 | [AL-AIN, ,, United, Arab, Emirates, 1996-12-06] | [] | There are no tokens referring to specific people in the provided l... | [] | ✔️ [True] | 
 | 3 | [Japan, began, the, defence, of, their, Asian, Cup, title, with, a... | [] | We did not find any tokens referring to specific people in the pro... | [] | ✔️ [True] | 
-| 4 | [But, China, saw, their, luck, desert, them, in, the, second, matc... | [] | The extracted tokens referring to specific people are "China" and ... | [China, Uzbekistan] | |
+| 4 | [But, China, saw, their, luck, desert, them, in, the, second, matc... | [] | The extracted tokens referring to specific people are "China" and ... | [China, Uzbekistan] |  | 
 | ... | ... | ... | ... | ... | ... | 
 | 195 | ['The', 'Wallabies', 'have', 'their', 'sights', 'set', 'on', 'a', ... | [David, Campese] | The extracted_people includes "David Campese" as it refers to a sp... | [David, Campese] | ✔️ [True] | 
 | 196 | ['The', 'Wallabies', 'currently', 'have', 'no', 'plans', 'to', 'ma... | [] | The extracted_people includes "Wallabies" as it refers to a specif... | [] | ✔️ [True] | 
@@ -265,7 +265,7 @@ DSPy includes powerful optimizers that can improve the quality of your system.
 
 Here, we use DSPy's `MIPROv2` optimizer to:
 
-- Automatically tune the program's language model (LM) prompt by 1. using the LM to adjust the prompt's instructions and 2. building few-shot examples from the training dataset that are augmented with reasoning generated from `dspy.ChainOfThought`.
+- Automatically tune the program's language model (LM) prompt by 1. using the LM to adjust the prompt's instructions and 2. building few-shot examples from the training dataset that are augmented with reasoning generated from `dspy.ChainOfThought` .
 - Maximize correctness on the training set.
 
 This optimization process is automated, saving time and effort while improving accuracy.
@@ -294,13 +294,13 @@ In this case, we see that accuracy of the program on the test dataset has improv
 ```
 evaluate_correctness(optimized_people_extractor, devset=test_set)
 ```
-Average Metric: 186.00 / 200 (93.0%): 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [00:23<00:00, 8.58it/s]
+Average Metric: 186.00 / 200 (93.0%): 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [00:23<00:00,  8.58it/s]
 
 2024/11/18 21:15:00 INFO dspy.evaluate.evaluate: Average Metric: 186 / 200 (93.0%)
 
-| tokens | expected_extracted_people | rationale | extracted_people | extraction_correctness_metric | |
+|  | tokens | expected_extracted_people | rationale | extracted_people | extraction_correctness_metric | 
 |---|---|---|---|---|---|
-| 0 | [SOCCER, -, JAPAN, GET, LUCKY, WIN, ,, CHINA, IN, SURPRISE, DEFEAT... | [CHINA] | There are no specific people mentioned in the provided tokens. The... | [] | |
+| 0 | [SOCCER, -, JAPAN, GET, LUCKY, WIN, ,, CHINA, IN, SURPRISE, DEFEAT... | [CHINA] | There are no specific people mentioned in the provided tokens. The... | [] |  | 
 | 1 | [Nadim, Ladki] | [Nadim, Ladki] | The tokens "Nadim Ladki" refer to a specific individual. Both toke... | [Nadim, Ladki] | ✔️ [True] | 
 | 2 | [AL-AIN, ,, United, Arab, Emirates, 1996-12-06] | [] | There are no tokens referring to specific people in the provided l... | [] | ✔️ [True] | 
 | 3 | [Japan, began, the, defence, of, their, Asian, Cup, title, with, a... | [] | There are no specific people mentioned in the provided tokens. The... | [] | ✔️ [True] | 
@@ -328,7 +328,73 @@ Use `inspect_history(n=1)` to view the last interaction and analyze the generate
 ```
 dspy.inspect_history(n=1)
 ```
-[2024-11-18T21:15:00.584497] System message: Your input fields are: 1. `tokens` (list[str]): tokenized text Your output fields are: 1. `rationale` (str): ${produce the extracted_people}. We ... 2. `extracted_people` (list[str]): all tokens referring to specific people extracted from the tokenized text All interactions will be structured in the following way, with the appropriate values filled in. [[ ## tokens ## ]] {tokens} [[ ## rationale ## ]] {rationale} [[ ## extracted_people ## ]] {extracted_people} # note: the value you produce must be pareseable according to the following JSON schema: {"type": "array", "items": {"type": "string"}} [[ ## completed ## ]] In adhering to this structure, your objective is: In a high-stakes situation where accurate identification of individuals is critical for regulatory compliance and public health communication, extract contiguous tokens referring to specific people from the provided list of string tokens. Ensure that you output each identified individual as separate tokens without combining multiple tokens into a single value. This task is essential for ensuring clarity and accountability in communications pertaining to EU regulations and health matters. User message: [[ ## tokens ## ]] ["He", "said", "further", "scientific", "study", "was", "required", "and", "if", "it", "was", "found", "that", "action", "was", "needed", "it", "should", "be", "taken", "by", "the", "European", "Union", "."] Respond with the corresponding output fields, starting with the field `[[ ## rationale ## ]]`, then `[[ ## extracted_people ## ]]` (must be formatted as a valid Python list[str]), and then ending with the marker for `[[ ## completed ## ]]`. Assistant message: [[ ## rationale ## ]] There are no specific people mentioned in the provided tokens. The only reference is to the "European Union," which is an organization rather than a specific person. We therefore conclude that there are no extracted people. [[ ## extracted_people ## ]] [] [[ ## completed ## ]] User message: [[ ## tokens ## ]] ["BRUSSELS", "1996-08-22"] Respond with the corresponding output fields, starting with the field `[[ ## rationale ## ]]`, then `[[ ## extracted_people ## ]]` (must be formatted as a valid Python list[str]), and then ending with the marker for `[[ ## completed ## ]]`. Assistant message: [[ ## rationale ## ]] There are no tokens referring to specific people in the provided list. We only have a location and a date. [[ ## extracted_people ## ]] [] [[ ## completed ## ]] User message: [[ ## tokens ## ]] ["Fischler", "proposed", "EU-wide", "measures", "after", "reports", "from", "Britain", "and", "France", "that", "under", "laboratory", "conditions", "sheep", "could", "contract", "Bovine", "Spongiform", "Encephalopathy", "(", "BSE", ")", "--", "mad", "cow", "disease", "."] Respond with the corresponding output fields, starting with the field `[[ ## rationale ## ]]`, then `[[ ## extracted_people ## ]]` (must be formatted as a valid Python list[str]), and then ending with the marker for `[[ ## completed ## ]]`. Assistant message: [[ ## rationale ## ]] The extracted tokens refer to specific people mentioned in the text. In this case, "Fischler" is the only token that refers to a specific person. We extract this token as it is contiguous and represents an individual involved in the proposed measures. [[ ## extracted_people ## ]] ["Fischler"] [[ ## completed ## ]] User message: [[ ## tokens ## ]] ["Germany", "'s", "representative", "to", "the", "European", "Union", "'s", "veterinary", "committee", "Werner", "Zwingmann", "said", "on", "Wednesday", "consumers", "should", "buy", "sheepmeat", "from", "countries", "other", "than", "Britain", "until", "the", "scientific", "advice", "was", "clearer", "."] Respond with the corresponding output fields, starting with the field `[[ ## rationale ## ]]`, then `[[ ## extracted_people ## ]]` (must be formatted as a valid Python list[str]), and then ending with the marker for `[[ ## completed ## ]]`. Assistant message: [[ ## rationale ## ]] We extracted the name "Werner Zwingmann" from the tokenized text as it refers to a specific person mentioned in the context of a statement regarding sheepmeat consumption. [[ ## extracted_people ## ]] ["Werner", "Zwingmann"] [[ ## completed ## ]] User message: [[ ## tokens ## ]] ["LONDON", "1996-12-06"] Respond with the corresponding output fields, starting with the field `[[ ## rationale ## ]]`, then `[[ ## extracted_people ## ]]` (must be formatted as a valid Python list[str]), and then ending with the marker for `[[ ## completed ## ]]`. Response: [[ ## rationale ## ]] There are no tokens referring to specific people in the provided list. The tokens only include a location and a date. [[ ## extracted_people ## ]] [] [[ ## completed ## ]]
+[2024-11-18T21:15:00.584497]
+System message:
+Your input fields are:
+1. `tokens` (list[str]): tokenized text
+Your output fields are:
+1. `rationale` (str): ${produce the extracted_people}. We ...
+2. `extracted_people` (list[str]): all tokens referring to specific people extracted from the tokenized text
+All interactions will be structured in the following way, with the appropriate values filled in.
+[[ ## tokens ## ]]
+{tokens}
+[[ ## rationale ## ]]
+{rationale}
+[[ ## extracted_people ## ]]
+{extracted_people}        # note: the value you produce must be pareseable according to the following JSON schema: {"type": "array", "items": {"type": "string"}}
+[[ ## completed ## ]]
+In adhering to this structure, your objective is: 
+        In a high-stakes situation where accurate identification of individuals is critical for regulatory compliance and public health communication, extract contiguous tokens referring to specific people from the provided list of string tokens. Ensure that you output each identified individual as separate tokens without combining multiple tokens into a single value. This task is essential for ensuring clarity and accountability in communications pertaining to EU regulations and health matters.
+User message:
+[[ ## tokens ## ]]
+["He", "said", "further", "scientific", "study", "was", "required", "and", "if", "it", "was", "found", "that", "action", "was", "needed", "it", "should", "be", "taken", "by", "the", "European", "Union", "."]
+Respond with the corresponding output fields, starting with the field `[[ ## rationale ## ]]`, then `[[ ## extracted_people ## ]]` (must be formatted as a valid Python list[str]), and then ending with the marker for `[[ ## completed ## ]]`.
+Assistant message:
+[[ ## rationale ## ]]
+There are no specific people mentioned in the provided tokens. The only reference is to the "European Union," which is an organization rather than a specific person. We therefore conclude that there are no extracted people.
+[[ ## extracted_people ## ]]
+[]
+[[ ## completed ## ]]
+User message:
+[[ ## tokens ## ]]
+["BRUSSELS", "1996-08-22"]
+Respond with the corresponding output fields, starting with the field `[[ ## rationale ## ]]`, then `[[ ## extracted_people ## ]]` (must be formatted as a valid Python list[str]), and then ending with the marker for `[[ ## completed ## ]]`.
+Assistant message:
+[[ ## rationale ## ]]
+There are no tokens referring to specific people in the provided list. We only have a location and a date.
+[[ ## extracted_people ## ]]
+[]
+[[ ## completed ## ]]
+User message:
+[[ ## tokens ## ]]
+["Fischler", "proposed", "EU-wide", "measures", "after", "reports", "from", "Britain", "and", "France", "that", "under", "laboratory", "conditions", "sheep", "could", "contract", "Bovine", "Spongiform", "Encephalopathy", "(", "BSE", ")", "--", "mad", "cow", "disease", "."]
+Respond with the corresponding output fields, starting with the field `[[ ## rationale ## ]]`, then `[[ ## extracted_people ## ]]` (must be formatted as a valid Python list[str]), and then ending with the marker for `[[ ## completed ## ]]`.
+Assistant message:
+[[ ## rationale ## ]]
+The extracted tokens refer to specific people mentioned in the text. In this case, "Fischler" is the only token that refers to a specific person. We extract this token as it is contiguous and represents an individual involved in the proposed measures.
+[[ ## extracted_people ## ]]
+["Fischler"]
+[[ ## completed ## ]]
+User message:
+[[ ## tokens ## ]]
+["Germany", "'s", "representative", "to", "the", "European", "Union", "'s", "veterinary", "committee", "Werner", "Zwingmann", "said", "on", "Wednesday", "consumers", "should", "buy", "sheepmeat", "from", "countries", "other", "than", "Britain", "until", "the", "scientific", "advice", "was", "clearer", "."]
+Respond with the corresponding output fields, starting with the field `[[ ## rationale ## ]]`, then `[[ ## extracted_people ## ]]` (must be formatted as a valid Python list[str]), and then ending with the marker for `[[ ## completed ## ]]`.
+Assistant message:
+[[ ## rationale ## ]]
+We extracted the name "Werner Zwingmann" from the tokenized text as it refers to a specific person mentioned in the context of a statement regarding sheepmeat consumption.
+[[ ## extracted_people ## ]]
+["Werner", "Zwingmann"]
+[[ ## completed ## ]]
+User message:
+[[ ## tokens ## ]]
+["LONDON", "1996-12-06"]
+Respond with the corresponding output fields, starting with the field `[[ ## rationale ## ]]`, then `[[ ## extracted_people ## ]]` (must be formatted as a valid Python list[str]), and then ending with the marker for `[[ ## completed ## ]]`.
+Response:
+[[ ## rationale ## ]]
+There are no tokens referring to specific people in the provided list. The tokens only include a location and a date.
+[[ ## extracted_people ## ]]
+[]
+[[ ## completed ## ]]
 
 ## Keeping an eye on cost
 
@@ -358,9 +424,9 @@ loaded_people_extractor(tokens=["Italy", "recalled", "Marcello", "Cuttitta"]).ex
 
 Instead of saving the program to a local file, you can track it in MLflow for better reproducibility and collaboration.
 
-- **Dependency Management**: MLflow automatically save the frozen environment metadata along with the program to ensure reproducibility.
-- **Experiment Tracking**: With MLflow, you can track the program's performance and cost along with the program itself.
-- **Collaboration**: You can share the program and results with your team members by sharing the MLflow experiment.
+1. **Dependency Management** : MLflow automatically save the frozen environment metadata along with the program to ensure reproducibility.
+2. **Experiment Tracking** : With MLflow, you can track the program's performance and cost along with the program itself.
+3. **Collaboration** : You can share the program and results with your team members by sharing the MLflow experiment.
 
 To save the program in MLflow, run the following code:
 
@@ -389,7 +455,7 @@ By leveraging structured inputs and outputs, we ensured that the system was easy
 **Next Steps:**
 
 - Experiment with extraction of other entity types (e.g., locations or organizations).
-- Explore DSPy's other builtin modules like `ReAct`for more complex reasoning tasks.
+- Explore DSPy's other builtin modules like `ReAct` for more complex reasoning tasks.
 - Use the system in larger workflows, such as large scale document processing or summarization.
 
 # Citations

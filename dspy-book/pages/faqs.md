@@ -3,7 +3,7 @@ type: Web Page
 title: FAQ - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/faqs
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 This page is outdated and may not be fully accurate in DSPy 2.5 and 2.6
@@ -12,7 +12,7 @@ This page is outdated and may not be fully accurate in DSPy 2.5 and 2.6
 
 ## Is DSPy right for me? DSPy vs. other frameworks
 
-The **DSPy** philosophy and abstraction differ significantly from other libraries and frameworks, so it’s usually straightforward to decide when **DSPy** is (or isn’t) the right framework for your usecase. If you’re a NLP/AI researcher (or a practitioner exploring new pipelines or new tasks), the answer is generally an invariable **yes**. If you’re a practitioner doing other things, please read on.
+The **DSPy** philosophy and abstraction differ significantly from other libraries and frameworks, so it’s usually straightforward to decide when **DSPy** is (or isn’t) the right framework for your usecase. If you’re an NLP/AI researcher (or a practitioner exploring new pipelines or new tasks), the answer is generally an invariable **yes**. If you’re a practitioner doing other things, please read on.
 
 **DSPy vs. thin wrappers for prompts (OpenAI API, MiniChain, basic templating)** In other words: *Why can’t I just write my prompts directly as string templates?* Well, for extremely simple settings, this *might* work just fine. (If you’re familiar with neural networks, this is like expressing a tiny two-layer NN as a Python for-loop. It kinda works.) However, when you need higher quality (or manageable cost), then you need to iteratively explore multi-stage decomposition, improved prompting, data bootstrapping, careful finetuning, retrieval augmentation, and/or using smaller (or cheaper, or local) models. The true expressive power of building with foundation models lies in the interactions between these pieces. But every time you change one piece, you likely break (or weaken) multiple other components. **DSPy** cleanly abstracts away (*and* powerfully optimizes) the parts of these interactions that are external to your actual system design. It lets you focus on designing the module-level interactions: the *same program* expressed in 10 or 20 lines of **DSPy** can easily be compiled into multi-stage instructions for `GPT-4`, detailed prompts for `Llama2-13b`, or finetunes for `T5-base`. Oh, and you wouldn’t need to maintain long, brittle, model-specific strings at the core of your project anymore.
 
@@ -73,14 +73,19 @@ In the AWS lambda deployment, you should disable both DSP_* and DSPY_*.
 ## Advanced Usage
 
 - 
-**How do I parallelize?**You can parallelize DSPy programs during both compilation and evaluation by specifying multiple thread settings in the respective DSPy`optimizers`or within the`dspy.Evaluate`utility function.
+**How do I parallelize?** You can parallelize DSPy programs during both compilation and evaluation by specifying multiple thread settings in the respective DSPy`optimizers` or within the`dspy.Evaluate` utility function.
 - 
 **How do freeze a module?**
 
 Modules can be frozen by setting their `._compiled` attribute to be True, indicating the module has gone through optimizer compilation and should not have its parameters adjusted. This is handled internally in optimizers such as `dspy.BootstrapFewShot` where the student program is ensured to be frozen before the teacher propagates the gathered few-shot demonstrations in the bootstrapping process. 
 
 - 
-**How do I use DSPy assertions?**a) **How to Add Assertions to Your Program**: -**Define Constraints**: Use`dspy.Assert`and/or`dspy.Suggest`to define constraints within your DSPy program. These are based on boolean validation checks for the outcomes you want to enforce, which can simply be Python functions to validate the model outputs. -**Integrating Assertions**: Keep your Assertion statements following a model generations (hint: following a module layer)b) **How to Activate the Assertions**: 1.**Using**: - Wrap your DSPy module with assertions using the`assert_transform_module``assert_transform_module`function, along with a`backtrack_handler`. This function transforms your program to include internal assertions backtracking and retry logic, which can be customized as well:`program_with_assertions = assert_transform_module(ProgramWithAssertions(), backtrack_handler)`2.**Activate Assertions**: - Directly call`activate_assertions`on your DSPy program with assertions:`program_with_assertions = ProgramWithAssertions().activate_assertions()`**Note**: To use Assertions properly, you must**activate**a DSPy program that includes`dspy.Assert`or`dspy.Suggest`statements from either of the methods above.
+**How do I use DSPy assertions?**a) **How to Add Assertions to Your Program** :
+-**Define Constraints** : Use`dspy.Assert` and/or`dspy.Suggest` to define constraints within your DSPy program. These are based on boolean validation checks for the outcomes you want to enforce, which can simply be Python functions to validate the model outputs.
+-**Integrating Assertions** : Keep your Assertion statements following a model generations (hint: following a module layer)b) **How to Activate the Assertions** :
+1.**Using `assert_transform_module`** :
+    - Wrap your DSPy module with assertions using the`assert_transform_module` function, along with a`backtrack_handler` . This function transforms your program to include internal assertions backtracking and retry logic, which can be customized as well:`program_with_assertions = assert_transform_module(ProgramWithAssertions(), backtrack_handler)` 2.**Activate Assertions** :
+    - Directly call`activate_assertions` on your DSPy program with assertions:`program_with_assertions = ProgramWithAssertions().activate_assertions()`**Note** : To use Assertions properly, you must**activate** a DSPy program that includes`dspy.Assert` or`dspy.Suggest` statements from either of the methods above.
 
 ## Errors
 

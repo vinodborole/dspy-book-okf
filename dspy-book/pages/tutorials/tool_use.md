@@ -3,7 +3,7 @@ type: Web Page
 title: Advanced Tool Use - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/tool_use
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Tutorial: Advanced Tool Use
@@ -18,24 +18,24 @@ Install the latest DSPy via `pip install -U dspy` and follow along. You will als
 
 [MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
 
-- Install MLflow
+1. Install MLflow
 
 ```
 %pip install mlflow>=2.20
 ```
-- Start MLflow UI in a separate terminal
+1. Start MLflow UI in a separate terminal
 
 ```
 mlflow ui --port 5000
 ```
-- Connect the notebook to MLflow
+1. Connect the notebook to MLflow
 
 ```
 import mlflow
 mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("DSPy")
 ```
-- Enabling tracing.
+1. Enabling tracing.
 
 ```
 mlflow.dspy.autolog()

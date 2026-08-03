@@ -3,7 +3,7 @@ type: Web Page
 title: GEPA optimization - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/getting-started/gepa-optimization
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Prompt Optimizing with GEPA
@@ -65,9 +65,9 @@ Now it’s time to grab a beverage and wait.
 
 Behind the scenes, compile runs an iterative loop.
 
-- GEPA executes our program on training examples with the student LM and scores each result with our metric.
-- Examples and their metric results are sent to the reflection LM, which proposes new instructions.
-- GEPA runs the program again with the new instructions, scores again, and keeps the instruction candidates that score best.
+1. GEPA executes our program on training examples with the student LM and scores each result with our metric.
+2. Examples and their metric results are sent to the reflection LM, which proposes new instructions.
+3. GEPA runs the program again with the new instructions, scores again, and keeps the instruction candidates that score best.
 
 This loop repeats until the budget runs out.
 

@@ -3,7 +3,7 @@ type: Web Page
 title: 'Modules: composing your own - DSPy'
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/modules
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Modules: composing your own
@@ -162,13 +162,13 @@ A `Completions` object when the prediction came from `n > 1` samples; `pred.comp
 
 Token-usage accounting. Populated when the prediction ran under `dspy.settings(track_usage=True)`.
 
-**Comparison to  dspy.Example.** Same storage layer; different intent. 
+**Comparison to `dspy.Example`.** Same storage layer; different intent. `Example` is for training data — it carries `_demos` and `_input_keys`, and `.with_inputs` returns a filtered copy. `Prediction` is for module outputs — no input/output split, plus completions and usage. Use `Example` for what goes in, `Prediction` for what comes out.
 
-`Example` is for training data — it carries `_demos` and `_input_keys`, and `.with_inputs` returns a filtered copy. `Prediction` is for module outputs — no input/output split, plus completions and usage. Use `Example` for what goes in, `Prediction` for what comes out.## Cross-links
+## Cross-links
 
 - Each built-in module subclass has its own DD page: see the predictor zoo, ReAct, and the optimizer-specific pages.
-- [Saving and loading](../saving-and-loading/)covers the persistence story in detail.
-- [Settings and context()](../settings-and-context/)covers how LM / adapter / callback overrides propagate into a module’s sub-modules.
+- [Saving and loading](../saving-and-loading/) covers the persistence story in detail.
+- [Settings and context()](../settings-and-context/) covers how LM / adapter / callback overrides propagate into a module’s sub-modules.
 
 # Citations
 

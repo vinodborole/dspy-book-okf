@@ -3,7 +3,7 @@ type: Web Page
 title: Metrics - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/getting-started/metrics
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Building metrics for evaluation and optimization
@@ -22,9 +22,9 @@ Outside DSPy, evaluation code often spends real effort on structural checks — 
 
 There are many ways to define your metric, but most use one or more of these patterns:
 
-- **Labeled data comparisons:**Compare the prediction against a “gold” output, usually labeled by a human expert. For example, a dataset of five-haiku arrays each paired with one ideal pick would let us evaluate and optimize the ensemble judge.
-- **Rule-based checks:**Evaluate with code that checks verifiable properties. For our haiku program, this might involve counting lines and syllables in a haiku.
-- [LLM judges](../../diving-deeper/metrics-and-evaluation/):
+- **Labeled data comparisons:** Compare the prediction against a “gold” output, usually labeled by a human expert. For example, a dataset of five-haiku arrays each paired with one ideal pick would let us evaluate and optimize the ensemble judge.
+- **Rule-based checks:** Evaluate with code that checks verifiable properties. For our haiku program, this might involve counting lines and syllables in a haiku.
+- **[LLM judges](../../diving-deeper/metrics-and-evaluation/):** Evaluate with another, usually larger, model. We might ask a frontier model how well a smaller model’s haiku evokes a place and season, similar to our ensemble’s judge. But here the optimizer bakes those judgments into the smaller model’s instructions once, instead of calling the judge with every inference.
 
 You can get creative and clever with these patterns. For example, we could measure our program’s ability to evoke a specific place by generating sets of haikus from varied location inputs, presenting an LLM judge with the array, and asking it to pick the verse matching a given location.
 

@@ -3,7 +3,7 @@ type: Web Page
 title: Cache - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/cache
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Use and Customize DSPy Cache
@@ -14,9 +14,9 @@ In this tutorial, we will explore the design of DSPy’s caching mechanism and d
 
 DSPy’s caching system is architected in three distinct layers:
 
-- **In-memory cache**: Implemented using- `cachetools.LRUCache`, this layer provides fast access to frequently used data.
-- **On-disk cache**: Leveraging- `diskcache.FanoutCache`, this layer offers persistent storage for cached items.
-- **Prompt cache (Server-side cache)**: This layer is managed by the LLM service provider (e.g., OpenAI, Anthropic).
+1. **In-memory cache** : Implemented using`cachetools.LRUCache` , this layer provides fast access to frequently used data.
+2. **On-disk cache** : Leveraging`diskcache.FanoutCache` , this layer offers persistent storage for cached items.
+3. **Prompt cache (Server-side cache)** : This layer is managed by the LLM service provider (e.g., OpenAI, Anthropic).
 
 While DSPy does not directly control the server-side prompt cache, it offers users the flexibility to enable, disable, and customize the in-memory and on-disk caches to suit their specific requirements.
 
@@ -36,7 +36,7 @@ You can enable prompt caching by passing the `cache_control_injection_points` pa
 
 This is especially beneficial when:
 
-- Using `dspy.ReAct()`with the same instructions
+- Using `dspy.ReAct()` with the same instructions
 - Working with long system prompts that remain constant
 - Making multiple requests with similar context
 
@@ -48,9 +48,9 @@ DSPy provides an opt-in `restrict_pickle` mode that restricts which types the ca
 
 When enabled, the cache only allows:
 
-- **LiteLLM and OpenAI response types**(- `litellm.types.*`,- `openai.types.*`) – the pydantic data models that DSPy caches for LM calls, embeddings, and the Responses API.
-- **NumPy array reconstruction helpers**– the specific internal functions needed to deserialize- `numpy.ndarray`(used by embedding caches).
-- **User-registered types**via- `safe_types`– any additional types you explicitly trust.
+- **LiteLLM and OpenAI response types** (`litellm.types.*` ,`openai.types.*` ) – the pydantic data models that DSPy caches for LM calls, embeddings, and the Responses API.
+- **NumPy array reconstruction helpers** – the specific internal functions needed to deserialize`numpy.ndarray` (used by embedding caches).
+- **User-registered types** via`safe_types` – any additional types you explicitly trust.
 
 If you cache custom types (dataclasses, pydantic models, etc.), register them:
 

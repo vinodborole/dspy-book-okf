@@ -3,7 +3,7 @@ type: Web Page
 title: Building AI Applications by Customizing DSPy Modules - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/custom_module
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Building AI Applications by Customizing DSPy Modules
@@ -12,9 +12,9 @@ In this guide, we will walk you through how to build a GenAI application by cust
 
 A [DSPy module](https://dspy.ai/learn/programming/modules/) is the building block for DSPy programs.
 
-- Each built-in module abstracts a prompting technique (like chain of thought or ReAct). Crucially, they are generalized to handle any signature. 
-- A DSPy module has learnable parameters (i.e., the little pieces comprising the prompt and the LM weights) and can be invoked (called) to process inputs and return outputs. 
-- Multiple modules can be composed into bigger modules (programs). DSPy modules are inspired directly by NN modules in PyTorch, but applied to LM programs. 
+- Each built-in module abstracts a prompting technique (like chain of thought or ReAct). Crucially, they are generalized to handle any signature.
+- A DSPy module has learnable parameters (i.e., the little pieces comprising the prompt and the LM weights) and can be invoked (called) to process inputs and return outputs.
+- Multiple modules can be composed into bigger modules (programs). DSPy modules are inspired directly by NN modules in PyTorch, but applied to LM programs.
 
 Although you can build a DSPy program without implementing a custom module, we highly recommend putting your logic with a custom module so that you can use other DSPy features, like DSPy optimizer or MLflow DSPy tracing.
 
@@ -29,24 +29,24 @@ Before getting started, make sure you have DSPy installed:
 
 [MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
 
-- Install MLflow
+1. Install MLflow
 
 ```
 %pip install mlflow>=3.0.0
 ```
-- Start MLflow UI in a separate terminal
+1. Start MLflow UI in a separate terminal
 
 ```
 mlflow ui --port 5000 --backend-store-uri sqlite:///mlruns.db
 ```
-- Connect the notebook to MLflow
+1. Connect the notebook to MLflow
 
 ```
 import mlflow
 mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("DSPy")
 ```
-- Enabling tracing.
+1. Enabling tracing.
 
 ```
 mlflow.dspy.autolog()
@@ -57,8 +57,8 @@ To learn more about the integration, visit [MLflow DSPy Documentation](https://m
 
 You can implement custom prompting logic and integrate external tools or services by customizing a DSPy module. To achieve this, subclass from `dspy.Module` and implement the following two key methods:
 
-- `__init__`: This is the constructor, where you define the attributes and sub-modules of your program.
-- `forward`: This method contains the core logic of your DSPy program.
+- `__init__` : This is the constructor, where you define the attributes and sub-modules of your program.
+- `forward` : This method contains the core logic of your DSPy program.
 
 Within the `forward()` method, you are not limited to calling only other DSPy modules; you can also integrate any standard Python functions, such as those for interacting with Langchain/Agno agents, MCP tools, database handlers, and more.
 
@@ -76,9 +76,9 @@ class MyProgram(dspy.Module):
 ```
 Let's illustrate this with a practical code example. We will build a simple Retrieval-Augmented Generation (RAG) application with multiple stages:
 
-- **Query Generation:**Generate a suitable query based on the user's question to retrieve relevant context.
-- **Context Retrieval:**Fetch context using the generated query.
-- **Answer Generation:**Produce a final answer based on the retrieved context and the original question.
+1. **Query Generation:** Generate a suitable query based on the user's question to retrieve relevant context.
+2. **Context Retrieval:** Fetch context using the generated query.
+3. **Answer Generation:** Produce a final answer based on the retrieved context and the original question.
 
 The code implementation for this multi-stage program is shown below.
 

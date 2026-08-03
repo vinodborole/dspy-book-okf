@@ -3,7 +3,7 @@ type: Web Page
 title: GEPA for Structured Information Extraction for Enterprise Tasks - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/gepa_facilitysupportanalyzer
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Tutorial: GEPA for Structured Information Extraction for Enterprise Tasks
@@ -24,24 +24,24 @@ We will build a simple DSPy program, and then use the `dspy.GEPA` optimizer to o
 
 **Setup MLflow**
 
-- Install MLflow
+1. Install MLflow
 
 ```
 %pip install mlflow>=3.0.0
 ```
-- Start MLflow UI in a separate terminal
+1. Start MLflow UI in a separate terminal
 
 ```
 mlflow ui --port 5000 --backend-store-uri sqlite:///mlruns.db
 ```
-- Connect the notebook to MLflow
+1. Connect the notebook to MLflow
 
 ```
 import mlflow
 mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("DSPy")
 ```
-- Enabling autologging.
+1. Enabling autologging.
 
 ```
 mlflow.dspy.autolog(
@@ -223,7 +223,7 @@ Average Metric: 51.30 / 68 (75.4%): 100%|█████████████
 
 2025/08/12 18:09:18 INFO dspy.evaluate.evaluate: Average Metric: 51.3 / 68 (75.4%)
 
-| message | answer | urgency | sentiment | categories | metric | |
+|  | message | answer | urgency | sentiment | categories | metric | 
 |---|---|---|---|---|---|---|
 | 0 | Hey ProCare Support Team, Hope you all are doing great! My name is... | {"categories": {"routine_maintenance_requests": false, "customer_f... | low | positive | [sustainability_and_environmental_practices] | ✔️ [1.000] | 
 | 1 | Hey ProCare Team, Hope you’re all doing well! My name’s Jake, and ... | {"categories": {"routine_maintenance_requests": true, "customer_fe... | medium | positive | [routine_maintenance_requests, customer_feedback_and_complaints] | ✔️ [0.967] | 
@@ -2499,7 +2499,132 @@ for name, pred in optimized_program.named_predictors():
     print(pred.signature.instructions)
     print("*********************************")
 ```
-================================ Predictor: urgency_module.predict ================================ Prompt: Task: Read the provided message and determine the urgency. Context/domain: - Messages typically relate to facility management and services (e.g., facility operations, space utilization, security, sustainability, HVAC systems, maintenance, cleaning services) for a provider like ProCare Facility Solutions. - Senders may be residential or commercial clients and may reference residents, tenants, property operations, or prior support interactions. Output format: - Provide exactly two fields, in this order, no extra text or formatting: reasoning: <1–3 concise sentences explaining the key cues that determine urgency> urgency: <one of: low | medium | high> Urgency levels and decision rules: - HIGH: - Clear or implied immediate risk to safety/security or major operational impact. - Explicit urgency signals (e.g., “Urgent,” “Immediate attention required,” “ASAP,” “critical,” “escalating”). - Severe dissatisfaction with demand for immediate corrective action or evidence of repeated failed support and escalation. - Examples/triggers: security breach/serious security gaps, fire/smoke, flooding/water leak, gas leak, electrical hazard, power outage, loss of access, no heat in winter or no cooling in extreme heat affecting many residents/operations. - MEDIUM: - Time-sensitive issues that affect comfort, reliability, or service quality but are not emergencies and pose no immediate safety/security risk. - Requests for prompt scheduling/repair/maintenance where delay could worsen impact but is not currently critical. - Examples/triggers: HVAC making noises and inconsistent temperature, minor malfunction, routine maintenance requested “at the earliest convenience,” issues noted as “not an emergency.” - LOW: - General inquiries, information requests, quotes, scheduling/options discussions, or interest in additional services with no stated or implied time pressure. - Compliments/feedback without an urgent problem. - Examples/triggers: asking for details on specialized cleaning, pricing, or availability without a problem to fix now. Key cues to weigh: - Explicit urgency language vs. statements like “not an emergency.” - Safety/security implications and operational continuity. - Impact scope (residents/tenants/business operations). - Deadlines/dates or requested response times. - Prior failed attempts and escalation tone. - Do not inflate urgency based solely on polite phrases like “prompt assistance” if no urgent risk is present. Tie-breakers: - If the message explicitly says it’s not an emergency and no serious risk is evident, do not classify as high. - If unclear and no risk/time pressure is indicated, default to low. ********************************* ================================ Predictor: sentiment_module.predict ================================ Prompt: Task - Read the provided message text and classify its overall sentiment as one of: positive, neutral, or negative. Input format - You will receive one field: - message: A string that may include a Subject line and an email-style body. Output format - Output only a single lowercase label: positive, neutral, or negative. - Do not include any additional text or reasoning. Classification guidelines - Focus on the overall emotional tone expressed about the service/interaction, not the message’s functional purpose (e.g., making a request) or formalities. - If signals are mixed or weak, default to neutral. Label definitions - Positive: - The message clearly expresses satisfaction, praise, gratitude, or enthusiasm that goes beyond routine politeness. - Strong and/or multiple explicit positive cues dominate (e.g., “satisfied client,” “exceptional service,” “truly appreciate,” “excellent,” “very happy,” “great,” “love working with you”). - Negative: - The message expresses dissatisfaction, complaints, frustration, anger, fear, or disappointment about the service/experience. - Explicit negative claims or emotions (e.g., “unacceptable,” “unsafe,” “poor quality,” “frustrated,” “angry,” “very disappointed”). - Neutral: - Informational, inquisitive, or routine requests without clear emotional valence. - Polite or formal language alone does not imply positivity (e.g., “I hope this finds you well,” “thank you,” “best regards”). - Expressions of concern framed as questions or requests for clarification, without asserting a negative judgment. - Mild or incidental compliments that are secondary to a routine request remain neutral unless strong positive cues dominate. Disambiguation notes and edge cases - Concerns or hesitations presented as inquiries (e.g., asking about quality/safety protocols) are neutral unless they assert dissatisfaction or harm. - Routine maintenance/service requests are neutral by default. They become positive only if accompanied by strong, explicit, and primary praise or gratitude. - Occasional or mild praise embedded in an otherwise routine request (e.g., “your services have been instrumental…”) is still neutral unless multiple strong positive signals dominate the tone. - Do not infer sentiment from sender identity, organization, or subject line alone; rely on explicit sentiment-bearing language in the body. ********************************* ================================ Predictor: categories_module.predict ================================ Prompt: You are classifying a single customer message sent to ProCare Facility Solutions (a facilities/cleaning services provider). Your job is to assign all and only the applicable categories from a fixed list, based strictly on the message content. Allowed categories and precise definitions: - cleaning_services_scheduling - Use only when the message’s primary purpose is to coordinate timing/availability for cleaning services (initial booking, rescheduling, adjusting times). - Typical signals: specific dates/times, availability windows, explicit reschedule/change requests, or back-and-forth around timing for cleaning crews. - Do NOT use for maintenance scheduling or when a timing phrase appears merely as part of a broader service request or complaint (e.g., “arrange a team,” “at your earliest convenience,” “within the next week”) without concrete, central timing logistics for cleaning. - specialized_cleaning_services - Use when the message mentions specific/specialized cleaning types or tasks beyond generic cleaning. - Examples: deep cleaning, mold remediation, carpet cleaning/maintenance, window washing, post-construction cleanup, floor stripping/waxing, disinfection/sanitation. - customer_feedback_and_complaints - Use when the message expresses dissatisfaction with prior service, reports subpar outcomes or communication issues, or requests remedies (redo, refund, re-clean). - quality_and_safety_concerns - Use when the message raises quality shortfalls (e.g., areas still dirty, stains remaining) or safety/health risks (e.g., mold, hazards), or questions/challenges the provider’s quality/safety standards or protocols. - Can co-occur with customer_feedback_and_complaints if the sender is unhappy with outcomes. - general_inquiries - Use when the sender explicitly asks for information about services, scope, what’s included, requirements, pricing, or availability before committing, or seeks clarification/guidance about process. - Important restriction from prior feedback: If the inquiry is solely about quality/safety standards (e.g., protocols, certifications, safety practices) without broader questions about offerings/availability/process, tag only quality_and_safety_concerns and do NOT add general_inquiries. - facility_management_issues - Use when the message concerns systemic/process coordination of facilities (e.g., space utilization, overlapping bookings, scheduling system design, policy/process improvements) rather than cleaning outcomes or specific service timing. - Do NOT add cleaning_services_scheduling when the focus is reviewing/improving a scheduling system rather than coordinating a specific cleaning appointment. - routine_maintenance_requests - Use when the message requests non-emergency facility maintenance (e.g., HVAC performance issues, minor plumbing, electrical checks, general upkeep) rather than cleaning. - Mentioning a desire to schedule a maintenance visit does not trigger cleaning_services_scheduling; that category is reserved for cleaning timing logistics. Key decision rules and pitfalls to avoid: - Multi-label: Assign every category that is clearly supported by explicit statements in the message. - Strict evidence only: Do not infer beyond the text. Praise, urgency (“ASAP”), client profile, or confidentiality are not categories by themselves. - Scheduling vs. Complaint distinction: - If rescheduling is proposed only as a fix within a complaint about poor service, do NOT include cleaning_services_scheduling. Use customer_feedback_and_complaints (and quality_and_safety_concerns if applicable). - Scheduling vs. Service request distinction: - Do NOT tag cleaning_services_scheduling merely because the sender asks you to “arrange a visit,” “send a team,” or handle something “at your earliest convenience.” - Only tag cleaning_services_scheduling when the message’s central focus is concrete timing logistics for cleaning (e.g., “Can you come Friday at 3 PM?” “What slots do you have next week?” “Please move our usual Friday cleaning to Monday.”). - For maintenance timing (HVAC, plumbing, etc.), use routine_maintenance_requests and do not add cleaning_services_scheduling. - Specialized services: - If the message mentions deep cleaning, mold remediation, carpet care, window washing, etc., include specialized_cleaning_services alongside any other applicable categories. - General inquiries: - Tag when the sender asks about offerings, inclusions, requirements, pricing, or availability before committing. If they merely request service without asking questions, do not add general_inquiries. - Do not add general_inquiries when the only questions are about quality/safety standards; use quality_and_safety_concerns alone in that case. Input: - A single free-text customer message (often includes a subject and body). Output format (plain text, exact structure): - reasoning: Briefly justify each selected category and note key exclusions (especially why cleaning_services_scheduling was or was not applied). - categories: A JSON array of the selected category strings, e.g., ["specialized_cleaning_services", "quality_and_safety_concerns"]. - If no categories apply, return an empty JSON array: []. Process to follow: 1) Read the message once to identify intents: timing logistics (cleaning only), service-type specificity, feedback/complaint, quality/safety concerns, information requests, facility management/process issues, routine maintenance. 2) Map each intent to categories using the definitions and rules above (especially the scheduling distinctions and the quality/safety vs general_inquiries nuance). 3) Produce concise reasoning and the JSON array of categories using the exact strings from the Allowed categories list. Edge-case guidance from prior evaluations: - System/process coordination about space usage or overlapping bookings → facility_management_issues only. Exclude cleaning_services_scheduling. - Inquiry focused on quality/safety standards and protocols (certifications, how safety is ensured) → quality_and_safety_concerns only. Exclude general_inquiries unless broader service/process/availability questions are asked. - Non-urgent HVAC/plumbing visit request → routine_maintenance_requests. Exclude cleaning_services_scheduling (not a cleaning appointment). *********************************
+================================
+Predictor: urgency_module.predict
+================================
+Prompt:
+Task: Read the provided message and determine the urgency.
+Context/domain:
+- Messages typically relate to facility management and services (e.g., facility operations, space utilization, security, sustainability, HVAC systems, maintenance, cleaning services) for a provider like ProCare Facility Solutions.
+- Senders may be residential or commercial clients and may reference residents, tenants, property operations, or prior support interactions.
+Output format:
+- Provide exactly two fields, in this order, no extra text or formatting:
+reasoning: <1–3 concise sentences explaining the key cues that determine urgency>
+urgency: <one of: low | medium | high>
+Urgency levels and decision rules:
+- HIGH:
+  - Clear or implied immediate risk to safety/security or major operational impact.
+  - Explicit urgency signals (e.g., “Urgent,” “Immediate attention required,” “ASAP,” “critical,” “escalating”).
+  - Severe dissatisfaction with demand for immediate corrective action or evidence of repeated failed support and escalation.
+  - Examples/triggers: security breach/serious security gaps, fire/smoke, flooding/water leak, gas leak, electrical hazard, power outage, loss of access, no heat in winter or no cooling in extreme heat affecting many residents/operations.
+- MEDIUM:
+  - Time-sensitive issues that affect comfort, reliability, or service quality but are not emergencies and pose no immediate safety/security risk.
+  - Requests for prompt scheduling/repair/maintenance where delay could worsen impact but is not currently critical.
+  - Examples/triggers: HVAC making noises and inconsistent temperature, minor malfunction, routine maintenance requested “at the earliest convenience,” issues noted as “not an emergency.”
+- LOW:
+  - General inquiries, information requests, quotes, scheduling/options discussions, or interest in additional services with no stated or implied time pressure.
+  - Compliments/feedback without an urgent problem.
+  - Examples/triggers: asking for details on specialized cleaning, pricing, or availability without a problem to fix now.
+Key cues to weigh:
+- Explicit urgency language vs. statements like “not an emergency.”
+- Safety/security implications and operational continuity.
+- Impact scope (residents/tenants/business operations).
+- Deadlines/dates or requested response times.
+- Prior failed attempts and escalation tone.
+- Do not inflate urgency based solely on polite phrases like “prompt assistance” if no urgent risk is present.
+Tie-breakers:
+- If the message explicitly says it’s not an emergency and no serious risk is evident, do not classify as high.
+- If unclear and no risk/time pressure is indicated, default to low.
+*********************************
+================================
+Predictor: sentiment_module.predict
+================================
+Prompt:
+Task
+- Read the provided message text and classify its overall sentiment as one of: positive, neutral, or negative.
+Input format
+- You will receive one field:
+  - message: A string that may include a Subject line and an email-style body.
+Output format
+- Output only a single lowercase label: positive, neutral, or negative.
+- Do not include any additional text or reasoning.
+Classification guidelines
+- Focus on the overall emotional tone expressed about the service/interaction, not the message’s functional purpose (e.g., making a request) or formalities.
+- If signals are mixed or weak, default to neutral.
+Label definitions
+- Positive:
+  - The message clearly expresses satisfaction, praise, gratitude, or enthusiasm that goes beyond routine politeness.
+  - Strong and/or multiple explicit positive cues dominate (e.g., “satisfied client,” “exceptional service,” “truly appreciate,” “excellent,” “very happy,” “great,” “love working with you”).
+- Negative:
+  - The message expresses dissatisfaction, complaints, frustration, anger, fear, or disappointment about the service/experience.
+  - Explicit negative claims or emotions (e.g., “unacceptable,” “unsafe,” “poor quality,” “frustrated,” “angry,” “very disappointed”).
+- Neutral:
+  - Informational, inquisitive, or routine requests without clear emotional valence.
+  - Polite or formal language alone does not imply positivity (e.g., “I hope this finds you well,” “thank you,” “best regards”).
+  - Expressions of concern framed as questions or requests for clarification, without asserting a negative judgment.
+  - Mild or incidental compliments that are secondary to a routine request remain neutral unless strong positive cues dominate.
+Disambiguation notes and edge cases
+- Concerns or hesitations presented as inquiries (e.g., asking about quality/safety protocols) are neutral unless they assert dissatisfaction or harm.
+- Routine maintenance/service requests are neutral by default. They become positive only if accompanied by strong, explicit, and primary praise or gratitude.
+- Occasional or mild praise embedded in an otherwise routine request (e.g., “your services have been instrumental…”) is still neutral unless multiple strong positive signals dominate the tone.
+- Do not infer sentiment from sender identity, organization, or subject line alone; rely on explicit sentiment-bearing language in the body.
+*********************************
+================================
+Predictor: categories_module.predict
+================================
+Prompt:
+You are classifying a single customer message sent to ProCare Facility Solutions (a facilities/cleaning services provider). Your job is to assign all and only the applicable categories from a fixed list, based strictly on the message content.
+Allowed categories and precise definitions:
+- cleaning_services_scheduling
+  - Use only when the message’s primary purpose is to coordinate timing/availability for cleaning services (initial booking, rescheduling, adjusting times).
+  - Typical signals: specific dates/times, availability windows, explicit reschedule/change requests, or back-and-forth around timing for cleaning crews.
+  - Do NOT use for maintenance scheduling or when a timing phrase appears merely as part of a broader service request or complaint (e.g., “arrange a team,” “at your earliest convenience,” “within the next week”) without concrete, central timing logistics for cleaning.
+- specialized_cleaning_services
+  - Use when the message mentions specific/specialized cleaning types or tasks beyond generic cleaning.
+  - Examples: deep cleaning, mold remediation, carpet cleaning/maintenance, window washing, post-construction cleanup, floor stripping/waxing, disinfection/sanitation.
+- customer_feedback_and_complaints
+  - Use when the message expresses dissatisfaction with prior service, reports subpar outcomes or communication issues, or requests remedies (redo, refund, re-clean).
+- quality_and_safety_concerns
+  - Use when the message raises quality shortfalls (e.g., areas still dirty, stains remaining) or safety/health risks (e.g., mold, hazards), or questions/challenges the provider’s quality/safety standards or protocols.
+  - Can co-occur with customer_feedback_and_complaints if the sender is unhappy with outcomes.
+- general_inquiries
+  - Use when the sender explicitly asks for information about services, scope, what’s included, requirements, pricing, or availability before committing, or seeks clarification/guidance about process.
+  - Important restriction from prior feedback: If the inquiry is solely about quality/safety standards (e.g., protocols, certifications, safety practices) without broader questions about offerings/availability/process, tag only quality_and_safety_concerns and do NOT add general_inquiries.
+- facility_management_issues
+  - Use when the message concerns systemic/process coordination of facilities (e.g., space utilization, overlapping bookings, scheduling system design, policy/process improvements) rather than cleaning outcomes or specific service timing.
+  - Do NOT add cleaning_services_scheduling when the focus is reviewing/improving a scheduling system rather than coordinating a specific cleaning appointment.
+- routine_maintenance_requests
+  - Use when the message requests non-emergency facility maintenance (e.g., HVAC performance issues, minor plumbing, electrical checks, general upkeep) rather than cleaning.
+  - Mentioning a desire to schedule a maintenance visit does not trigger cleaning_services_scheduling; that category is reserved for cleaning timing logistics.
+Key decision rules and pitfalls to avoid:
+- Multi-label: Assign every category that is clearly supported by explicit statements in the message.
+- Strict evidence only: Do not infer beyond the text. Praise, urgency (“ASAP”), client profile, or confidentiality are not categories by themselves.
+- Scheduling vs. Complaint distinction:
+  - If rescheduling is proposed only as a fix within a complaint about poor service, do NOT include cleaning_services_scheduling. Use customer_feedback_and_complaints (and quality_and_safety_concerns if applicable).
+- Scheduling vs. Service request distinction:
+  - Do NOT tag cleaning_services_scheduling merely because the sender asks you to “arrange a visit,” “send a team,” or handle something “at your earliest convenience.”
+  - Only tag cleaning_services_scheduling when the message’s central focus is concrete timing logistics for cleaning (e.g., “Can you come Friday at 3 PM?” “What slots do you have next week?” “Please move our usual Friday cleaning to Monday.”).
+  - For maintenance timing (HVAC, plumbing, etc.), use routine_maintenance_requests and do not add cleaning_services_scheduling.
+- Specialized services:
+  - If the message mentions deep cleaning, mold remediation, carpet care, window washing, etc., include specialized_cleaning_services alongside any other applicable categories.
+- General inquiries:
+  - Tag when the sender asks about offerings, inclusions, requirements, pricing, or availability before committing. If they merely request service without asking questions, do not add general_inquiries.
+  - Do not add general_inquiries when the only questions are about quality/safety standards; use quality_and_safety_concerns alone in that case.
+Input:
+- A single free-text customer message (often includes a subject and body).
+Output format (plain text, exact structure):
+- reasoning: Briefly justify each selected category and note key exclusions (especially why cleaning_services_scheduling was or was not applied).
+- categories: A JSON array of the selected category strings, e.g., ["specialized_cleaning_services", "quality_and_safety_concerns"].
+- If no categories apply, return an empty JSON array: [].
+Process to follow:
+1) Read the message once to identify intents: timing logistics (cleaning only), service-type specificity, feedback/complaint, quality/safety concerns, information requests, facility management/process issues, routine maintenance.
+2) Map each intent to categories using the definitions and rules above (especially the scheduling distinctions and the quality/safety vs general_inquiries nuance).
+3) Produce concise reasoning and the JSON array of categories using the exact strings from the Allowed categories list.
+Edge-case guidance from prior evaluations:
+- System/process coordination about space usage or overlapping bookings → facility_management_issues only. Exclude cleaning_services_scheduling.
+- Inquiry focused on quality/safety standards and protocols (certifications, how safety is ensured) → quality_and_safety_concerns only. Exclude general_inquiries unless broader service/process/availability questions are asked.
+- Non-urgent HVAC/plumbing visit request → routine_maintenance_requests. Exclude cleaning_services_scheduling (not a cleaning appointment).
+*********************************
 
 Note the high levels of detail about the task learnt in the prompts!
 
@@ -2512,7 +2637,7 @@ Average Metric: 59.17 / 68 (87.0%): 100%|█████████████
 
 2025/08/12 20:57:09 INFO dspy.evaluate.evaluate: Average Metric: 59.166666666666664 / 68 (87.0%)
 
-| message | answer | urgency | sentiment | categories | metric | |
+|  | message | answer | urgency | sentiment | categories | metric | 
 |---|---|---|---|---|---|---|
 | 0 | Hey ProCare Support Team, Hope you all are doing great! My name is... | {"categories": {"routine_maintenance_requests": false, "customer_f... | low | positive | [sustainability_and_environmental_practices] | ✔️ [1.000] | 
 | 1 | Hey ProCare Team, Hope you’re all doing well! My name’s Jake, and ... | {"categories": {"routine_maintenance_requests": true, "customer_fe... | medium | positive | [routine_maintenance_requests] | ✔️ [1.000] | 
@@ -2536,15 +2661,15 @@ GEPA was able to optimize GPT-4.1 nano's performance **from 75% score to 87%** i
 
 A GEPA run with `track_stats=True` returns detailed results in the `detailed_results` attribute.
 
-- **candidates**: List of proposed candidates.
-- **parents**: For each candidate, list of parent indices or None.
-- **val_aggregate_scores**: Aggregate validation score per candidate.
-- **val_subscores**: Per-instance validation scores per candidate.
-- **per_val_instance_best_candidates**: Indices of best candidates for each validation instance
-- **discovery_eval_counts**: Metric calls/rollouts used to discover each candidate.
-- **best_outputs_valset**: Best output produced for each task (only present with- `track_best_outputs=True`)
-- **best_idx**: Index of candidate with top score.
-- **best_candidate**: Program for best_idx.
+- **candidates** : List of proposed candidates.
+- **parents** : For each candidate, list of parent indices or None.
+- **val_aggregate_scores** : Aggregate validation score per candidate.
+- **val_subscores** : Per-instance validation scores per candidate.
+- **per_val_instance_best_candidates** : Indices of best candidates for each validation instance
+- **discovery_eval_counts** : Metric calls/rollouts used to discover each candidate.
+- **best_outputs_valset** : Best output produced for each task (only present with`track_best_outputs=True` )
+- **best_idx** : Index of candidate with top score.
+- **best_candidate** : Program for best_idx.
 
 Let's visualize the optimization trajectory taken by GEPA for this task.
 

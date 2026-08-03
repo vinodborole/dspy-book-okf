@@ -3,7 +3,7 @@ type: Web Page
 title: Deployment - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/deployment
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Tutorial: Deploying your DSPy program
@@ -77,10 +77,10 @@ For complete guide on how to deploy a DSPy program with MLflow, and how to custo
 
 ### Best Practices for MLflow Deployment
 
-- **Environment Management**: Always specify your Python dependencies in a- `conda.yaml`or- `requirements.txt`file.
-- **Versioning**: Use meaningful tags and descriptions for your model versions.
-- **Input Validation**: Define clear input schemas and examples.
-- **Monitoring**: Set up proper logging and monitoring for production deployments.
+1. **Environment Management** : Always specify your Python dependencies in a`conda.yaml` or`requirements.txt` file.
+2. **Versioning** : Use meaningful tags and descriptions for your model versions.
+3. **Input Validation** : Define clear input schemas and examples.
+4. **Monitoring** : Set up proper logging and monitoring for production deployments.
 
 For production deployments, consider using MLflow with containerization:
 

@@ -3,7 +3,7 @@ type: Web Page
 title: Settings and context() - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/settings-and-context
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Settings and `context()`
@@ -84,26 +84,26 @@ Standard keys (defined in `DEFAULT_CONFIG`):
 
 | Key | Default | Purpose | 
 |---|---|---|
-| `lm` | `None` | Default LM for every `Predict`. | 
-| `adapter` | `None`(falls back to`ChatAdapter()`) | Adapter used to format and parse. | 
-| `rm` | `None` | Default retriever for `dspy.Retrieve()`. | 
+| `lm` | `None` | Default LM for every `Predict` . | 
+| `adapter` | `None` (falls back to`ChatAdapter()` ) | Adapter used to format and parse. | 
+| `rm` | `None` | Default retriever for `dspy.Retrieve()` . | 
 | `callbacks` | `[]` | Callback handlers fired around module calls. | 
 | `track_usage` | `False` | Enable token-usage accounting. | 
-| `num_threads` | `8` | Default thread count for `dspy.Parallel`/`Module.batch`. | 
-| `async_max_workers` | `8` | Concurrency cap for `asyncify`. | 
+| `num_threads` | `8` | Default thread count for `dspy.Parallel` /`Module.batch` . | 
+| `async_max_workers` | `8` | Concurrency cap for `asyncify` . | 
 | `max_errors` | `10` | Parallel-job error threshold before cancellation. | 
 | `provide_traceback` | `False` | Include tracebacks in parallel error logs. | 
 | `disable_history` | `False` | Skip recording call history on modules. | 
 | `warn_on_type_mismatch` | `True` | Warn when an input doesn’t match the signature’s declared type. | 
-| `max_history_size`/`max_trace_size` | `10000`each | Trim limits for module history and per-call trace. | 
-| `stream_listeners`/`send_stream` | `[]`/`None` | Streaming wiring. | 
+| `max_history_size` /`max_trace_size` | `10000` each | Trim limits for module history and per-call trace. | 
+| `stream_listeners` /`send_stream` | `[]` /`None` | Streaming wiring. | 
 | `allow_tool_async_sync_conversion` | `False` | Permit running async tools inside sync code. | 
 | `branch_idx` | `0` | Rollout / branch index used by some optimizers. | 
 
 Set-by-DSPy keys (don’t set these yourself):
 
-- `caller_predict`,- `caller_modules`— the current call stack, used by callbacks and tracing.
-- `usage_tracker`,- `trace`— populated by the relevant contexts and read inside modules.
+- `caller_predict` ,`caller_modules` — the current call stack, used by callbacks and tracing.
+- `usage_tracker` ,`trace` — populated by the relevant contexts and read inside modules.
 
 ### How overrides propagate
 
@@ -121,11 +121,11 @@ At submission time, captures the parent’s `thread_local_overrides.get()` and h
 
 Runs a sync DSPy module on a worker thread via `anyio.to_thread.run_sync`. Same snapshot-and-reapply trick: capture parent overrides at call time, re-apply in the worker, reset on exit.
 
-**Plain  threading.Thread / concurrent.futures.ThreadPoolExecutor**
+**Plain `threading.Thread` / `concurrent.futures.ThreadPoolExecutor`**
 
-Does not inherit. The override lives in a ContextVar that the new OS thread doesn’t see. Workaround: capture
+Does not inherit. The override lives in a ContextVar that the new OS thread doesn’t see. Workaround: capture `dspy.settings.thread_local_overrides.get()` in the parent and `set` it inside the worker, or wrap the work in `dspy.Parallel`.
 
-`dspy.settings.thread_local_overrides.get()` in the parent and `set` it inside the worker, or wrap the work in `dspy.Parallel`.### Ownership and locking
+### Ownership and locking
 
 **Owner thread**
 
@@ -141,8 +141,8 @@ A single `threading.Lock` guards `_ensure_configure_allowed`. The read path does
 
 ## Cross-links
 
-- [Saving and loading](../saving-and-loading/)— settings serialization sits next to module serialization.
-- Reference: `clients.md`— LM-instance knobs (`temperature`,`max_tokens`,`api_base`, retries) that intentionally don’t live in settings.
+- [Saving and loading](../saving-and-loading/) — settings serialization sits next to module serialization.
+- Reference: `clients.md` — LM-instance knobs (`temperature` ,`max_tokens` ,`api_base` , retries) that intentionally don’t live in settings.
 
 # Citations
 

@@ -3,7 +3,7 @@ type: Web Page
 title: GEPA in depth - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/gepa-in-depth
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # GEPA in depth
@@ -74,20 +74,20 @@ Grouped by what you’re trying to do.
 
 Takes a feedback-shaped metric, a budget (exactly one of `auto` / `max_full_evals` / `max_metric_calls`), and a `reflection_lm` (defaults to the globally-configured LM — you’ll often want to pass a stronger one). `candidate_selection_strategy="current_best"` switches off Pareto sampling and turns GEPA into greedy local search. `failure_score` is the score assigned when the metric raises; `perfect_score` is the threshold for `skip_perfect_score`.
 
-** GEPA.compile(student, *, trainset, valset=None, ...)** → 
+**`GEPA.compile(student, *, trainset, valset=None, ...)`** → `dspy.Module`
+Runs the search. `valset` defaults to `trainset` when not provided. Returns a fresh Module whose predictors carry the best candidate’s instructions; sets `_compiled = True`.
 
-`dspy.Module`
-Runs the search. `valset` defaults to `trainset` when not provided. Returns a fresh Module whose predictors carry the best candidate’s instructions; sets `_compiled = True`.### Budget translation
+### Budget translation
 
 How a budget number turns into LM calls.
 
-** auto** — light / medium / heavy preset
-Maps to 
+**`auto`** — light / medium / heavy preset
+Maps to `num_candidates = 6 / 12 / 18` and derives the metric-call budget from your valset size. The conversion accounts for the initial full eval, bootstrapping (`5 × num_candidates`), per-candidate minibatch evals, and periodic full evals every 5 steps. On a 2-predictor / 100-example task: light ≈ 1330 calls, medium ≈ 1740, heavy ≈ 2045.
 
-`num_candidates = 6 / 12 / 18` and derives the metric-call budget from your valset size. The conversion accounts for the initial full eval, bootstrapping (`5 × num_candidates`), per-candidate minibatch evals, and periodic full evals every 5 steps. On a 2-predictor / 100-example task: light ≈ 1330 calls, medium ≈ 1740, heavy ≈ 2045.** max_full_evals** — pass-count budget
-Each “full eval” is one walk through the union of trainset and valset. GEPA computes 
+**`max_full_evals`** — pass-count budget
+Each “full eval” is one walk through the union of trainset and valset. GEPA computes `max_metric_calls = max_full_evals × (len(trainset) + len(valset))` internally.
 
-`max_metric_calls = max_full_evals × (len(trainset) + len(valset))` internally.** max_metric_calls** — raw cap
+**`max_metric_calls`** — raw cap
 Direct ceiling on metric invocations. Use this when you’ve measured per-call cost and want a hard dollar cap.
 
 ### The reflective loop
@@ -95,56 +95,56 @@ Direct ceiling on metric invocations. Use this when you’ve measured per-call c
 **Metric shape** — `metric(gold, pred, trace, pred_name, pred_trace) -> dspy.Prediction(score, feedback)`
 Called twice per evaluated example: once at module level (`pred_name=None`, `pred_trace=None`) for the aggregate, once per predictor under mutation (`pred_name="..."`, `pred_trace=[(predictor, inputs, outputs)]`) for per-predictor feedback. Return `dspy.Prediction(score: float, feedback: str)`. The `feedback` string is what reaches the reflection prompt verbatim.
 
-** reflection_lm** — the LM that proposes new instructions
+**`reflection_lm`** — the LM that proposes new instructions
 Reads a minibatch of low-scoring traces and emits a candidate instruction for the selected predictor. Defaults to the globally configured LM; passing a stronger one explicitly is the most common GEPA tuning. Called serially per mutation — threading doesn’t help here.
 
-** reflection_minibatch_size** — examples shown to the reflection LM per mutation
-Default 
+**`reflection_minibatch_size`** — examples shown to the reflection LM per mutation
+Default `3`. Larger minibatches give the proposer more context (better proposals) at the cost of longer reflection prompts (more tokens).
 
-`3`. Larger minibatches give the proposer more context (better proposals) at the cost of longer reflection prompts (more tokens).** instruction_proposer** — custom proposer hook
-A callable matching the 
+**`instruction_proposer`** — custom proposer hook
+A callable matching the `gepa.ProposalFn` protocol: takes a `{predictor_name: current_instruction}` dict, a reflective dataset of low-scoring examples, and a list of components to update; returns a new `{predictor_name: new_instruction}` dict. Override when the default proposer doesn’t handle your modality (signatures with `dspy.Image` fields, say) or when you want domain-specific constraints on the instructions.
 
-`gepa.ProposalFn` protocol: takes a `{predictor_name: current_instruction}` dict, a reflective dataset of low-scoring examples, and a list of components to update; returns a new `{predictor_name: new_instruction}` dict. Override when the default proposer doesn’t handle your modality (signatures with `dspy.Image` fields, say) or when you want domain-specific constraints on the instructions.### Population dynamics
+### Population dynamics
 
-** candidate_selection_strategy** — 
+**`candidate_selection_strategy`** — `"pareto"` (default) or `"current_best"`
+`"pareto"` samples next-mutation candidates stochastically from the per-example Pareto frontier. `"current_best"` always mutates the highest-aggregate candidate. Pareto explores more; current-best converges faster on simple tasks.
 
-`"pareto"` (default) or `"current_best"`
-`"pareto"` samples next-mutation candidates stochastically from the per-example Pareto frontier. `"current_best"` always mutates the highest-aggregate candidate. Pareto explores more; current-best converges faster on simple tasks.** component_selector** — 
+**`component_selector`** — `"round_robin"` (default), `"all"`, or a custom `ReflectionComponentSelector`
+Which predictor to update on each iteration. Round-robin cycles; `"all"` updates every predictor at once. Custom selectors can target predictors by historical regret or any other policy.
 
-`"round_robin"` (default), `"all"`, or a custom `ReflectionComponentSelector`
-Which predictor to update on each iteration. Round-robin cycles; `"all"` updates every predictor at once. Custom selectors can target predictors by historical regret or any other policy.** use_merge / max_merge_invocations**
-Merging combines instructions from two successful candidates into a new candidate. Costs one re-evaluation per merge; 
+**`use_merge` / `max_merge_invocations`**
+Merging combines instructions from two successful candidates into a new candidate. Costs one re-evaluation per merge; `max_merge_invocations` (default 5) caps the total.
 
-`max_merge_invocations` (default 5) caps the total.** skip_perfect_score / perfect_score**
-Examples at 
+**`skip_perfect_score` / `perfect_score`**
+Examples at `perfect_score` drop out of the reflective minibatch. Default `perfect_score=1.0`; set lower if your metric saturates below 1.
 
-`perfect_score` drop out of the reflective minibatch. Default `perfect_score=1.0`; set lower if your metric saturates below 1.### Inspecting the run
+### Inspecting the run
 
-** compiled_program.detailed_results** (when 
+**`compiled_program.detailed_results`** (when `track_stats=True`) → `DspyGEPAResult`
 
-`track_stats=True`) → `DspyGEPAResult`- `candidates: list[Module]`— every program ever proposed
-- `parents: list[list[int] | None]`— lineage (- `None`for seed, otherwise parent indices)
-- `val_aggregate_scores: list[float]`— one per candidate
-- `val_subscores: list[list[float]]`— per-candidate, per-example scores
-- `per_val_instance_best_candidates: list[set[int]]`— which candidates won which example
-- `discovery_eval_counts: list[int]`— metric calls consumed before each candidate appeared
-- `best_idx: int`— index of the returned winner
-- `best_candidate: Module`— same module GEPA returned from- `.compile()`
+- `candidates: list[Module]` — every program ever proposed
+- `parents: list[list[int] | None]` — lineage (`None` for seed, otherwise parent indices)
+- `val_aggregate_scores: list[float]` — one per candidate
+- `val_subscores: list[list[float]]` — per-candidate, per-example scores
+- `per_val_instance_best_candidates: list[set[int]]` — which candidates won which example
+- `discovery_eval_counts: list[int]` — metric calls consumed before each candidate appeared
+- `best_idx: int` — index of the returned winner
+- `best_candidate: Module` — same module GEPA returned from`.compile()`
 
 Convert to a JSON-safe dict via `.to_dict()`.
 
-** log_dir** — disk-side logging
+**`log_dir`** — disk-side logging
 When set, GEPA writes per-iteration logs to that directory: candidates, scores, proposed instructions. Useful for post-mortem on what the reflection LM was suggesting.
 
-** use_wandb / use_mlflow**
+**`use_wandb` / `use_mlflow`**
 Stream search progress to Weights & Biases or MLflow. Each candidate’s aggregate score is logged as an iteration step.
 
 ## Cross-links
 
-- [Optimizers: choosing one](../choosing-an-optimizer/)— the selection guide that recommends GEPA for feedback-rich tasks.
-- [Metrics and evaluation](../metrics-and-evaluation/)— the- `Prediction(score, feedback)`shape GEPA requires, and the LLM-as-judge pattern for building one.
-- [Modules: composing your own](../modules/)—- `_compiled`propagation and the deepcopy-then-mutate pattern GEPA uses on the student.
-- [BootstrapFewShot family](../bootstrap-fewshot-family/)— the demo-tuning alternative; pair with GEPA via- `BetterTogether`when both knobs need to turn.
+- [Optimizers: choosing one](../choosing-an-optimizer/) — the selection guide that recommends GEPA for feedback-rich tasks.
+- [Metrics and evaluation](../metrics-and-evaluation/) — the`Prediction(score, feedback)` shape GEPA requires, and the LLM-as-judge pattern for building one.
+- [Modules: composing your own](../modules/) —`_compiled` propagation and the deepcopy-then-mutate pattern GEPA uses on the student.
+- [BootstrapFewShot family](../bootstrap-fewshot-family/) — the demo-tuning alternative; pair with GEPA via`BetterTogether` when both knobs need to turn.
 
 # Citations
 

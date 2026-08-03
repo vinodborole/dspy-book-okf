@@ -3,7 +3,7 @@ type: Web Page
 title: GEPA for Privacy-Conscious Delegation - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/gepa_papillon
-timestamp: '2026-07-09T12:16:40.130937+00:00'
+timestamp: '2026-08-03T09:53:06.608112+00:00'
 ---
 
 # Tutorial: GEPA for Privacy-Conscious Delegation
@@ -26,24 +26,24 @@ For simplicity, we will use "gpt-4.1-nano" as the small LM, and "gpt-4.1-mini" a
 
 **Setup MLflow**
 
-- Install MLflow
+1. Install MLflow
 
 ```
 %pip install mlflow>=3.0.0
 ```
-- Start MLflow UI in a separate terminal
+1. Start MLflow UI in a separate terminal
 
 ```
 mlflow ui --port 5000 --backend-store-uri sqlite:///mlruns.db
 ```
-- Connect the notebook to MLflow
+1. Connect the notebook to MLflow
 
 ```
 import mlflow
 mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("DSPy")
 ```
-- Enabling autologging.
+1. Enabling autologging.
 
 ```
 mlflow.dspy.autolog(
@@ -118,8 +118,8 @@ Loaded 225 training examples, 225 dev examples, and 214 test examples.
 
 What does it mean for a PAPILLON system to be successful?
 
-- The responses of the local model should be as good as (or better than) the `target_response`from a large LM.
-- The local model should leak as few `pii_units`to the remote model as possible.
+1. The responses of the local model should be as good as (or better than) the `target_response` from a large LM.
+2. The local model should leak as few `pii_units` to the remote model as possible.
 
 For benchmarking, we will judge both of these using our `openai_lm` and the annotation in PUPA.
 
@@ -183,21 +183,21 @@ kwargs = dict(num_threads=16, display_progress=True, display_table=5, max_errors
 evaluate = dspy.Evaluate(metric=compute_overall_score, devset=testset, **kwargs)
 evaluate(zeroshot)
 ```
-0%| | 0/214 [00:00<?, ?it/s]Average Metric: 107.87 / 139 (77.6%): 65%|█████████████████████████████████████████████████████████████████████████████████████████▋ | 139/214 [00:13<00:05, 12.75it/s]
+  0%|                                                                                                                                                                                          | 0/214 [00:00<?, ?it/s]Average Metric: 107.87 / 139 (77.6%):  65%|█████████████████████████████████████████████████████████████████████████████████████████▋                                                | 139/214 [00:13<00:05, 12.75it/s]
 
-2025/08/12 18:31:42 WARNING dspy.clients.lm: LM response was truncated due to exceeding max_tokens=4000. You can inspect the latest LM interactions with `dspy.inspect_history()`. To avoid truncation, consider passing a larger max_tokens when setting up dspy.LM. You may also consider increasing the temperature (currently 0.0) if the reason for truncation is repetition.
+2025/08/12 18:31:42 WARNING dspy.clients.lm: LM response was truncated due to exceeding max_tokens=4000. You can inspect the latest LM interactions with `dspy.inspect_history()`. To avoid truncation, consider passing a larger max_tokens when setting up dspy.LM. You may also consider increasing the temperature (currently 0.0)  if the reason for truncation is repetition.
 
-Average Metric: 163.71 / 214 (76.5%): 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 214/214 [00:22<00:00, 9.57it/s]
+Average Metric: 163.71 / 214 (76.5%): 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 214/214 [00:22<00:00,  9.57it/s]
 
 2025/08/12 18:31:52 INFO dspy.evaluate.evaluate: Average Metric: 163.70979853479852 / 214 (76.5%)
 
-| target_response | user_query | pii_str | llm_request | llm_response | response | compute_overall_score | |
+|  | target_response | user_query | pii_str | llm_request | llm_response | response | compute_overall_score | 
 |---|---|---|---|---|---|---|---|
-| 0 | Subject: Follow-up on Endpoint Management Solution Discussion Dear... | rewrite in professional "as discusseed in last meeting with you an... | effem||balaji||balaji | Rewrite the following message in a professional tone, ensuring cla... | Subject: Follow-up on E-FEM Account Management and Solution Finali... | Subject: Clarification on E-FEM Account Management and Next Steps ... | |
+| 0 | Subject: Follow-up on Endpoint Management Solution Discussion Dear... | rewrite in professional "as discusseed in last meeting with you an... | effem\|\|balaji\|\|balaji | Rewrite the following message in a professional tone, ensuring cla... | Subject: Follow-up on E-FEM Account Management and Solution Finali... | Subject: Clarification on E-FEM Account Management and Next Steps ... |  | 
 | 1 | Кампания "Share a Coke" была запущена Coca-Cola в 2011 году в Авст... | расскажи про PR-кампанию Coca-Cola “Share a Coke" | coca-cola | Please provide a detailed summary of Coca-Cola's "Share a Coke" PR... | Certainly! Here is a detailed summary of Coca-Cola's "Share a Coke... | Кампания Coca-Cola "Share a Coke" — это очень успешная маркетингов... | ✔️ [1.000] | 
-| 2 | Creating a Facebook ad campaign within a specific budget and targe... | give me a facebook ads campaign for the next 7 days for canva pro ... | jordan||canva | Create a comprehensive Facebook ads campaign plan for selling Canv... | Certainly! Below is a comprehensive 7-day Facebook Ads campaign pl... | Certainly! Here's a 7-day Facebook ads campaign plan for selling C... | ✔️ [1.000] | 
-| 3 | The delivery was scheduled for today, but due to a payment delay t... | The delivery supposed to be today. Seems our payment delay to Lvio... | seagate||lviv||ms. chan | Please rewrite the following message in a professional and clear m... | The delivery was originally scheduled for today; however, due to a... | The delivery was originally scheduled for today; however, due to a... | ✔️ [0.833] | 
-| 4 | Dear Ms. Amanda, I hope this email finds you well. I wanted to bri... | write a email to Ms, Amanda ; tell her, we have a way to overcome ... | india||amanda||hermann(germany)||china||vims(france) | Write a professional email to Ms. Amanda explaining that we have a... | Subject: Proposal to Overcome Certification Challenges and Product... | Dear Ms. Amanda, I hope you are well. We have identified a way to ... | ✔️ [0.700] | 
+| 2 | Creating a Facebook ad campaign within a specific budget and targe... | give me a facebook ads campaign for the next 7 days for canva pro ... | jordan\|\|canva | Create a comprehensive Facebook ads campaign plan for selling Canv... | Certainly! Below is a comprehensive 7-day Facebook Ads campaign pl... | Certainly! Here's a 7-day Facebook ads campaign plan for selling C... | ✔️ [1.000] | 
+| 3 | The delivery was scheduled for today, but due to a payment delay t... | The delivery supposed to be today. Seems our payment delay to Lvio... | seagate\|\|lviv\|\|ms. chan | Please rewrite the following message in a professional and clear m... | The delivery was originally scheduled for today; however, due to a... | The delivery was originally scheduled for today; however, due to a... | ✔️ [0.833] | 
+| 4 | Dear Ms. Amanda, I hope this email finds you well. I wanted to bri... | write a email to Ms, Amanda ; tell her, we have a way to overcome ... | india\|\|amanda\|\|hermann(germany)\|\|china\|\|vims(france) | Write a professional email to Ms. Amanda explaining that we have a... | Subject: Proposal to Overcome Certification Challenges and Product... | Dear Ms. Amanda, I hope you are well. We have identified a way to ... | ✔️ [0.700] | 
 
 EvaluationResult(score=76.5, results=<list of 214 results>)
 
@@ -292,7 +292,38 @@ Note that since we allowed GEPA the budget to only generate 1 candidate, it has 
 ```
 print(optimized_papillon.craft_redacted_request.predict.signature.instructions)
 ```
-Task Description: You will be given a private user query that may contain sensitive, personal, or identifying information. Your task is to transform this user query into a privacy-preserving prompt or request suitable for a powerful external large language model (LLM). The generated request should enable the external LLM to assist with the user’s original intent effectively, while ensuring that no private, personally identifiable, or sensitive information about the user is exposed or leaked. Input Format: - The user query is a free-form text input that may include explicit personal details, real names, descriptive traits, or specific events. - The input may range from requests for creative writing, role descriptions, lists of hobbies, profiles, or any other user-generated content. Detailed Task Requirements and Domain-Specific Considerations: 1. Privacy Preservation: - Do not include any directly identifying details, real names, or sensitive personal information in the generated request. - Replace or anonymize any personal data, including but not limited to names, dates, biographical details, or events tied to individuals. - Avoid leaking private user context or information that could be traced back to the user. 2. Maintaining Task Integrity: - The LLM request must capture the user’s original intention and task goals as faithfully as possible, phrased in a generalized and context-neutral way. - For content requests involving real-world entities (e.g., institutions, events), consider making the scenario fictionalized or anonymized if it involves potentially identifying or sensitive context. - For character or profile descriptions, abstract/remove intimate personal details but preserve key personality traits or narrative elements in a generalized manner. 3. Quality of Generated LLM Request: - The description should be clear, coherent, and sufficiently detailed to enable a relevant and helpful response from the LLM without needing further clarifications. - Avoid introducing new biases or assumptions outside the user’s input. - Exclude illegal or ethically sensitive activities where applicable, or transform them into acceptable analogues to maintain ethical standards. 4. Reasoning Component: - Alongside the final LLM request, provide a concise reasoning summary that explains how private data was identified and sanitized, the thought process behind generalization or anonymization, and how the final prompt preserves user intent while protecting privacy. Generalizable Strategy: - Identify sensitive or private details in the user query. - Abstract or anonymize such details without losing essential meaning. - Frame the request in terms of generic or fictional scenarios. - Explicitly instruct the external LLM to avoid real or private details and to focus on a neutral, generic, or fictional perspective when relevant. - Validate that no PII or identifiable content remains in the final prompt. Outputs: - A reasoning section summarizing privacy considerations and prompt construction approach. - A final privacy-preserving LLM prompt/request ready to be sent to an external LLM. This approach ensures strong privacy protection aligned with best practices while maximizing task quality and relevance.
+Task Description:
+You will be given a private user query that may contain sensitive, personal, or identifying information. Your task is to transform this user query into a privacy-preserving prompt or request suitable for a powerful external large language model (LLM). The generated request should enable the external LLM to assist with the user’s original intent effectively, while ensuring that no private, personally identifiable, or sensitive information about the user is exposed or leaked.
+Input Format:
+- The user query is a free-form text input that may include explicit personal details, real names, descriptive traits, or specific events.
+- The input may range from requests for creative writing, role descriptions, lists of hobbies, profiles, or any other user-generated content.
+  
+Detailed Task Requirements and Domain-Specific Considerations:
+1. Privacy Preservation:
+   - Do not include any directly identifying details, real names, or sensitive personal information in the generated request.
+   - Replace or anonymize any personal data, including but not limited to names, dates, biographical details, or events tied to individuals.
+   - Avoid leaking private user context or information that could be traced back to the user.
+2. Maintaining Task Integrity:
+   - The LLM request must capture the user’s original intention and task goals as faithfully as possible, phrased in a generalized and context-neutral way.
+   - For content requests involving real-world entities (e.g., institutions, events), consider making the scenario fictionalized or anonymized if it involves potentially identifying or sensitive context.
+   - For character or profile descriptions, abstract/remove intimate personal details but preserve key personality traits or narrative elements in a generalized manner.
+   
+3. Quality of Generated LLM Request:
+   - The description should be clear, coherent, and sufficiently detailed to enable a relevant and helpful response from the LLM without needing further clarifications.
+   - Avoid introducing new biases or assumptions outside the user’s input.
+   - Exclude illegal or ethically sensitive activities where applicable, or transform them into acceptable analogues to maintain ethical standards.
+4. Reasoning Component:
+   - Alongside the final LLM request, provide a concise reasoning summary that explains how private data was identified and sanitized, the thought process behind generalization or anonymization, and how the final prompt preserves user intent while protecting privacy.
+Generalizable Strategy:
+- Identify sensitive or private details in the user query.
+- Abstract or anonymize such details without losing essential meaning.
+- Frame the request in terms of generic or fictional scenarios.
+- Explicitly instruct the external LLM to avoid real or private details and to focus on a neutral, generic, or fictional perspective when relevant.
+- Validate that no PII or identifiable content remains in the final prompt.
+Outputs:
+- A reasoning section summarizing privacy considerations and prompt construction approach.
+- A final privacy-preserving LLM prompt/request ready to be sent to an external LLM.
+This approach ensures strong privacy protection aligned with best practices while maximizing task quality and relevance.
 
 ```
 evaluate(optimized_papillon)
@@ -301,13 +332,13 @@ Average Metric: 184.26 / 214 (86.1%): 100%|████████████�
 
 2025/08/12 18:27:34 INFO dspy.evaluate.evaluate: Average Metric: 184.2602564102564 / 214 (86.1%)
 
-| target_response | user_query | pii_str | llm_request | llm_response | response | compute_overall_score | |
+|  | target_response | user_query | pii_str | llm_request | llm_response | response | compute_overall_score | 
 |---|---|---|---|---|---|---|---|
-| 0 | Subject: Follow-up on Endpoint Management Solution Discussion Dear... | rewrite in professional "as discusseed in last meeting with you an... | effem||balaji||balaji | Please draft a professional, formal update regarding a previous di... | Subject: Update on Device Management Solution Discussion Dear Team... | Subject: Follow-up on Device Management Solution Discussion Dear T... | ✔️ [1.000] | 
+| 0 | Subject: Follow-up on Endpoint Management Solution Discussion Dear... | rewrite in professional "as discusseed in last meeting with you an... | effem\|\|balaji\|\|balaji | Please draft a professional, formal update regarding a previous di... | Subject: Update on Device Management Solution Discussion Dear Team... | Subject: Follow-up on Device Management Solution Discussion Dear T... | ✔️ [1.000] | 
 | 1 | Кампания "Share a Coke" была запущена Coca-Cola в 2011 году в Авст... | расскажи про PR-кампанию Coca-Cola “Share a Coke" | coca-cola | Please provide an overview of a well-known marketing campaign by a... | Certainly! One of the most famous marketing campaigns involving pe... | Конечно! PR-кампания Coca-Cola “Share a Coke” — это одна из самых ... | ✔️ [1.000] | 
-| 2 | Creating a Facebook ad campaign within a specific budget and targe... | give me a facebook ads campaign for the next 7 days for canva pro ... | jordan||canva | Create a detailed 7-day social media advertising campaign plan for... | Certainly! Below is a detailed 7-day social media advertising camp... | Certainly! Here's a detailed 7-day Facebook Ads campaign plan for ... | ✔️ [1.000] | 
-| 3 | The delivery was scheduled for today, but due to a payment delay t... | The delivery supposed to be today. Seems our payment delay to Lvio... | seagate||lviv||ms. chan | Please help rewrite the following message into a professional, pri... | Subject: Shipment Rescheduling Due to Payment Processing Delay Dea... | Subject: Shipment Rescheduling Notice Dear [Recipient], Please be ... | ✔️ [0.500] | 
-| 4 | Dear Ms. Amanda, I hope this email finds you well. I wanted to bri... | write a email to Ms, Amanda ; tell her, we have a way to overcome ... | india||amanda||hermann(germany)||china||vims(france) | Please draft a professional email to a colleague named Ms. Amanda.... | Subject: Strategy for CE Certification and Manufacturing Options f... | Subject: Strategy to Address Certification and Import Challenges f... | ✔️ [0.700] | 
+| 2 | Creating a Facebook ad campaign within a specific budget and targe... | give me a facebook ads campaign for the next 7 days for canva pro ... | jordan\|\|canva | Create a detailed 7-day social media advertising campaign plan for... | Certainly! Below is a detailed 7-day social media advertising camp... | Certainly! Here's a detailed 7-day Facebook Ads campaign plan for ... | ✔️ [1.000] | 
+| 3 | The delivery was scheduled for today, but due to a payment delay t... | The delivery supposed to be today. Seems our payment delay to Lvio... | seagate\|\|lviv\|\|ms. chan | Please help rewrite the following message into a professional, pri... | Subject: Shipment Rescheduling Due to Payment Processing Delay Dea... | Subject: Shipment Rescheduling Notice Dear [Recipient], Please be ... | ✔️ [0.500] | 
+| 4 | Dear Ms. Amanda, I hope this email finds you well. I wanted to bri... | write a email to Ms, Amanda ; tell her, we have a way to overcome ... | india\|\|amanda\|\|hermann(germany)\|\|china\|\|vims(france) | Please draft a professional email to a colleague named Ms. Amanda.... | Subject: Strategy for CE Certification and Manufacturing Options f... | Subject: Strategy to Address Certification and Import Challenges f... | ✔️ [0.700] | 
 
 EvaluationResult(score=86.1, results=<list of 214 results>)
 
