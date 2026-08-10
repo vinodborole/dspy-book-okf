@@ -2,7 +2,7 @@
   "generator": "okf-kit",
   "okf_version": "0.1",
   "root_url": "https://dspy.ai/",
-  "updated_at": "2026-08-03T09:53:06.662442+00:00",
+  "updated_at": "2026-08-10T07:48:17.539683+00:00",
   "config": {
     "max_depth": 3,
     "max_pages": 70,
@@ -40,13 +40,19 @@
       "path": "pages/diving-deeper/built-in-module-variants.md",
       "url": "https://dspy.ai/diving-deeper/built-in-module-variants",
       "title": "Built-in module variants - DSPy",
-      "hash": "d187e13436b5665a6e78318c51c876f48c1888db27544b951790fb5fbe687d46"
+      "hash": "8fd8bff345b06b3591473115a36f1cc81bca05485de7dfda29e33627a6bf910d"
     },
     {
       "path": "pages/diving-deeper/choosing-an-optimizer.md",
       "url": "https://dspy.ai/diving-deeper/choosing-an-optimizer",
       "title": "Optimizers: choosing one - DSPy",
       "hash": "8fdd5e9afff7d1633c12f9cfd6ecd565e0a433a97ce4357c4ae0f6f1feee5ab5"
+    },
+    {
+      "path": "pages/diving-deeper/flex.md",
+      "url": "https://dspy.ai/diving-deeper/flex",
+      "title": "Flex: optimizable module code - DSPy",
+      "hash": "a497fe1f62768407c3a2fa577446bf1f0034b6a7a478ad526c0ccffaaa192dd2"
     },
     {
       "path": "pages/diving-deeper/gepa-in-depth.md",
@@ -259,12 +265,6 @@
       "hash": "73f2ed9714c29aafe73ee0fd176358030e50f366a12621dda5de6b18420266a6"
     },
     {
-      "path": "pages/tutorials/email_extraction.md",
-      "url": "https://dspy.ai/tutorials/email_extraction",
-      "title": "Email Information Extraction - DSPy",
-      "hash": "3286580a27d46ce96a41136516368a747b46cd49204a2d083b613c44e464564e"
-    },
-    {
       "path": "pages/tutorials/entity_extraction.md",
       "url": "https://dspy.ai/tutorials/entity_extraction",
       "title": "Entity Extraction - DSPy",
@@ -464,6 +464,10 @@
     ],
     [
       "pages/diving-deeper/built-in-module-variants.md",
+      "pages/diving-deeper/flex.md"
+    ],
+    [
+      "pages/diving-deeper/built-in-module-variants.md",
       "pages/diving-deeper/modules.md"
     ],
     [
@@ -489,6 +493,18 @@
     [
       "pages/diving-deeper/choosing-an-optimizer.md",
       "pages/diving-deeper/metrics-and-evaluation.md"
+    ],
+    [
+      "pages/diving-deeper/flex.md",
+      "pages/diving-deeper/built-in-module-variants.md"
+    ],
+    [
+      "pages/diving-deeper/flex.md",
+      "pages/diving-deeper/gepa-in-depth.md"
+    ],
+    [
+      "pages/diving-deeper/flex.md",
+      "pages/diving-deeper/rlm.md"
     ],
     [
       "pages/diving-deeper/gepa-in-depth.md",
@@ -788,10 +804,6 @@
     ],
     [
       "pages/tutorials.md",
-      "pages/tutorials/email_extraction.md"
-    ],
-    [
-      "pages/tutorials.md",
       "pages/tutorials/entity_extraction.md"
     ],
     [
@@ -999,10 +1011,6 @@
       "pages/home.md"
     ],
     [
-      "pages/tutorials/email_extraction.md",
-      "pages/home.md"
-    ],
-    [
       "pages/tutorials/entity_extraction.md",
       "pages/home.md"
     ],
@@ -1096,10 +1104,6 @@
     ],
     [
       "pages/tutorials/real_world_examples.md",
-      "pages/tutorials/email_extraction.md"
-    ],
-    [
-      "pages/tutorials/real_world_examples.md",
       "pages/tutorials/llms_txt_generation.md"
     ],
     [
@@ -1128,10 +1132,10 @@
     ]
   ],
   "last_sync": {
-    "synced_at": "2026-08-03T09:53:06.644608+00:00",
-    "added": 0,
-    "changed": 60,
-    "removed": 0,
+    "synced_at": "2026-08-10T07:48:17.521992+00:00",
+    "added": 1,
+    "changed": 1,
+    "removed": 1,
     "pages": 70
   }
 }

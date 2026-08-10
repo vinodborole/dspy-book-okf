@@ -4,6 +4,7 @@
 - [BootstrapFewShot family - DSPy](/pages/diving-deeper/bootstrap-fewshot-family.md)
 - [Built-in module variants - DSPy](/pages/diving-deeper/built-in-module-variants.md)
 - [Optimizers: choosing one - DSPy](/pages/diving-deeper/choosing-an-optimizer.md)
+- [Flex: optimizable module code - DSPy](/pages/diving-deeper/flex.md)
 - [GEPA in depth - DSPy](/pages/diving-deeper/gepa-in-depth.md)
 - [Metrics and evaluation - DSPy](/pages/diving-deeper/metrics-and-evaluation.md)
 - [Modules: composing your own - DSPy](/pages/diving-deeper/modules.md)

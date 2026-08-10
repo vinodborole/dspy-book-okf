@@ -3,16 +3,16 @@ type: Web Page
 title: Built-in module variants - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/built-in-module-variants
-timestamp: '2026-08-03T09:53:06.608112+00:00'
+timestamp: '2026-08-10T07:48:17.519068+00:00'
 ---
 
 # Built-in module variants
 
 ## Intent
 
-`Predict`, `ChainOfThought`, and `ReAct` cover most programs, but DSPy ships a handful of other modules for situations where one LM call is not enough, or where reasoning needs a Python runtime, or where you want to fan out across examples. This page collects those modules, groups them by what they’re for, and gives selection guidance so you know which one to reach for when.
+`Predict`, `ChainOfThought`, and `ReAct` cover most programs, but DSPy ships a handful of other modules for situations where one LM call is not enough, or where reasoning needs a Python runtime, or where you want to fan out across examples, or where the module’s structure itself is worth learning rather than hand-writing. This page collects those modules, groups them by what they’re for, and gives selection guidance so you know which one to reach for when.
 
-Read this when a plain `Predict` or `ChainOfThought` isn’t getting you there and you’re trying to decide between sampling more, comparing drafts, executing code, or running the same module in parallel.
+Read this when a plain `Predict` or `ChainOfThought` isn’t getting you there and you’re trying to decide between sampling more, comparing drafts, executing code, running the same module in parallel, or letting an optimizer discover the structure.
 
 ## Design decisions
 
@@ -55,6 +55,10 @@ A plain function — no LM call, no signature, no `dspy.Module`. It tallies comp
 ### 10. `RLM` is marked experimental for a reason
 
 The class is decorated with `@experimental` and the interface is still in flux. It composes a code sandbox with built-in `llm_query` / `llm_query_batched` tools that let generated code call a separate sub-LM mid-execution. The mental model is a Python REPL the LM drives, with another LM available as a callable inside. Useful, but the boundary conditions — max call counts, sandbox lifetime, error recovery — are still being worked out.
+
+### 11. `Flex` puts the module’s code into the optimization search space
+
+Every other DSPy module fixes its structure at construction time; `Flex` doesn’t. It holds its implementation as source code (`module_src`) and marks that code as the optimizable parameter, so `dspy.GEPA` rewrites its *entire implementation* — how many predictors, which primitives, what runs in Python instead of an LM — against your metric, rather than only tuning instructions. Construct it from a signature like any module (it begins as a one-call `Predict` baseline, or `RLM` when given tools), then let optimization discover the decomposition. Also experimental. It has its own deep dive: [Flex: Optimizable module code](../flex/).
 
 ## API walkthrough
 
@@ -109,6 +113,7 @@ Wraps `ParallelExecutor` and submits each `(module, example)` pair to a thread p
 - [Modules: composing your own](../modules/) — every variant here is a`dspy.Module` (except`Parallel` and`majority` ), so the composition rules apply.
 - [Tools, ReAct, and MCP](../tools-react-and-mcp/) —`CodeAct` and`RLM` use the same tool-wrapping machinery as`ReAct` .
 - [RLM: exploring large contexts with code](../rlm/) — the deep dive on the experimental REPL-driven module summarized above.
+- [Flex: Optimizable module code](../flex/) — the deep dive on the code-optimizable Flex module summarized above.
 - [Settings and `context()`](../settings-and-context/) — how`Parallel` and`Module.batch` snapshot the active overrides into each worker.
 
 # Citations

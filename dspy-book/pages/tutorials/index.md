@@ -13,7 +13,6 @@
 - [Building AI Applications by Customizing DSPy Modules - DSPy](/pages/tutorials/custom_module.md)
 - [Building AI Agents with DSPy - DSPy](/pages/tutorials/customer_service_agent.md)
 - [Deployment - DSPy](/pages/tutorials/deployment.md)
-- [Email Information Extraction - DSPy](/pages/tutorials/email_extraction.md)
 - [Entity Extraction - DSPy](/pages/tutorials/entity_extraction.md)
 - [Finetuning Agents - DSPy](/pages/tutorials/games.md)
 - [Overview - DSPy](/pages/tutorials/gepa_ai_program.md)
