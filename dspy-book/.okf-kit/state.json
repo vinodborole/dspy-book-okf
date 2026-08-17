@@ -2,7 +2,7 @@
   "generator": "okf-kit",
   "okf_version": "0.1",
   "root_url": "https://dspy.ai/",
-  "updated_at": "2026-08-10T07:48:17.539683+00:00",
+  "updated_at": "2026-08-17T07:02:33.768823+00:00",
   "config": {
     "max_depth": 3,
     "max_pages": 70,
@@ -52,7 +52,7 @@
       "path": "pages/diving-deeper/flex.md",
       "url": "https://dspy.ai/diving-deeper/flex",
       "title": "Flex: optimizable module code - DSPy",
-      "hash": "a497fe1f62768407c3a2fa577446bf1f0034b6a7a478ad526c0ccffaaa192dd2"
+      "hash": "e8a55e110c9eed20a86d33307a33d9cb821f13e9f1a7b2861bb0a464b9c7b3e9"
     },
     {
       "path": "pages/diving-deeper/gepa-in-depth.md",
@@ -346,7 +346,7 @@
       "path": "pages/tutorials/observability.md",
       "url": "https://dspy.ai/tutorials/observability",
       "title": "Debugging & Observability - DSPy",
-      "hash": "4524e8214ebad76d5e45037523735de08cc98dc49cd6c282d2451b4468d3cc59"
+      "hash": "b4841a4642c058e63b8a6a2aa2a464a440331aaf4a4b391d2a1ef6c7b115d14a"
     },
     {
       "path": "pages/tutorials/optimize_ai_program.md",
@@ -1132,10 +1132,10 @@
     ]
   ],
   "last_sync": {
-    "synced_at": "2026-08-10T07:48:17.521992+00:00",
-    "added": 1,
-    "changed": 1,
-    "removed": 1,
+    "synced_at": "2026-08-17T07:02:33.750557+00:00",
+    "added": 0,
+    "changed": 2,
+    "removed": 0,
     "pages": 70
   }
 }

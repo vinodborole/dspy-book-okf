@@ -3,7 +3,7 @@ type: Web Page
 title: 'Flex: optimizable module code - DSPy'
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/flex
-timestamp: '2026-08-10T07:48:17.519068+00:00'
+timestamp: '2026-08-17T07:02:33.747853+00:00'
 ---
 
 # Flex: Optimizable module code
@@ -98,7 +98,7 @@ The optimizer-authored code does not run against the real `dspy` package. Inside
 **Available**
 
 - `dspy.Module` — the base class the generated source subclasses.`__init__` assigns predictors;`forward` runs in the sandbox.
-- `dspy.Predict` ,`dspy.ChainOfThought` ,`dspy.ReAct` ,`dspy.ReActV2` ,`dspy.RLM` ,`dspy.CodeAct` ,`dspy.ProgramOfThought` — constructed in the sandbox but*built on the host* , where the real LM calls happen. Constructor kwargs cross as JSON.
+- `dspy.Predict` ,`dspy.ChainOfThought` ,`dspy.ReAct` ,`dspy.ReActV2` ,`dspy.RLM` — constructed in the sandbox but*built on the host* , where the real LM calls happen. Constructor kwargs cross as JSON.
 - `dspy.Signature("inputs -> outputs", "instructions")` — the string form only, used to give an inner predictor its instructions. It is a marker the host turns back into a real`Signature` , not the class: it has no methods, no`with_instructions()` , and no`dspy.InputField` /`dspy.OutputField` class form.
 - `dspy.Prediction(**fields)` — the return value of`forward` . Holds fields; it is not the host`Prediction` type.
 - `dspy.Tool(func)` — a pass-through wrapper. Only tools you passed to`dspy.Flex(tools=...)` can be handed to a bridged sub-predictor; they are already in scope by name, so wrapping is optional.
