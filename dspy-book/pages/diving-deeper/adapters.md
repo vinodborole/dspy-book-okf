@@ -3,7 +3,7 @@ type: Web Page
 title: 'Adapters: how signatures become prompts - DSPy'
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/diving-deeper/adapters
-timestamp: '2026-08-03T09:53:06.608112+00:00'
+timestamp: '2026-08-24T07:04:52.434574+00:00'
 ---
 
 # Adapters: how signatures become prompts
@@ -76,7 +76,7 @@ Outputs structured JSON. Internally extends ChatAdapter — formatting is simila
 
 `dspy.XMLAdapter(callbacks=None)`
 
-`<field_name>value</field_name>` tags. The parser is a regex (`r"<(\w+)>(.*?)</\1>"` with `DOTALL`); it’s robust to whitespace but doesn’t tolerate nested tags of the same name.
+`<field_name>value</field_name>` tags. Lists use repeated `<item>` tags.
 
 `dspy.TwoStepAdapter(extraction_model: BaseLM, **kwargs)`
 
@@ -208,7 +208,8 @@ Safe in-memory inputs such as data URIs, bytes, PIL images, audio arrays, and st
 
 - [Signatures in depth](../signatures-in-depth/) — what the adapter consumes.
 - [Settings and context()](../settings-and-context/) — how`configure` and`context` propagate the adapter choice.
-- Tools, ReAct, and MCP DD page — `Tool` and`ToolCalls` are adapter-formatted but module-driven.
+- [Tools and MCP](../tools/) —`Tool` and`ToolCalls` are adapter-formatted but module-driven.
+- [ReAct and ReActV2](../react/) — how the two agent loops present history and tool calls to adapters.
 
 # Citations
 

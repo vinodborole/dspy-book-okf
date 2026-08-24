@@ -3,7 +3,7 @@ type: Web Page
 title: Tools with ReAct - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/getting-started/react-and-tools
-timestamp: '2026-08-03T09:53:06.608112+00:00'
+timestamp: '2026-08-24T07:04:52.434574+00:00'
 ---
 
 # Give the program tools with `dspy.ReAct`
@@ -54,7 +54,11 @@ ReAct’s returned `Prediction` instance carries a `trajectory` field: a diction
 
 We can print it like so:
 
-For tool authoring patterns, MCP integration, and trajectory debugging, see [Tools, ReAct, and MCP](../../diving-deeper/tools-react-and-mcp/).
+For tool authoring patterns and MCP integration, see [Tools and MCP](../../diving-deeper/tools/). For the ReAct loop’s execution model and trajectory debugging, see [ReAct and ReActV2](../../diving-deeper/react/).
+
+Experimental: ReActV2
+
+`dspy.ReActV2` is the experimental, structured-history replacement for the current ReAct implementation. It will become `dspy.ReAct` in DSPy 3.5, bringing native multi-turn and parallel tool calls and improved prompt-cache reuse. The `dspy.ReActV2` name will remain as a deprecated compatibility alias throughout 3.5 and will be removed in 3.6. See [The transition from ReAct to ReActV2](../../diving-deeper/react/#the-transition-from-react-to-reactv2).
 
 **Next:** [Composing modules →](../composing-modules/)
 

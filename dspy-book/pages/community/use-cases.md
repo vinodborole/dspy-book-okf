@@ -3,12 +3,12 @@ type: Web Page
 title: Use Cases - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/community/use-cases
-timestamp: '2026-08-03T09:53:06.608112+00:00'
+timestamp: '2026-08-24T07:04:52.434574+00:00'
 ---
 
 # DSPy in Production
 
-DSPy is in production at **Shopify, Databricks, Dropbox, Microsoft AI, Moody's, AWS, Sephora, VMware**, and dozens more.
+DSPy is in production at **Shopify, Databricks, Dropbox, Microsoft AI, Moody's, AWS, Sephora, VMware, Nubank**, and dozens more.
 
 This list represents companies that have publicly shared their use cases or have provided permission to be included. It reflects a selection of the many industry applications of DSPy currently in production. To add yours, please [open a PR](https://github.com/stanfordnlp/dspy/edit/main/docs/docs/community/use-cases.md).
 
@@ -40,6 +40,7 @@ Relevance judge, automated
 | **[Sephora](https://www.sephora.com/)** | Undisclosed agent usecases; perspectives shared in [DAIS Session](https://www.youtube.com/watch?v=D2HurSldDkE) . | 
 | **[Zoro UK](https://www.zoro.co.uk/)** | E-commerce applications around structured shopping. [Portkey Session](https://www.youtube.com/watch?v=_vGKSc1tekE) | 
 | **[VMware](https://www.vmware.com/)** | RAG and other prompt optimization applications. [Interview in The Register.](https://www.theregister.com/2024/02/22/prompt_engineering_ai_models/)[Business Insider.](https://www.businessinsider.com/chaptgpt-large-language-model-ai-prompt-engineering-automated-optimizer-2024-3) | 
+| **[Nubank](https://nubank.com.br/)** | Uses DSPy with GEPA to optimize modular, semantically versioned prompts for production-grade financial-service agents. [Engineering blog](https://building.nubank.com/building-ai-agents-for-131-million-customers/) | 
 | **[Nous Research](https://nousresearch.com/)** | Evolutionary self-improvement for the Hermes agent: optimizes skills, prompts, and code using DSPy + GEPA. [GitHub](https://github.com/NousResearch/hermes-agent-self-evolution) | 
 | **[Haize Labs](https://www.haizelabs.com/)** | Automated red-teaming for LLMs. [Blog](https://blog.haizelabs.com/posts/dspy/) | 
 | **[Plastic Labs](https://www.plasticlabs.ai/)** | R&D pipelines for Honcho. [Blog](https://blog.plasticlabs.ai/blog/User-State-is-State-of-the-Art) | 

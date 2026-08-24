@@ -3,7 +3,7 @@ type: Web Page
 title: Use MCP in DSPy - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/mcp
-timestamp: '2026-08-03T09:53:06.608112+00:00'
+timestamp: '2026-08-24T07:04:52.434574+00:00'
 ---
 
 # Tutorial: Use MCP tools in DSPy
@@ -44,7 +44,7 @@ it:
 
 Before we start the server, let’s take a look at the code.
 
-We first create a `FastMCP` instance, which is a utility that helps quickly build an MCP server:
+We first create a server instance, using the class name provided by the installed SDK version:
 
 Then we define our data structures, which in a real-world application would be the database schema, e.g.:
 
@@ -55,11 +55,11 @@ MCP clients as MCP tools:
 
 The last step is spinning up the server:
 
-Now we have finished writing the server! Let’s launch it:
+Now we have finished writing the server. You do not need to launch it separately; the MCP client below starts it as a subprocess.
 
 ## Write a DSPy Program That Utilizes Tools in MCP Server
 
-Now that the server is running, let’s build the actual airline service agent which
+Now that the server is ready, let’s build the actual airline service agent which
 utilizes the MCP tools in our server to assist users. In your working directory,
 create a file named `dspy_mcp_agent.py`, and follow the guide to add code to it.
 
@@ -69,8 +69,9 @@ We first need to gather all available tools from the MCP server and make them
 usable by DSPy. DSPy provides an API [`dspy.Tool`](https://dspy.ai/api/primitives/Tool/)
 as the standard tool interface. Let’s convert all the MCP tools to `dspy.Tool`.
 
-We need to create an MCP client instance to communicate with the MCP server, fetch all available
-tools, and convert them to `dspy.Tool` using the static method `from_mcp_tool`:
+We use the MCP SDK v2 high-level `Client` to start the server, fetch its available tools, and convert
+them to `dspy.Tool` using the static method `from_mcp_tool`. Keep the client context open while DSPy
+uses the converted tools:
 
 With the code above, we have successfully collected all available MCP tools and converted them to DSPy tools.
 

@@ -2,7 +2,7 @@
   "generator": "okf-kit",
   "okf_version": "0.1",
   "root_url": "https://dspy.ai/",
-  "updated_at": "2026-08-17T07:02:33.768823+00:00",
+  "updated_at": "2026-08-24T07:04:52.459523+00:00",
   "config": {
     "max_depth": 3,
     "max_pages": 70,
@@ -22,13 +22,13 @@
       "path": "pages/community/use-cases.md",
       "url": "https://dspy.ai/community/use-cases",
       "title": "Use Cases - DSPy",
-      "hash": "84736d13dcd2f66a4513723dea34cf575dddf98c828d2ee63d52d1ffaf18e8ca"
+      "hash": "72c556a5d3d48b0787950c947a6509309719a74038a1354421453c66f327764a"
     },
     {
       "path": "pages/diving-deeper/adapters.md",
       "url": "https://dspy.ai/diving-deeper/adapters",
       "title": "Adapters: how signatures become prompts - DSPy",
-      "hash": "11df776c13c469793185b6c3cdc2b653a647805a9071c4440579c81d8190b088"
+      "hash": "462972ad01ad1b7504d7c36fa76f46feab2b3e76e0a6ffe553aa9317ad9bb5d7"
     },
     {
       "path": "pages/diving-deeper/bootstrap-fewshot-family.md",
@@ -40,7 +40,7 @@
       "path": "pages/diving-deeper/built-in-module-variants.md",
       "url": "https://dspy.ai/diving-deeper/built-in-module-variants",
       "title": "Built-in module variants - DSPy",
-      "hash": "8fd8bff345b06b3591473115a36f1cc81bca05485de7dfda29e33627a6bf910d"
+      "hash": "32427f325931f9b14e558ffda4dd356a37be6b908e5aae49bd0bda35819a1aee"
     },
     {
       "path": "pages/diving-deeper/choosing-an-optimizer.md",
@@ -73,10 +73,16 @@
       "hash": "953f96c8a886b4cb0fcb6c088a79346d079583ecc717f4290df7ebf56105ae14"
     },
     {
+      "path": "pages/diving-deeper/react.md",
+      "url": "https://dspy.ai/diving-deeper/react",
+      "title": "ReAct and ReActV2 - DSPy",
+      "hash": "c2690cc075626e516f615f18450cf31ca6b59ff7ca485a0e1626615bcd69b6c6"
+    },
+    {
       "path": "pages/diving-deeper/rlm.md",
       "url": "https://dspy.ai/diving-deeper/rlm",
       "title": "RLM: exploring large contexts with code - DSPy",
-      "hash": "b3c855e0ddb23defb3c9f7666b3a754fab75fffaa6bc12ed44ad158489e994a2"
+      "hash": "81d42bdf529cec7c03831dd5e1817a37f31ee4c9a8f697420dcd2428b1f14249"
     },
     {
       "path": "pages/diving-deeper/saving-and-loading.md",
@@ -97,10 +103,10 @@
       "hash": "3fad052ce3365323c415c6a1b43a05881516028c75c8e0c2f75f5cd31ce8a58a"
     },
     {
-      "path": "pages/diving-deeper/tools-react-and-mcp.md",
-      "url": "https://dspy.ai/diving-deeper/tools-react-and-mcp",
-      "title": "Tools, ReAct, and MCP - DSPy",
-      "hash": "f61c9a7f29ddf52e9862190e3e91468eb76fded115e3b91085e469e8d5f06ef5"
+      "path": "pages/diving-deeper/tools.md",
+      "url": "https://dspy.ai/diving-deeper/tools",
+      "title": "Tools and MCP - DSPy",
+      "hash": "019e36b99b4eeee2985b169f7a97f5ef524d32c598d5a16098971319a168449c"
     },
     {
       "path": "pages/faqs.md",
@@ -124,7 +130,7 @@
       "path": "pages/getting-started/composing-modules.md",
       "url": "https://dspy.ai/getting-started/composing-modules",
       "title": "Composing modules - DSPy",
-      "hash": "70a5b37c3c7997aab3885e03af9d04801a390751670a06b1c48a844ebc7fb496"
+      "hash": "f4535c5810b136a03925410a6de10f14223944229025f630fb3a74998680d142"
     },
     {
       "path": "pages/getting-started/expanding-signatures.md",
@@ -166,7 +172,7 @@
       "path": "pages/getting-started/react-and-tools.md",
       "url": "https://dspy.ai/getting-started/react-and-tools",
       "title": "Tools with ReAct - DSPy",
-      "hash": "b264bf5510c359dfbc0c03248323a2460225601ee6a821ed8a98aca898d4f5a7"
+      "hash": "4eed9f5758c23062438c84026e06216d4fffbc47008758a9ed7db1abd88e25b9"
     },
     {
       "path": "pages/getting-started/saving-and-loading.md",
@@ -328,7 +334,7 @@
       "path": "pages/tutorials/mcp.md",
       "url": "https://dspy.ai/tutorials/mcp",
       "title": "Use MCP in DSPy - DSPy",
-      "hash": "22eb3ad480dcc86fe92cc6d1fd81651db0c3ccffb2a44bb024b6cebfdd6017ac"
+      "hash": "c90e6d789593d4c91fc313f4c0ad3dcea951b17b15707d437f8159712dce35e1"
     },
     {
       "path": "pages/tutorials/mem0_react_agent.md",
@@ -425,12 +431,6 @@
       "url": "https://dspy.ai/tutorials/tool_use",
       "title": "Advanced Tool Use - DSPy",
       "hash": "8797b9088664895694e4914c2024aa80766f0bb21283010068c7599625ba438d"
-    },
-    {
-      "path": "pages/tutorials/yahoo_finance_react.md",
-      "url": "https://dspy.ai/tutorials/yahoo_finance_react",
-      "title": "Financial Analysis with Yahoo Finance - DSPy",
-      "hash": "e38c8a8c8b495e8c978c5fb76255c0743e330803ae3f7c2897860b3c3bd40ebf"
     }
   ],
   "edges": [
@@ -440,11 +440,19 @@
     ],
     [
       "pages/diving-deeper/adapters.md",
+      "pages/diving-deeper/react.md"
+    ],
+    [
+      "pages/diving-deeper/adapters.md",
       "pages/diving-deeper/settings-and-context.md"
     ],
     [
       "pages/diving-deeper/adapters.md",
       "pages/diving-deeper/signatures-in-depth.md"
+    ],
+    [
+      "pages/diving-deeper/adapters.md",
+      "pages/diving-deeper/tools.md"
     ],
     [
       "pages/diving-deeper/bootstrap-fewshot-family.md",
@@ -472,6 +480,10 @@
     ],
     [
       "pages/diving-deeper/built-in-module-variants.md",
+      "pages/diving-deeper/react.md"
+    ],
+    [
+      "pages/diving-deeper/built-in-module-variants.md",
       "pages/diving-deeper/rlm.md"
     ],
     [
@@ -480,7 +492,7 @@
     ],
     [
       "pages/diving-deeper/built-in-module-variants.md",
-      "pages/diving-deeper/tools-react-and-mcp.md"
+      "pages/diving-deeper/tools.md"
     ],
     [
       "pages/diving-deeper/choosing-an-optimizer.md",
@@ -543,12 +555,28 @@
       "pages/diving-deeper/settings-and-context.md"
     ],
     [
+      "pages/diving-deeper/react.md",
+      "pages/diving-deeper/adapters.md"
+    ],
+    [
+      "pages/diving-deeper/react.md",
+      "pages/diving-deeper/modules.md"
+    ],
+    [
+      "pages/diving-deeper/react.md",
+      "pages/diving-deeper/tools.md"
+    ],
+    [
+      "pages/diving-deeper/react.md",
+      "pages/tutorials/cache.md"
+    ],
+    [
       "pages/diving-deeper/rlm.md",
       "pages/diving-deeper/built-in-module-variants.md"
     ],
     [
       "pages/diving-deeper/rlm.md",
-      "pages/diving-deeper/tools-react-and-mcp.md"
+      "pages/diving-deeper/tools.md"
     ],
     [
       "pages/diving-deeper/saving-and-loading.md",
@@ -575,19 +603,19 @@
       "pages/diving-deeper/modules.md"
     ],
     [
-      "pages/diving-deeper/tools-react-and-mcp.md",
+      "pages/diving-deeper/tools.md",
       "pages/diving-deeper/adapters.md"
     ],
     [
-      "pages/diving-deeper/tools-react-and-mcp.md",
+      "pages/diving-deeper/tools.md",
       "pages/diving-deeper/built-in-module-variants.md"
     ],
     [
-      "pages/diving-deeper/tools-react-and-mcp.md",
-      "pages/diving-deeper/modules.md"
+      "pages/diving-deeper/tools.md",
+      "pages/diving-deeper/react.md"
     ],
     [
-      "pages/diving-deeper/tools-react-and-mcp.md",
+      "pages/diving-deeper/tools.md",
       "pages/diving-deeper/rlm.md"
     ],
     [
@@ -612,11 +640,11 @@
     ],
     [
       "pages/getting-started/composing-modules.md",
-      "pages/diving-deeper/settings-and-context.md"
+      "pages/diving-deeper/react.md"
     ],
     [
       "pages/getting-started/composing-modules.md",
-      "pages/diving-deeper/tools-react-and-mcp.md"
+      "pages/diving-deeper/settings-and-context.md"
     ],
     [
       "pages/getting-started/composing-modules.md",
@@ -688,7 +716,11 @@
     ],
     [
       "pages/getting-started/react-and-tools.md",
-      "pages/diving-deeper/tools-react-and-mcp.md"
+      "pages/diving-deeper/react.md"
+    ],
+    [
+      "pages/getting-started/react-and-tools.md",
+      "pages/diving-deeper/tools.md"
     ],
     [
       "pages/getting-started/react-and-tools.md",
@@ -907,10 +939,6 @@
       "pages/tutorials/tool_use.md"
     ],
     [
-      "pages/tutorials.md",
-      "pages/tutorials/yahoo_finance_react.md"
-    ],
-    [
       "pages/tutorials/agents.md",
       "pages/home.md"
     ],
@@ -1111,10 +1139,6 @@
       "pages/tutorials/mem0_react_agent.md"
     ],
     [
-      "pages/tutorials/real_world_examples.md",
-      "pages/tutorials/yahoo_finance_react.md"
-    ],
-    [
       "pages/tutorials/rl_ai_program.md",
       "pages/tutorials/rl_multihop.md"
     ],
@@ -1132,10 +1156,10 @@
     ]
   ],
   "last_sync": {
-    "synced_at": "2026-08-17T07:02:33.750557+00:00",
-    "added": 0,
-    "changed": 2,
-    "removed": 0,
+    "synced_at": "2026-08-24T07:04:52.441334+00:00",
+    "added": 2,
+    "changed": 7,
+    "removed": 2,
     "pages": 70
   }
 }

@@ -39,4 +39,3 @@
 - [Saving and Loading - DSPy](/pages/tutorials/saving.md)
 - [Streaming - DSPy](/pages/tutorials/streaming.md)
 - [Advanced Tool Use - DSPy](/pages/tutorials/tool_use.md)
-- [Financial Analysis with Yahoo Finance - DSPy](/pages/tutorials/yahoo_finance_react.md)
