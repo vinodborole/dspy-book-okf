@@ -2,7 +2,7 @@
   "generator": "okf-kit",
   "okf_version": "0.1",
   "root_url": "https://dspy.ai/",
-  "updated_at": "2026-08-31T13:08:35.560134+00:00",
+  "updated_at": "2026-09-07T11:59:51.528167+00:00",
   "config": {
     "max_depth": 3,
     "max_pages": 70,
@@ -52,13 +52,13 @@
       "path": "pages/diving-deeper/flex.md",
       "url": "https://dspy.ai/diving-deeper/flex",
       "title": "Flex: optimizable module code - DSPy",
-      "hash": "e8a55e110c9eed20a86d33307a33d9cb821f13e9f1a7b2861bb0a464b9c7b3e9"
+      "hash": "6dbfae607888805b3d0ba230bf46d4fc37ff944f28301f674809b77a6b4cbd21"
     },
     {
       "path": "pages/diving-deeper/gepa-in-depth.md",
       "url": "https://dspy.ai/diving-deeper/gepa-in-depth",
       "title": "GEPA in depth - DSPy",
-      "hash": "a997e23425692c3ebad0703d56a321b64695c3b402f390dfa24dc881e11804fa"
+      "hash": "06ae5dbcc6662df4448d0db69eae1d4638f652527b8f6f5bdf2e1e9826a27baf"
     },
     {
       "path": "pages/diving-deeper/metrics-and-evaluation.md",
@@ -1156,9 +1156,9 @@
     ]
   ],
   "last_sync": {
-    "synced_at": "2026-08-31T13:08:35.542129+00:00",
+    "synced_at": "2026-09-07T11:59:51.510130+00:00",
     "added": 0,
-    "changed": 1,
+    "changed": 2,
     "removed": 0,
     "pages": 70
   }
