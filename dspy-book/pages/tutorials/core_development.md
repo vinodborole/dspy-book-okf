@@ -3,7 +3,7 @@ type: Web Page
 title: Overview - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/tutorials/core_development
-timestamp: '2026-08-03T09:53:06.608112+00:00'
+timestamp: '2026-09-14T12:15:40.843061+00:00'
 ---
 
 # Tools, Development, and Deployment
@@ -11,6 +11,10 @@ timestamp: '2026-08-03T09:53:06.608112+00:00'
 This section covers essential DSPy features and best practices for professional AI development. Learn how to implement key functionalities like streaming, caching, deployment, and monitoring in your DSPy applications. These tutorials focus on the practical aspects of building production-ready systems.
 
 ## Integration and Tooling
+
+### [Custom LM Engines](../custom_lm_engines/)
+
+Connect a custom backend through the lm15 request/response contract. The worked example runs the Pi CLI and its tools from a DSPy program.
 
 ### [Use MCP in DSPy](../mcp/)
 

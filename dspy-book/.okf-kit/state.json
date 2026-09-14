@@ -2,7 +2,7 @@
   "generator": "okf-kit",
   "okf_version": "0.1",
   "root_url": "https://dspy.ai/",
-  "updated_at": "2026-09-07T11:59:51.528167+00:00",
+  "updated_at": "2026-09-14T12:15:40.858486+00:00",
   "config": {
     "max_depth": 3,
     "max_pages": 70,
@@ -52,7 +52,7 @@
       "path": "pages/diving-deeper/flex.md",
       "url": "https://dspy.ai/diving-deeper/flex",
       "title": "Flex: optimizable module code - DSPy",
-      "hash": "6dbfae607888805b3d0ba230bf46d4fc37ff944f28301f674809b77a6b4cbd21"
+      "hash": "09c39005cffc15f8a4989a3cf3b5fda38e5b9a9fd098b7a510e6536d705fdae2"
     },
     {
       "path": "pages/diving-deeper/gepa-in-depth.md",
@@ -82,7 +82,7 @@
       "path": "pages/diving-deeper/rlm.md",
       "url": "https://dspy.ai/diving-deeper/rlm",
       "title": "RLM: exploring large contexts with code - DSPy",
-      "hash": "81d42bdf529cec7c03831dd5e1817a37f31ee4c9a8f697420dcd2428b1f14249"
+      "hash": "a44709879382c897cc357fcc7b907797402d91f87eba45eb97c594fcfbadb8d4"
     },
     {
       "path": "pages/diving-deeper/saving-and-loading.md",
@@ -226,7 +226,7 @@
       "path": "pages/tutorials/cache.md",
       "url": "https://dspy.ai/tutorials/cache",
       "title": "Cache - DSPy",
-      "hash": "2cef9065e1c471d5ecb1474ff2c5841d766cfd68b1e1adb352e5264ec14a3357"
+      "hash": "0d57326940fafe217dc93ebfe4ee893720ba05452ba58dd04212bf1bccdaa4e0"
     },
     {
       "path": "pages/tutorials/classification.md",
@@ -250,7 +250,13 @@
       "path": "pages/tutorials/core_development.md",
       "url": "https://dspy.ai/tutorials/core_development",
       "title": "Overview - DSPy",
-      "hash": "79f0467355587abd4156a02c42671fc95bf9e811f9b8900eadaf6005322c5253"
+      "hash": "353886c3a75bce862fd9c8bf7edf3431b6a6110fb220968ad96a0619ef82b341"
+    },
+    {
+      "path": "pages/tutorials/custom_lm_engines.md",
+      "url": "https://dspy.ai/tutorials/custom_lm_engines",
+      "title": "Custom LM Engines - DSPy",
+      "hash": "e8f74520fd5e5a907a0f5319751682bc7285c14697b3a081bc5c5a1ba18fb15d"
     },
     {
       "path": "pages/tutorials/custom_module.md",
@@ -335,12 +341,6 @@
       "url": "https://dspy.ai/tutorials/mcp",
       "title": "Use MCP in DSPy - DSPy",
       "hash": "c90e6d789593d4c91fc313f4c0ad3dcea951b17b15707d437f8159712dce35e1"
-    },
-    {
-      "path": "pages/tutorials/mem0_react_agent.md",
-      "url": "https://dspy.ai/tutorials/mem0_react_agent",
-      "title": "Memory-Enabled ReAct Agents - DSPy",
-      "hash": "a81487699943e33e352ecc710c289799d2cd8b5aaa97d3ddff32f630827b4745"
     },
     {
       "path": "pages/tutorials/multihop_search.md",
@@ -880,10 +880,6 @@
     ],
     [
       "pages/tutorials.md",
-      "pages/tutorials/mem0_react_agent.md"
-    ],
-    [
-      "pages/tutorials.md",
       "pages/tutorials/multihop_search.md"
     ],
     [
@@ -1004,6 +1000,10 @@
     ],
     [
       "pages/tutorials/core_development.md",
+      "pages/tutorials/custom_lm_engines.md"
+    ],
+    [
+      "pages/tutorials/core_development.md",
       "pages/tutorials/deployment.md"
     ],
     [
@@ -1029,6 +1029,10 @@
     [
       "pages/tutorials/core_development.md",
       "pages/tutorials/streaming.md"
+    ],
+    [
+      "pages/tutorials/custom_lm_engines.md",
+      "pages/home.md"
     ],
     [
       "pages/tutorials/custom_module.md",
@@ -1091,10 +1095,6 @@
       "pages/tutorials/observability.md"
     ],
     [
-      "pages/tutorials/mem0_react_agent.md",
-      "pages/home.md"
-    ],
-    [
       "pages/tutorials/multihop_search.md",
       "pages/home.md"
     ],
@@ -1135,10 +1135,6 @@
       "pages/tutorials/llms_txt_generation.md"
     ],
     [
-      "pages/tutorials/real_world_examples.md",
-      "pages/tutorials/mem0_react_agent.md"
-    ],
-    [
       "pages/tutorials/rl_ai_program.md",
       "pages/tutorials/rl_multihop.md"
     ],
@@ -1156,10 +1152,10 @@
     ]
   ],
   "last_sync": {
-    "synced_at": "2026-09-07T11:59:51.510130+00:00",
-    "added": 0,
-    "changed": 2,
-    "removed": 0,
+    "synced_at": "2026-09-14T12:15:40.846364+00:00",
+    "added": 1,
+    "changed": 4,
+    "removed": 1,
     "pages": 70
   }
 }
