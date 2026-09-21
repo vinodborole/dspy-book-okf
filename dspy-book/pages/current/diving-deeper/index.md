@@ -1,0 +1,16 @@
+# /pages/current/diving-deeper — directory listing
+
+- [Adapters: how signatures become prompts - DSPy](/pages/current/diving-deeper/adapters.md)
+- [BootstrapFewShot family - DSPy](/pages/current/diving-deeper/bootstrap-fewshot-family.md)
+- [Built-in module variants - DSPy](/pages/current/diving-deeper/built-in-module-variants.md)
+- [Optimizers: choosing one - DSPy](/pages/current/diving-deeper/choosing-an-optimizer.md)
+- [Flex: optimizable module code - DSPy](/pages/current/diving-deeper/flex.md)
+- [GEPA in depth - DSPy](/pages/current/diving-deeper/gepa-in-depth.md)
+- [Metrics and evaluation - DSPy](/pages/current/diving-deeper/metrics-and-evaluation.md)
+- [Modules: composing your own - DSPy](/pages/current/diving-deeper/modules.md)
+- [ReAct and ReActV2 - DSPy](/pages/current/diving-deeper/react.md)
+- [RLM: exploring large contexts with code - DSPy](/pages/current/diving-deeper/rlm.md)
+- [Saving and loading - DSPy](/pages/current/diving-deeper/saving-and-loading.md)
+- [Settings and context() - DSPy](/pages/current/diving-deeper/settings-and-context.md)
+- [Signatures in depth - DSPy](/pages/current/diving-deeper/signatures-in-depth.md)
+- [Tools and MCP - DSPy](/pages/current/diving-deeper/tools.md)
