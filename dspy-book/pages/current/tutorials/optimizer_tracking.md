@@ -3,84 +3,79 @@ type: Web Page
 title: Tracking DSPy Optimizers - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/tutorials/optimizer_tracking
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Tracking DSPy Optimizers with MLflow
 
-This tutorial demonstrates how to use MLflow to track and analyze your DSPy optimization process. MLflow’s built-in integration for DSPy provides traceability and debuggability for your DSPy optimization experience. It allows you to understand the intermediate trials during the optimization, store the optimized program and its results, and provides observability into your program execution.
+ This tutorial demonstrates how to use MLflow to track and analyze your DSPy optimization process. MLflow’s built-in integration for DSPy provides traceability and debuggability for your DSPy optimization experience. It allows you to understand the intermediate trials during the optimization, store the optimized program and its results, and provides observability into your program execution.
 
 Through the autologging capability, MLflow tracks the following information:
 
-- 
-**Optimizer Parameters**
+-  **Optimizer Parameters**
   - Number of few-shot examples
   - Number of candidates
   - Other configuration settings
-- 
-**Program States**
+-  **Program States**
   - Initial instructions and few-shot examples
   - Optimized instructions and few-shot examples
   - Intermediate instructions and few-shot examples during optimization
-- 
-**Datasets**
+-  **Datasets**
   - Training data used
   - Evaluation data used
-- 
-**Performance Progression**
+-  **Performance Progression**
   - Overall metric progression
   - Performance at each evaluation step
-- 
-**Traces**
+-  **Traces**
   - Program execution traces
   - Model responses
   - Intermediate prompts
 
 ## Getting Started
 
-### 1. Install MLflow
+ ### 1. Install MLflow
 
-First, install MLflow (version 2.21.1 or later):
+ First, install MLflow (version 2.21.1 or later):
 
 ### 2. Start MLflow Tracking Server
 
-Let’s spin up the MLflow tracking server with the following command. This will start a local server at `http://127.0.0.1:5000/`:
+ Let’s spin up the MLflow tracking server with the following command. This will start a local server at `http://127.0.0.1:5000/`:
 
 ### 3. Enable Autologging
 
-Configure MLflow to track your DSPy optimization:
+ Configure MLflow to track your DSPy optimization:
 
 ### 4. Optimizing Your Program
 
-Here’s a complete example showing how to track the optimization of a math problem solver:
+ Here’s a complete example showing how to track the optimization of a math problem solver:
 
 ### 5. Viewing Results
 
-Once your optimization is complete, you can analyze the results through MLflow’s UI. Let’s walk through how to explore your optimization runs.
+ Once your optimization is complete, you can analyze the results through MLflow’s UI. Let’s walk through how to explore your optimization runs.
 
 #### Step 1: Access the MLflow UI
 
-Navigate to `http://localhost:5000` in your web browser to access the MLflow tracking server UI.
+ Navigate to `http://localhost:5000` in your web browser to access the MLflow tracking server UI.
 
 #### Step 2: Understanding the Experiment Structure
 
-When you open the experiment page, you’ll see a hierarchical view of your optimization process. The parent run represents your overall optimization process, while the child runs show each intermediate version of your program that was created during optimization.
+ When you open the experiment page, you’ll see a hierarchical view of your optimization process. The parent run represents your overall optimization process, while the child runs show each intermediate version of your program that was created during optimization.
 
 #### Step 3: Analyzing the Parent Run
 
-Clicking on the parent run reveals the big picture of your optimization process. You’ll find detailed information about your optimizer’s configuration parameters and how your evaluation metrics progressed over time. The parent run also stores your final optimized program, including the instructions, signature definitions, and few-shot examples that were used. Additionally, you can review the training data that was used during the optimization process.
+ Clicking on the parent run reveals the big picture of your optimization process. You’ll find detailed information about your optimizer’s configuration parameters and how your evaluation metrics progressed over time. The parent run also stores your final optimized program, including the instructions, signature definitions, and few-shot examples that were used. Additionally, you can review the training data that was used during the optimization process.
 
 #### Step 4: Examining Child Runs
 
-Each child run provides a detailed snapshot of a specific optimization attempt. When you select a child run from the experiment page, you can explore several aspects of that particular intermediate program. On the run parameter tab or artifact tab, you can review the instructions and few-shot examples used for the intermediate program. One of the most powerful features is the Traces tab, which provides a step-by-step view of your program’s execution. Here you can understand exactly how your DSPy program processes inputs and generates outputs.
+ Each child run provides a detailed snapshot of a specific optimization attempt. When you select a child run from the experiment page, you can explore several aspects of that particular intermediate program. On the run parameter tab or artifact tab, you can review the instructions and few-shot examples used for the intermediate program. One of the most powerful features is the Traces tab, which provides a step-by-step view of your program’s execution. Here you can understand exactly how your DSPy program processes inputs and generates outputs.
 
 ### 6. Loading Models for Inference
 
-You can load the optimized program directly from the MLflow tracking server for inference:
+ You can load the optimized program directly from the MLflow tracking server for inference:
 
 ## Troubleshooting
 
-- If traces aren’t appearing, ensure `log_traces_from_compile=True`
+ - If traces aren’t appearing, ensure `log_traces_from_compile=True`
 - For large datasets, consider setting `log_traces_from_compile=False` to avoid memory issues
 - Use `mlflow.get_run(run_id)` to programmatically access MLflow run data
 

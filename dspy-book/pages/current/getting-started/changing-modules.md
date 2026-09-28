@@ -3,12 +3,12 @@ type: Web Page
 title: Changing modules - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/getting-started/changing-modules
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Change inference strategies by changing the module
 
-In our previous examples, we used the `Predict` module to execute our signature.
+ In our previous examples, we used the `Predict` module to execute our signature.
 
 Other modules define different strategies for executing a task, and trying them out is very simple:
 

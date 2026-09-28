@@ -3,20 +3,20 @@ type: Web Page
 title: Async - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/tutorials/async
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Async DSPy Programming
 
-DSPy provides native support for asynchronous programming, allowing you to build more efficient and scalable applications. This guide will walk you through how to leverage async capabilities in DSPy, covering both built-in modules and custom implementations.
+ DSPy provides native support for asynchronous programming, allowing you to build more efficient and scalable applications. This guide will walk you through how to leverage async capabilities in DSPy, covering both built-in modules and custom implementations.
 
 ## Why Use Async in DSPy?
 
-Asynchronous programming in DSPy offers several benefits: - Improved performance through concurrent operations - Better resource utilization - Reduced waiting time for I/O-bound operations - Enhanced scalability for handling multiple requests
+ Asynchronous programming in DSPy offers several benefits: - Improved performance through concurrent operations - Better resource utilization - Reduced waiting time for I/O-bound operations - Enhanced scalability for handling multiple requests
 
 ## When Should I use Sync or Async?
 
-Choosing between synchronous and asynchronous programming in DSPy depends on your specific use case. Here’s a guide to help you make the right choice:
+ Choosing between synchronous and asynchronous programming in DSPy depends on your specific use case. Here’s a guide to help you make the right choice:
 
 Use Synchronous Programming When
 
@@ -35,7 +35,7 @@ Use Asynchronous Programming When:
 
 ### Important Considerations
 
-While async programming offers performance benefits, it comes with some trade-offs:
+ While async programming offers performance benefits, it comes with some trade-offs:
 
 - More complex error handling and debugging
 - Potential for subtle, hard-to-track bugs
@@ -46,30 +46,25 @@ We recommend starting with synchronous programming for most development scenario
 
 ## Using Built-in Modules Asynchronously
 
-Most DSPy built-in modules support asynchronous operations through the `acall()` method. This method
-maintains the same interface as the synchronous `__call__` method but operates asynchronously.
+ Most DSPy built-in modules support asynchronous operations through the `acall()` method. This method maintains the same interface as the synchronous `__call__` method but operates asynchronously.
 
 Here’s a basic example using `dspy.Predict`:
 
 ### Working with Async Tools
 
-DSPy’s `Tool` class seamlessly integrates with async functions. When you provide an async
-function to `dspy.Tool`, you can execute it using `acall()`. This is particularly useful
-for I/O-bound operations or when working with external services.
+ DSPy’s `Tool` class seamlessly integrates with async functions. When you provide an async function to `dspy.Tool`, you can execute it using `acall()`. This is particularly useful for I/O-bound operations or when working with external services.
 
 #### Using Async Tools in Synchronous Contexts
 
-If you need to call an async tool from synchronous code, you can enable automatic async-to-sync conversion:
+ If you need to call an async tool from synchronous code, you can enable automatic async-to-sync conversion:
 
 For more details on async tools, see the [Tools documentation](../../learn/programming/tools/#async-tools).
 
-Note: When using `dspy.ReAct` with tools, calling `acall()` on the ReAct instance will automatically
-execute all tools asynchronously using their `acall()` methods.
+Note: When using `dspy.ReAct` with tools, calling `acall()` on the ReAct instance will automatically execute all tools asynchronously using their `acall()` methods.
 
 ## Creating Custom Async DSPy Modules
 
-To create your own async DSPy module, implement the `aforward()` method instead of `forward()`. This method
-should contain your module’s async logic. Here’s an example of a custom module that chains two async operations:
+ To create your own async DSPy module, implement the `aforward()` method instead of `forward()`. This method should contain your module’s async logic. Here’s an example of a custom module that chains two async operations:
 
 # Citations
 

@@ -3,12 +3,12 @@ type: Web Page
 title: Custom LM Engines - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/tutorials/custom_lm_engines
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Custom LM Engines
 
-You can supply your own execution engine to `dspy.LM`. Before you do, check which of two situations you are in:
+ You can supply your own execution engine to `dspy.LM`. Before you do, check which of two situations you are in:
 
 - **An HTTP provider lm15 can already speak to** — an OpenAI-compatible service, a company gateway, a host DSPy’s bundled lm15 does not list yet. Do not write an engine:[declare the provider](#declaring-a-provider-instead-of-writing-an-engine) and`dspy.LM("<provider>/<model>")` routes natively, with`api_key` ,`api_base` ,`timeout` , saving and loading all behaving as for a built-in provider.
 - **Not an HTTP provider at all** — a CLI, an in-process model, an agent harness. Write an engine. It owns its whole connection, so the[rules below](#what-a-custom-engine-owns) apply.
@@ -21,15 +21,11 @@ DSPy 3.5 cutoff
 
 Custom `BaseLM.forward()`/`aforward()` integrations, `LegacyEngine`/`AsyncLegacyEngine`, and `complete_legacy()` shortcuts are deprecated in 3.4 and scheduled for removal in 3.5. Implement the request/response engine contract shown here; a legacy wrapper does not extend the migration deadline. OpenAI-style `lm(messages=[...])` calls are also being removed. `lm("hello")` remains a list-returning convenience; adapters use `lm(Request(...))` and consume `Response` directly. See the [migration guide](../../community/normalized-lm-api-migration/).
 
-Expected backend failures should raise specific errors from `dspy.lm15`, such as
-`AuthError` or `RateLimitError`. DSPy translates them into its public `LMError`
-family and owns retries. Unexpected exceptions retain their original cause and
-are not guessed to be retryable from their message text. See
-[errors and retry ownership](../../community/normalized-lm-api-migration/#errors-and-retry-ownership).
+Expected backend failures should raise specific errors from `dspy.lm15`, such as `AuthError` or `RateLimitError`. DSPy translates them into its public `LMError` family and owns retries. Unexpected exceptions retain their original cause and are not guessed to be retryable from their message text. See [errors and retry ownership](../../community/normalized-lm-api-migration/#errors-and-retry-ownership).
 
 ## Declaring a provider instead of writing an engine
 
-lm15 routes model strings through a registry of providers it has verified against the wire. A provider it does not list can be declared for the process with the same three facts a registry entry is made of — an access policy (name, key variable, address), a wire dialect, and a compat policy describing the server’s spellings:
+ lm15 routes model strings through a registry of providers it has verified against the wire. A provider it does not list can be declared for the process with the same three facts a registry entry is made of — an access policy (name, key variable, address), a wire dialect, and a compat policy describing the server’s spellings:
 
 Do this at import time of your application, before the LMs that use it are constructed. **Each `dspy.LM` binds the registrations present when it is constructed and keeps them for its whole life** — selection, capabilities, pricing, and both its sync and async engines read that one binding. `register_provider(..., replace=True)` therefore changes only LMs constructed afterwards; it never moves an existing LM, and it can never leave one LM’s sync calls on one definition and its async calls on another.
 
@@ -49,7 +45,7 @@ What a declaration is not: a receipt. lm15’s own registry entries are pinned f
 
 ## What a custom engine owns
 
-A custom engine is borrowed by `dspy.LM` and owns its connection. Three rules follow, and DSPy enforces each rather than guessing:
+ A custom engine is borrowed by `dspy.LM` and owns its connection. Three rules follow, and DSPy enforces each rather than guessing:
 
 **Connection settings are refused.** `dspy.LM(engine=MyEngine(), api_key=...)` raises `ValueError`, and so do `api_base`, `base_url`, `timeout`, `headers`, `extra_headers` and the other client settings — on construction, on `copy()`, and on every call (`lm("hi", api_key=...)`), before any cache lookup. There is no channel from the LM to the engine for them, and dropping them silently would let a call run with the engine’s key while the LM said another. Give them to the engine’s constructor.
 
@@ -63,7 +59,7 @@ This tutorial wraps the [Pi CLI](https://pi.dev) as a custom engine. Pi keeps it
 
 ## Prerequisites
 
-- A DSPy build with the custom `engine=` interface.
+ - A DSPy build with the custom `engine=` interface.
 - Pi installed, available as `pi` on your PATH, and authenticated.
 - A model available to your Pi account. The example uses `openai-codex` and`gpt-6-astra` ; change those two CLI arguments if needed.
 - A local Git repository to inspect.
@@ -74,7 +70,7 @@ This example keeps Pi’s normal tools, settings, and discovered resources. They
 
 ## Define the engine
 
-Pi’s print mode runs its tool loop and writes the final assistant text to stdout. Wrap that text in an lm15 response; no event-stream parsing is needed for this demo.
+ Pi’s print mode runs its tool loop and writes the final assistant text to stdout. Wrap that text in an lm15 response; no event-stream parsing is needed for this demo.
 
 Append DSPy’s system instructions with `--append-system-prompt`. This preserves Pi’s normal system prompt while telling it how to format the answer for DSPy.
 
@@ -82,7 +78,7 @@ Append DSPy’s system instructions with `--append-system-prompt`. This preserve
 
 ## Run a DSPy program
 
-Run these cells in a notebook whose working directory is your repository root. The last expression displays the prediction without `print()`:
+ Run these cells in a notebook whose working directory is your repository root. The last expression displays the prediction without `print()`:
 
 Here `"pi"` is a DSPy model label for history; the engine’s CLI arguments select the actual provider and model. `PiEngine` holds no state, so to make it saveable add `dump_state` returning `{}` and `load_state` returning `cls()`.
 
@@ -92,7 +88,7 @@ The answer depends on your repository. Pi still uses tools, but print mode does 
 
 ## Demo boundaries
 
-- **Minimal input handling:** forwards only the last user text message and a plain-text system prompt. Earlier messages, generation options, and DSPy-declared tools are not forwarded or validated. Use this demo without demonstrations, conversation history, or media. Pi’s own tools remain enabled.
+ - **Minimal input handling:** forwards only the last user text message and a plain-text system prompt. Earlier messages, generation options, and DSPy-declared tools are not forwarded or validated. Use this demo without demonstrations, conversation history, or media. Pi’s own tools remain enabled.
 - **Synchronous only:** no async counterpart or streaming implementation.
 - **No saved Pi session:**`--no-session` avoids transcript persistence, but Pi may still update its own settings or credentials.
 - **No automatic DSPy replay:** caching, LM retries, and adapter fallback are disabled for the demonstrated program. Pi’s own retry and compaction settings still apply.

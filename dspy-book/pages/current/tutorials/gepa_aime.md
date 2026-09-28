@@ -3,18 +3,18 @@ type: Web Page
 title: GEPA for AIME (Math) - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/tutorials/gepa_aime
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Tutorial: GEPA for AIME (Math)
 
-In this tutorial, we optimize GPT-4.1 Mini's Chain of Thought (`dspy.ChainOfThought`) for solving math problems (AIME) using the `dspy.GEPA` optimizer!
+ In this tutorial, we optimize GPT-4.1 Mini’s Chain of Thought (`dspy.ChainOfThought`) for solving math problems (AIME) using the `dspy.GEPA` optimizer!
 
 ## Recommended: Set up MLflow Autologging to understand what's happening under the hood.
 
 ### MLflow DSPy Integration
 
-[MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. MLflow's autologging capability automatically tracks progress of GEPA optimization, as well as visualizes prompts and module executions as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
+ [MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. MLflow’s autologging capability automatically tracks progress of GEPA optimization, as well as visualizes prompts and module executions as traces to understand the DSPy’s behavior better. You can set up MLflow easily by following the four steps below.
 
 **Visualize module executions as traces**
 
@@ -24,90 +24,21 @@ In this tutorial, we optimize GPT-4.1 Mini's Chain of Thought (`dspy.ChainOfThou
 
 1. Install MLflow
 
-```
-%pip install mlflow>=3.0.0
-```
-1. Start MLflow UI in a separate terminal
+1.  Start MLflow UI in a separate terminal
+2.  Connect the notebook to MLflow
+3.  Enabling autologging.
 
-```
-mlflow ui --port 5000 --backend-store-uri sqlite:///mlruns.db
-```
-1. Connect the notebook to MLflow
-
-```
-import mlflow
-mlflow.set_tracking_uri("http://localhost:5000")
-mlflow.set_experiment("DSPy")
-```
-1. Enabling autologging.
-
-```
-mlflow.dspy.autolog(
-    # Log the optimization progress
-    log_compiles=True,
-    # Log the evaluation results
-    log_evals=True,
-    # Log traces from module executions
-    log_traces=True
-)
-```
 To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
-```
-api_key = input("Enter your OpenAI API key: ")
-import dspy
-lm = dspy.LM("openai/gpt-4.1-mini", temperature=1, api_key=api_key, max_tokens=32000)
-dspy.configure(lm=lm)
-```
 ### Loading the AIME dataset
 
-The AIME exam consists of 2 problem sets of size 15 for each year. For this tutorial, we will use AIME problem sets from previous years (2022-2024) for optimization (amounting to total 3 years x 2 sets x 15 problems = 90 problems, split equally between train and validation sets), and test the performance on AIME 2025 (2 sets x 15 problems = 30 problems). Since AIME 2025 is a small set, we repeat it 5 times for statistical stability in evaluation.
+ The AIME exam consists of 2 problem sets of size 15 for each year. For this tutorial, we will use AIME problem sets from previous years (2022-2024) for optimization (amounting to total 3 years x 2 sets x 15 problems = 90 problems, split equally between train and validation sets), and test the performance on AIME 2025 (2 sets x 15 problems = 30 problems). Since AIME 2025 is a small set, we repeat it 5 times for statistical stability in evaluation.
 
-```
-import dspy
-from datasets import load_dataset
-def init_dataset():
-    train_split = load_dataset("AI-MO/aimo-validation-aime")['train']
-    train_split = [
-        dspy.Example({
-            "problem": x['problem'],
-            'solution': x['solution'],
-            'answer': x['answer'],
-        }).with_inputs("problem")
-        for x in train_split
-    ]
-    import random
-    random.Random(0).shuffle(train_split)
-    tot_num = len(train_split)
-    test_split = load_dataset("MathArena/aime_2025")['train']
-    test_split = [
-        dspy.Example({
-            "problem": x['problem'],
-            'answer': x['answer'],
-        }).with_inputs("problem")
-        for x in test_split
-    ]
-    train_set = train_split[:int(0.5 * tot_num)]
-    val_set = train_split[int(0.5 * tot_num):]
-    test_set = test_split * 5
-    return train_set, val_set, test_set
-```
-```
-train_set, val_set, test_set = init_dataset()
-len(train_set), len(val_set), len(test_set)
 ```
 (45, 45, 150)
-
-Let's view an example task input
-
 ```
-print("Problem:")
-print(train_set[0]['problem'])
-print("\n\nSolution:")
-print(train_set[0]['solution'])
-print("\n\nAnswer:")
-print(train_set[0]['answer'])
-```
+Let’s view an example task input
+
 ```
 Problem:
 In isosceles trapezoid $ABCD$, parallel bases $\overline{AB}$ and $\overline{CD}$ have lengths $500$ and $650$, respectively, and $AD=BC=333$. The angle bisectors of $\angle{A}$ and $\angle{D}$ meet at $P$, and the angle bisectors of $\angle{B}$ and $\angle{C}$ meet at $Q$. Find $PQ$.
@@ -158,46 +89,19 @@ By symmetry, $YB = AX = 129$. Thus, $PQ = XY = AB - 2AX = 500 - 2(129) = \boxed{
 Answer:
 242
 ```
-### Let's define the program: A simple `dspy.ChainOfThought`
+### Let’s define the program: A simple `dspy.ChainOfThought`
 
-```
-class GenerateResponse(dspy.Signature):
-    """Solve the problem and provide the answer in the correct format."""
-    problem = dspy.InputField()
-    answer = dspy.OutputField()
-program = dspy.ChainOfThought(GenerateResponse)
-```
-### Defining the evaluation metric
+ ### Defining the evaluation metric
 
-We simply check exact match between the predicted answer and the correct answer.
+ We simply check exact match between the predicted answer and the correct answer.
 
-```
-def metric(example, prediction, trace=None, pred_name=None, pred_trace=None):
-    correct_answer = int(example['answer'])
-    try:
-        llm_answer = int(prediction.answer)
-    except ValueError as e:
-        return 0
-    return int(correct_answer == llm_answer)
-```
 ### Evaluating unoptimized Chain Of Thought
 
-```
-import dspy
-evaluate = dspy.Evaluate(
-    devset=test_set,
-    metric=metric,
-    num_threads=32,
-    display_table=True,
-    display_progress=True
-)
-evaluate(program)
-```
+ ```
 Average Metric: 70.00 / 150 (46.7%): 100%|██████████████████████████████████████████████████████████████████████████████████████████████████| 150/150 [00:01<00:00, 119.75it/s]
 2025/08/12 21:49:36 INFO dspy.evaluate.evaluate: Average Metric: 70 / 150 (46.7%)
-
 2025/08/12 21:49:36 INFO dspy.evaluate.evaluate: Average Metric: 70 / 150 (46.7%)
-
+```
 |  | problem | example_answer | reasoning | pred_answer | metric | 
 |---|---|---|---|---|---|
 | 0 | Find the sum of all integer bases $b>9$ for which $17_b$ is a divi... | 70 | We are looking for integer bases $ b > 9 $ such that $ 17_b $ ... | 70 | ✔️ [1] | 
@@ -214,55 +118,17 @@ Average Metric: 70.00 / 150 (46.7%): 100%|████████████�
 
 150 rows × 5 columns
 
+```
 EvaluationResult(score=46.67, results=<list of 150 results>)
-
+```
 ### Optimize the program with `dspy.GEPA`
 
-GEPA is a *reflective* prompt optimizer, and it's strength lies in being able to leverage additional sources of information, like the DSPy program's execution and evaluation pipelines, which provides GEPA more visibility into why the system got the score that it did, and then GEPA can introspect to identify how to improve the score. GEPA can also leverage additional supervision provided in this manner. For example, during optimization, we can return the correct solution's to the problems the program failed to solve.
+ GEPA is a *reflective* prompt optimizer, and it’s strength lies in being able to leverage additional sources of information, like the DSPy program’s execution and evaluation pipelines, which provides GEPA more visibility into why the system got the score that it did, and then GEPA can introspect to identify how to improve the score. GEPA can also leverage additional supervision provided in this manner. For example, during optimization, we can return the correct solution’s to the problems the program failed to solve.
 
 We note that while such explicit supervision is not available in all scenarios, GEPA can work very flexibly with different forms of feedback (for example, using LLM-as-a-judge feedback shown in the PAPILLON tutorial, or just using answer labels, as shown in the facility-support tutorial).
 
-Let's quickly modify the evaluation metric to become an optimization metric for GEPA, that can provide this additional supervision!
+Let’s quickly modify the evaluation metric to become an optimization metric for GEPA, that can provide this additional supervision!
 
-```
-def metric_with_feedback(example, prediction, trace=None, pred_name=None, pred_trace=None):
-    correct_answer = int(example['answer'])
-    written_solution = example.get('solution', '')
-    try:
-        llm_answer = int(prediction.answer)
-    except ValueError as e:
-        feedback_text = f"The final answer must be a valid integer and nothing else. You responded with '{prediction.answer}', which couldn't be parsed as a python integer. Please ensure your answer is a valid integer without any additional text or formatting."
-        feedback_text += f" The correct answer is '{correct_answer}'."
-        if written_solution:
-            feedback_text += f" Here's the full step-by-step solution:\n{written_solution}\n\nThink about what takeaways you can learn from this solution to improve your future answers and approach to similar problems and ensure your final answer is a valid integer."
-        return dspy.Prediction(score=0, feedback=feedback_text)
-    score = int(correct_answer == llm_answer)
-    feedback_text = ""
-    if score == 1:
-        feedback_text = f"Your answer is correct. The correct answer is '{correct_answer}'."
-    else:
-        feedback_text = f"Your answer is incorrect. The correct answer is '{correct_answer}'."
-    
-    if written_solution:
-        feedback_text += f" Here's the full step-by-step solution:\n{written_solution}\n\nThink about what takeaways you can learn from this solution to improve your future answers and approach to similar problems."
-    return dspy.Prediction(score=score, feedback=feedback_text)
-```
-```
-from dspy import GEPA
-optimizer = GEPA(
-    metric=metric_with_feedback,
-    auto="light",
-    num_threads=32,
-    track_stats=True,
-    reflection_minibatch_size=3,
-    reflection_lm=dspy.LM(model="gpt-5", temperature=1.0, max_tokens=32000, api_key=api_key)
-)
-optimized_program = optimizer.compile(
-    program,
-    trainset=train_set,
-    valset=val_set,
-)
-```
 ```
 2025/08/12 21:49:36 INFO dspy.teleprompt.gepa.gepa: Running GEPA for approx 560 metric calls of the program. This amounts to 6.22 full evals on the train+val set.
 3
@@ -1664,12 +1530,9 @@ Final step
 2025/08/12 23:29:51 INFO dspy.evaluate.evaluate: Average Metric: 1.0 / 3 (33.3%)
 2025/08/12 23:29:51 INFO dspy.teleprompt.gepa.gepa: Iteration 21: New subsample score is not better, skipping
 ```
-### Let's see the prompt generated
+### Let’s see the prompt generated
 
-```
-print(optimized_program.predict.signature.instructions)
-```
-```
+  ```
 You will be given one math problem as plain text under a key like “problem.” Your job is to solve it correctly and return:
 - reasoning: a concise, logically ordered solution that uses identities/structure to avoid brute force, ends with a quick verification.
 - answer: the final requested number/expression only (no extra words).
@@ -1743,13 +1606,10 @@ It can be seen that what GEPA is doing here, is precomputing some reasoning to c
 
 ### Evaluating the Chain Of Thought optimized with GEPA
 
-```
-evaluate(optimized_program)
-```
+  ```
 Average Metric: 85.00 / 150 (56.7%): 100%|██████████████████████████████████████████████████████████████████████████████████████████████████| 150/150 [00:00<00:00, 476.89it/s]
-
 2025/08/12 23:53:14 INFO dspy.evaluate.evaluate: Average Metric: 85 / 150 (56.7%)
-
+```
 |  | problem | example_answer | reasoning | pred_answer | metric | 
 |---|---|---|---|---|---|
 | 0 | Find the sum of all integer bases $b>9$ for which $17_b$ is a divi... | 70 | - Interpret the numbers in base $ b $: \[ 17_b = 1 \cdot b + 7 =... | 70 | ✔️ [1] | 
@@ -1766,9 +1626,10 @@ Average Metric: 85.00 / 150 (56.7%): 100%|████████████�
 
 150 rows × 5 columns
 
+```
 EvaluationResult(score=56.67, results=<list of 150 results>)
-
-GEPA was able to optimize the GPT-4.1 Mini's performance on AIME 2025 **from 46.6% score to 56.6%**, a 10% improvement, with just a budget of `auto="light"`!
+```
+GEPA was able to optimize the GPT-4.1 Mini’s performance on AIME 2025 **from 46.6% score to 56.6%**, a 10% improvement, with just a budget of `auto="light"`!
 
 # Citations
 

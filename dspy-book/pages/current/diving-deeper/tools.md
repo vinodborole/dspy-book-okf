@@ -3,14 +3,14 @@ type: Web Page
 title: Tools and MCP - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/diving-deeper/tools
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Tools and MCP
 
-## Intent
+ ## Intent
 
-A tool lets a DSPy program call Python code chosen by a language model. The model sees a name, description, and argument schema; it selects the tool and supplies arguments; DSPy executes the callable and makes the result available to the program.
+ A tool lets a DSPy program call Python code chosen by a language model. The model sees a name, description, and argument schema; it selects the tool and supplies arguments; DSPy executes the callable and makes the result available to the program.
 
 Tools are a shared DSPy primitive, not a ReAct-specific feature. `dspy.ReAct` and `dspy.ReActV2` use them in agent loops, `dspy.RLM` exposes them inside its interpreter, `dspy.Flex` can wire them into optimized programs, and adapters use the same tool schemas for native provider function calling. `dspy.utils.mcp` bridges remote MCP tools into this interface.
 
@@ -18,7 +18,7 @@ Read this page when you want to define, wrap, validate, or import tools. For the
 
 ## Defining a tool
 
-A DSPy tool can start as an ordinary typed Python function:
+ A DSPy tool can start as an ordinary typed Python function:
 
 Modules that accept `tools=` convert callables to `dspy.Tool` automatically:
 
@@ -28,13 +28,13 @@ Good names, descriptions, parameter names, and type hints matter: they are the i
 
 ## How `dspy.Tool` works
 
-### Schema and metadata are inferred
+ ### Schema and metadata are inferred
 
-`dspy.Tool` stores the callable in `func` and derives `name`, `desc`, `args`, `arg_types`, and `arg_desc` from the function signature, type hints, and docstring. Pydantic annotations are converted to JSON schema and local `$ref` paths are resolved so the model receives a complete argument shape. Explicit constructor values override inference field by field.
+ `dspy.Tool` stores the callable in `func` and derives `name`, `desc`, `args`, `arg_types`, and `arg_desc` from the function signature, type hints, and docstring. Pydantic annotations are converted to JSON schema and local `$ref` paths are resolved so the model receives a complete argument shape. Explicit constructor values override inference field by field.
 
 ### Arguments are validated before execution
 
-`Tool.__call__(**kwargs)` and `Tool.acall(**kwargs)` validate arguments against the JSON schema and use Pydantic to coerce nested annotated values. The synchronous path calls the function directly. The asynchronous path awaits coroutine results and also accepts ordinary synchronous functions.
+ `Tool.__call__(**kwargs)` and `Tool.acall(**kwargs)` validate arguments against the JSON schema and use Pydantic to coerce nested annotated values. The synchronous path calls the function directly. The asynchronous path awaits coroutine results and also accepts ordinary synchronous functions.
 
 Calling an asynchronous tool from synchronous code raises by default. Opt into conversion only when your runtime permits it:
 
@@ -42,13 +42,13 @@ The conversion is explicit because driving an async tool from an existing event 
 
 ### Adapters choose text or native formatting
 
-The tool itself is provider-neutral. An adapter decides whether to render its schema into text or send it through a provider’s native function-calling API. For example:
+ The tool itself is provider-neutral. An adapter decides whether to render its schema into text or send it through a provider’s native function-calling API. For example:
 
 When native calling is active and the LM supports it, the adapter converts each tool with `Tool.format_as_litellm_function_call()` and sends the resulting descriptors in the LM request. Otherwise, it keeps tool selection in DSPy’s normal adapter-formatted fields. The same `Tool` works in either mode.
 
 ## Structured tool calls and results
 
-`dspy.ToolCalls` represents model-requested calls independently of any provider’s wire format. Each `ToolCalls.ToolCall` carries an optional provider call ID, a tool name, and an argument dictionary:
+ `dspy.ToolCalls` represents model-requested calls independently of any provider’s wire format. Each `ToolCalls.ToolCall` carries an optional provider call ID, a tool name, and an argument dictionary:
 
 The validator accepts DSPy’s `{name, args}` shape and common provider-style function-call shapes. Adapters handle conversion at the provider boundary; application code can keep using the DSPy representation.
 
@@ -56,7 +56,7 @@ Tool results are paired to calls by ID, name, value, and an error flag in `ToolC
 
 ## MCP tools
 
-MCP servers publish tools with JSON schemas. `dspy.Tool.from_mcp_tool(session, tool)` is the canonical bridge from a live `mcp.ClientSession` and an MCP tool definition to a DSPy tool:
+ MCP servers publish tools with JSON schemas. `dspy.Tool.from_mcp_tool(session, tool)` is the canonical bridge from a live `mcp.ClientSession` and an MCP tool definition to a DSPy tool:
 
 The bridge:
 
@@ -73,27 +73,21 @@ MCP tools are asynchronous because `mcp.ClientSession` is asynchronous. Use a mo
 
 ## API walkthrough
 
-**`dspy.Tool(func, name=None, desc=None, args=None, arg_types=None, arg_desc=None)`**
-Wraps a callable and infers any metadata not supplied explicitly.
+ **`dspy.Tool(func, name=None, desc=None, args=None, arg_types=None, arg_desc=None)`** Wraps a callable and infers any metadata not supplied explicitly.
 
-**`Tool.__call__(**kwargs)` / `Tool.acall(**kwargs)`**
-Validates, coerces, and executes tool arguments through synchronous or asynchronous entry points.
+**`Tool.__call__(**kwargs)` / `Tool.acall(**kwargs)`** Validates, coerces, and executes tool arguments through synchronous or asynchronous entry points.
 
-**`Tool.format_as_litellm_function_call()`** → `dict`
-Returns the OpenAI/LiteLLM-style function descriptor used by adapters for native calling.
+**`Tool.format_as_litellm_function_call()`** → `dict` Returns the OpenAI/LiteLLM-style function descriptor used by adapters for native calling.
 
-**`Tool.from_mcp_tool(session, tool, *, result_mode="text")`** → `Tool`
-Wraps a remote MCP tool as an asynchronous DSPy tool. Set `result_mode="structured"` to return structured MCP results when available.
+**`Tool.from_mcp_tool(session, tool, *, result_mode="text")`** → `Tool` Wraps a remote MCP tool as an asynchronous DSPy tool. Set `result_mode="structured"` to return structured MCP results when available.
 
-**`Tool.from_langchain(tool)`** → `Tool`
-Wraps a LangChain tool in the same DSPy interface.
+**`Tool.from_langchain(tool)`** → `Tool` Wraps a LangChain tool in the same DSPy interface.
 
-**`dspy.ToolCalls(tool_calls=[...])`**
-Stores one or more requested calls in a provider-neutral form.
+**`dspy.ToolCalls(tool_calls=[...])`** Stores one or more requested calls in a provider-neutral form.
 
 ## Cross-links
 
-- [ReAct and ReActV2](../react/) — how DSPy’s agent modules choose, execute, record, and replay tools.
+ - [ReAct and ReActV2](../react/) — how DSPy’s agent modules choose, execute, record, and replay tools.
 - [Adapters: how signatures become prompts](../adapters/) — where tool schemas and`ToolCalls` become provider requests and responses.
 - [RLM: exploring large contexts with code](../rlm/) — how RLM makes supplied tools callable inside its sandbox.
 - [Built-in module variants](../built-in-module-variants/) — other modules that consume tools.

@@ -3,12 +3,12 @@ type: Web Page
 title: Composing modules - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/getting-started/composing-modules
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Composing your own module
 
-Switching to `dspy.ReAct` turned our single-step program into a multi-step agent. It’s a significant change, but `ReAct` itself is simple to understand.
+ Switching to `dspy.ReAct` turned our single-step program into a multi-step agent. It’s a significant change, but `ReAct` itself is simple to understand.
 
 Inside [`dspy.ReAct`](../../diving-deeper/react/), other DSPy modules are composed together. Each step where the model considers its inputs and picks the next tool is a `dspy.Predict` module. A bit of code manages the control flow, looping through `Predict` calls until the model calls `finish` or hits `max_iters`. The synthesis step that follows, where the model assembles the answer from everything it’s learned, is a `ChainOfThought` module.
 
@@ -18,7 +18,7 @@ To illustrate, let’s build a custom module for our haiku writer composed of tw
 
 ## Composing modules to build an ensemble
 
-LLM-written poems are a roll of the dice. Sometimes their haikus are evocative; other times they’re predictable and bland. To increase our program’s odds of success, we’re going to roll the dice several times, then select the best candidate.
+ LLM-written poems are a roll of the dice. Sometimes their haikus are evocative; other times they’re predictable and bland. To increase our program’s odds of success, we’re going to roll the dice several times, then select the best candidate.
 
 Here’s what this looks like:
 
@@ -42,13 +42,13 @@ And the following reasoning:
 
 ## Using a bigger model as our judge
 
-To make this module a true ensemble, let’s use a different model to grade the work of our haiku writer. We only need to add one line:
+ To make this module a true ensemble, let’s use a different model to grade the work of our haiku writer. We only need to add one line:
 
 The [`with dspy.context()`](../../diving-deeper/settings-and-context/) statement allows us to define a new context that sets a new model for the judge call.
 
 ## Decompose to isolate, reuse, govern, and optimize
 
-Our haiku task is a small example, but building `HaikuEnsemble` demonstrates how easily we can decompose our programs when necessary. There’s no esoteric chaining API; modules are just Python and the DSPy primitives `Signature`, `Module`, and `LM`.
+ Our haiku task is a small example, but building `HaikuEnsemble` demonstrates how easily we can decompose our programs when necessary. There’s no esoteric chaining API; modules are just Python and the DSPy primitives `Signature`, `Module`, and `LM`.
 
 Reasons to decompose appear as our AI programs grow in complexity and we learn their failure modes. For example, we can use custom modules to:
 

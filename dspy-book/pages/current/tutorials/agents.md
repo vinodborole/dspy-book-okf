@@ -3,12 +3,12 @@ type: Web Page
 title: Building RAG as Agent - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/tutorials/agents
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Tutorial: Agents
 
-Let's walk through a quick example of setting up a `dspy.ReAct` agent with a couple of tools and optimizing it to conduct advanced browsing for multi-hop search.
+ Let’s walk through a quick example of setting up a `dspy.ReAct` agent with a couple of tools and optimizing it to conduct advanced browsing for multi-hop search.
 
 Install the latest DSPy via `pip install -U dspy` and follow along. You also need to run `pip install datasets`.
 
@@ -16,153 +16,60 @@ Install the latest DSPy via `pip install -U dspy` and follow along. You also nee
 
 ### MLflow DSPy Integration
 
-[MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy's behavior better. You can set up MLflow easily by following the four steps below.
+ [MLflow](https://mlflow.org/) is an LLMOps tool that natively integrates with DSPy and offer explainability and experiment tracking. In this tutorial, you can use MLflow to visualize prompts and optimization progress as traces to understand the DSPy’s behavior better. You can set up MLflow easily by following the four steps below.
 
 1. Install MLflow
 
-```
-%pip install mlflow>=2.20
-```
-1. Start MLflow UI in a separate terminal
+1.  Start MLflow UI in a separate terminal
+2.  Connect the notebook to MLflow
+3.  Enabling tracing.
 
-```
-mlflow ui --port 5000
-```
-1. Connect the notebook to MLflow
-
-```
-import mlflow
-mlflow.set_tracking_uri("http://localhost:5000")
-mlflow.set_experiment("DSPy")
-```
-1. Enabling tracing.
-
-```
-mlflow.dspy.autolog()
-```
-Once you have completed the steps above, you can see traces for each program execution on the notebook. They provide great visibility into the model's behavior and helps you understand the DSPy's concepts better throughout the tutorial.
+Once you have completed the steps above, you can see traces for each program execution on the notebook. They provide great visibility into the model’s behavior and helps you understand the DSPy’s concepts better throughout the tutorial.
 
 To kearn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
-In this tutorial, we'll use an extremely small LM, Meta's `Llama-3.2-3B-Instruct` which has 3 billion parameters.
+In this tutorial, we’ll use an extremely small LM, Meta’s `Llama-3.2-3B-Instruct` which has 3 billion parameters.
 
-A model like this is not very reliable out of the box for long or complex agent loops. However, it's extremely fast and cheap to host, as it needs very little RAM.
+A model like this is not very reliable out of the box for long or complex agent loops. However, it’s extremely fast and cheap to host, as it needs very little RAM.
 
 You might be able to host the 3B model on your laptop with Ollama, on your GPU server with SGLang, or via a provider that hosts it for you like Databricks or Together.
 
-In the snippet below, we'll configure our main LM as `Llama-3.2-3B`. We'll also set up a larger LM, i.e. `GPT-4o`, as a teacher that we'll invoke a very small number of times to help teach the small LM.
+In the snippet below, we’ll configure our main LM as `Llama-3.2-3B`. We’ll also set up a larger LM, i.e. `GPT-4o`, as a teacher that we’ll invoke a very small number of times to help teach the small LM.
 
-```
-import dspy
-llama3b = dspy.LM('<provider>/Llama-3.2-3B-Instruct', temperature=0.7)
-gpt4o = dspy.LM('openai/gpt-4o', temperature=0.7)
-dspy.configure(lm=llama3b)
-```
-Let's load a dataset for our task. We'll load examples from the HoVer multi-hop task, where the input is a (really!) complex claim and the output we're seeking is the set of Wikipedia pages that are required to fact-check that claim.
+Let’s load a dataset for our task. We’ll load examples from the HoVer multi-hop task, where the input is a (really!) complex claim and the output we’re seeking is the set of Wikipedia pages that are required to fact-check that claim.
 
-```
-import random
-from dspy.datasets import DataLoader
-kwargs = dict(fields=("claim", "supporting_facts", "hpqa_id", "num_hops"), input_keys=("claim",))
-hover = DataLoader().from_huggingface(dataset_name="vincentkoc/hover-parquet", split="train", trust_remote_code=True, **kwargs)
-hpqa_ids = set()
-hover = [
-    dspy.Example(claim=x.claim, titles=list(set([y["key"] for y in x.supporting_facts]))).with_inputs("claim")
-    for x in hover
-    if x["num_hops"] == 3 and x["hpqa_id"] not in hpqa_ids and not hpqa_ids.add(x["hpqa_id"])
-]
-random.Random(0).shuffle(hover)
-trainset, devset, testset = hover[:100], hover[100:200], hover[650:]
-```
-Let's view an example of this task:
+Let’s view an example of this task:
 
-```
-example = trainset[0]
-print("Claim:", example.claim)
-print("Pages that must be retrieved:", example.titles)
 ```
 Claim: This director is known for his work on Miss Potter. The Academy of Motion Picture Arts and Sciences presents the award in which he was nominated for his work in "Babe".
 Pages that must be retrieved: ['Miss Potter', 'Chris Noonan', 'Academy Award for Best Director']
+```
+Now, let’s define a function to do the search in Wikipedia. We’ll rely on a ColBERTv2 server that can search the “abstracts” (i.e., first paragraphs) of every article that existed in Wikipedia in 2017, which is the data used in HoVer.
 
-Now, let's define a function to do the search in Wikipedia. We'll rely on a ColBERTv2 server that can search the "abstracts" (i.e., first paragraphs) of every article that existed in Wikipedia in 2017, which is the data used in HoVer.
+Now, let’s use the `search` function to define two tools for our ReAct agent:
 
-```
-DOCS = {}
-def search(query: str, k: int) -> list[str]:
-    results = dspy.ColBERTv2(url='http://20.102.90.50:2017/wiki17_abstracts')(query, k=k)
-    results = [x['text'] for x in results]
-    for result in results:
-        title, text = result.split(" | ", 1)
-        DOCS[title] = text
-    return results
-```
-Now, let's use the `search` function to define two tools for our ReAct agent:
+Now, let’s define the ReAct agent in DSPy. It’s going to be super simple: it’ll take a `claim` and produce a list `titles: list[str]`.
 
-```
-def search_wikipedia(query: str) -> list[str]:
-    """Returns top-5 results and then the titles of the top-5 to top-30 results."""
-    topK = search(query, 30)
-    titles, topK = [f"`{x.split(' | ')[0]}`" for x in topK[5:30]], topK[:5]
-    return topK + [f"Other retrieved pages have titles: {', '.join(titles)}."]
-def lookup_wikipedia(title: str) -> str:
-    """Returns the text of the Wikipedia page, if it exists."""
-    if title in DOCS:
-        return DOCS[title]
-    results = [x for x in search(title, 10) if x.startswith(title + " | ")]
-    if not results:
-        return f"No Wikipedia page found for title: {title}"
-    return results[0]
-```
-Now, let's define the ReAct agent in DSPy. It's going to be super simple: it'll take a `claim` and produce a list `titles: list[str]`.
+We’ll instruct it to find all Wikipedia titles that are needed to fact-check the claim.
 
-We'll instruct it to find all Wikipedia titles that are needed to fact-check the claim.
+Let’s try it with a really simple claim to see if our tiny 3B model can do it!
 
-```
-instructions = "Find all Wikipedia titles relevant to verifying (or refuting) the claim."
-signature = dspy.Signature("claim -> titles: list[str]", instructions)
-react = dspy.ReAct(signature, tools=[search_wikipedia, lookup_wikipedia], max_iters=20)
-```
-Let's try it with a really simple claim to see if our tiny 3B model can do it!
-
-```
-react(claim="David Gregory was born in 1625.").titles[:3]
 ```
 ['David Gregory (physician)', 'David A. Gregory', 'David Harry Gregory']
-
-Great. Now let's set up an evaluation metric, `top5_recall`.
+```
+Great. Now let’s set up an evaluation metric, `top5_recall`.
 
 It will return the fraction of the gold pages (which are always 3) that are retrieved in the top-5 titles returned by the agent.
 
-```
-def top5_recall(example, pred, trace=None):
-    gold_titles = example.titles
-    recall = sum(x in pred.titles[:5] for x in gold_titles) / len(gold_titles)
-    # If we're "bootstrapping" for optimization, return True if and only if the recall is perfect.
-    if trace is not None:
-        return recall >= 1.0
-    
-    # If we're just doing inference, just measure the recall.
-    return recall
-evaluate = dspy.Evaluate(devset=devset, metric=top5_recall, num_threads=16, display_progress=True, display_table=5)
-```
-Let's evaluate our off-the-shelf agent, with `Llama-3.2-8B`, to see how far we can go already.
+Let’s evaluate our off-the-shelf agent, with `Llama-3.2-8B`, to see how far we can go already.
 
-This model is tiny, so it can complain fairly often. Let's wrap it in a try/except block to hide those.
+This model is tiny, so it can complain fairly often. Let’s wrap it in a try/except block to hide those.
 
-```
-def safe_react(claim: str):
-    try:
-        return react(claim=claim)
-    except Exception as e:
-        return dspy.Prediction(titles=[])
-evaluate(safe_react)
 ```
   0%|          | 0/100 [00:00<?, ?it/s]
-
 Average Metric: 8.00 / 100 (8.0%): 100%|██████████| 100/100 [05:22<00:00,  3.22s/it]
-
 2024/12/17 14:09:47 INFO dspy.evaluate.evaluate: Average Metric: 7.999999999999997 / 100 (8.0%)
-
+```
 |  | claim | example_titles | trajectory | reasoning | pred_titles | top5_success | 
 |---|---|---|---|---|---|---|
 | 0 | The Church of England's movement that inspired the Trinity Episcop... | [Oxford Movement, Trinity Episcopal Church (Houghton, Michigan), S... | {'thought_0': 'The claim suggests that there is a specific movemen... | The search results seem to be a mix of different churches with sim... | ['Trinity Episcopal Church (Houghton, Michigan)', 'Trinity Episcop... | ✔️ [0.333] | 
@@ -171,56 +78,25 @@ Average Metric: 8.00 / 100 (8.0%): 100%|██████████| 100/100 
 | 3 | The film by Sandi Sissel was released before The End of Suburbia. | [Chicken Ranch (film), Sandi Sissel, The End of Suburbia] | NaN | NaN | [] |  | 
 | 4 | The actor who played captain hook in the live production with Tayl... | [Christopher Walken, Taylor Louderman, Peter Pan Live!] | NaN | NaN | [] |  | 
 
+```
 8.0
-
+```
 ## Tracking Evaluation Results in MLflow Experiment
 
 To track and visualize the evaluation results over time, you can record the results in MLflow Experiment.
 
-```
-import mlflow
-with mlflow.start_run(run_name="agent_evaluation"):
-    evaluate = dspy.Evaluate(
-        devset=devset,
-        metric=top5_recall,
-        num_threads=16,
-        display_progress=True,
-    )
-    # Evaluate the program as usual
-    result = evaluate(cot)
-    # Log the aggregated score
-    mlflow.log_metric("top5_recall", result.score)
-    # Log the detailed evaluation results as a table
-    mlflow.log_table(
-        {
-            "Claim": [example.claim for example in eval_set],
-            "Expected Titles": [example.titles for example in eval_set],
-            "Predicted Titles": [output[1] for output in result.results],
-            "Top 5 Recall": [output[2] for output in result.results],
-        },
-        artifact_file="eval_results.json",
-    )
-```
 To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 Wow. It only scores 8% in terms of recall. Not that good!
 
-Let's now optimize the two prompts inside `dspy.ReAct` jointly to maximize the recall of our agent. This may take around 30 minutes and make some $5 worth of calls to GPT-4o to optimize Llama-3.2-3B.
+Let’s now optimize the two prompts inside `dspy.ReAct` jointly to maximize the recall of our agent. This may take around 30 minutes and make some $5 worth of calls to GPT-4o to optimize Llama-3.2-3B.
 
-```
-kwargs = dict(teacher_settings=dict(lm=gpt4o), prompt_model=gpt4o, max_errors=999)
-tp = dspy.MIPROv2(metric=top5_recall, auto="medium", num_threads=16, **kwargs)
-optimized_react = tp.compile(react, trainset=trainset, max_bootstrapped_demos=3, max_labeled_demos=0)
-```
-Let's now evaluate again, after optimization.
+Let’s now evaluate again, after optimization.
 
-```
-evaluate(optimized_react)
 ```
 Average Metric: 41.67 / 100 (41.7%): 100%|██████████| 100/100 [03:00<00:00,  1.81s/it]
-
 2024/12/17 15:12:06 INFO dspy.evaluate.evaluate: Average Metric: 41.66666666666667 / 100 (41.7%)
-
+```
 |  | claim | example_titles | trajectory | reasoning | pred_titles | top5_success | 
 |---|---|---|---|---|---|---|
 | 0 | The Church of England's movement that inspired the Trinity Episcop... | [Oxford Movement, Trinity Episcopal Church (Houghton, Michigan), S... | {'thought_0': 'To verify the claim, I need to identify the Church ... | The claim states that the Church of England's movement that inspir... | ['Trinity Episcopal Church (Houghton, Michigan)', 'Church of All S... | ✔️ [0.667] | 
@@ -229,22 +105,19 @@ Average Metric: 41.67 / 100 (41.7%): 100%|██████████| 100/10
 | 3 | The film by Sandi Sissel was released before The End of Suburbia. | [Chicken Ranch (film), Sandi Sissel, The End of Suburbia] | {'thought_0': 'To verify the claim, I need to find the release dat... | The claim states that the film by Sandi Sissel was released before... | [Sandi Sissel, The End of Suburbia (film)] | ✔️ [0.333] | 
 | 4 | The actor who played captain hook in the live production with Tayl... | [Christopher Walken, Taylor Louderman, Peter Pan Live!] | {'thought_0': 'To verify the claim, I need to find the actor who p... | The claim suggests that the actor who played Captain Hook in the l... | [Cyril Ritchard, Ruth Connell] |  | 
 
+```
 41.67
-
+```
 Awesome. It looks like the system improved drastically from 8% recall to around 40% recall. That was a pretty straightforward approach, but DSPy gives you many tools to continue iterating on this from here.
 
-Next, let's inspect the optimized prompts to understand what it has learned. We'll run one query and then inspect the last two prompts, which will show us the prompts used for both ReAct sub-modules, the one that does the agentic loop and the other than prepares the final results. (Alternatively, if you enabled MLflow Tracing following the instructions above, you can see all steps done by the agent including LLM calls, prompts, tool execution, in a rich tree-view.)
+Next, let’s inspect the optimized prompts to understand what it has learned. We’ll run one query and then inspect the last two prompts, which will show us the prompts used for both ReAct sub-modules, the one that does the agentic loop and the other than prepares the final results. (Alternatively, if you enabled MLflow Tracing following the instructions above, you can see all steps done by the agent including LLM calls, prompts, tool execution, in a rich tree-view.)
 
-```
-optimized_react(claim="The author of the 1960s unproduced script written for The Beatles, Up Against It, and Bernard-Marie Koltès are both playwrights.").titles
 ```
 ['Bernard-Marie Koltès', 'Joe Orton']
-
 ```
-dspy.inspect_history(n=2)
 ```
-[2024-12-17T15:13:25.420335]
-System message:
+[34m[2024-12-17T15:13:25.420335][0m
+[31mSystem message:[0m
 Your input fields are:
 1. `claim` (str)
 2. `trajectory` (str)
@@ -266,17 +139,13 @@ All interactions will be structured in the following way, with the appropriate v
 [[ ## completed ## ]]
 In adhering to this structure, your objective is: 
         Find all Wikipedia titles relevant to verifying (or refuting) the claim.
-        
         You will be given `claim` and your goal is to finish with `titles`.
-        
         To do this, you will interleave Thought, Tool Name, and Tool Args, and receive a resulting Observation.
-        
         Thought can reason about the current situation, and Tool Name can be the following types:
-        
         (1) search_wikipedia, whose description is <desc>Returns top-5 results and then the titles of the top-5 to top-30 results.</desc>. It takes arguments {'query': 'str'} in JSON format.
         (2) lookup_wikipedia, whose description is <desc>Returns the text of the Wikipedia page, if it exists.</desc>. It takes arguments {'title': 'str'} in JSON format.
         (3) finish, whose description is <desc>Signals that the final outputs, i.e. `titles`, are now available and marks the task as complete.</desc>. It takes arguments {} in JSON format.
-User message:
+[31mUser message:[0m
 [[ ## claim ## ]]
 1990 Film that Khiladiyon Ka Khiladi is loosely based on stars this actor who is best known for martial arts action films.
 [[ ## trajectory ## ]]
@@ -307,7 +176,7 @@ search_wikipedia
 [5] «Richard the Lionheart (2013 film) | Richard The Lionheart is a 2013 film, starring Chandler Maness as Richard the Lionheart, Malcolm McDowell as King Henry II and Andrea Zirio as Henry the Young.»
 [6] «Other retrieved pages have titles: `Richard the Lionheart: Rebellion`, `The Brothers Lionheart (1977 film)`, `Kodama Simham`, `Jean-Claude Van Damme`, `Lionsheart`, `A Day for Lionhearts`, `The Lion in Winter (1968 film)`, `Lion Jagapathi Rao`, `Theatre of Blood`, `Young Lions (album)`, `Richard the Lion-Hearted (1923 film)`, `Bullseye! (1990 film)`, `Fear (1990 film)`, `The Guard (1990 film)`, `Ironheart`, `The Guardian (1990 film)`, `Tiger Cage 2`, `Lion Rampant (game publisher)`, `Success (1991 film)`, `Lion in the Streets`, `The King of the Kickboxers`, `Lionheart (video game)`, `Richard the Lionheart (TV series)`, `Dermot Walsh`, `Lars Söderdahl`.»
 Respond with the corresponding output fields, starting with the field `[[ ## next_thought ## ]]`, then `[[ ## next_tool_name ## ]]` (must be formatted as a valid Python Literal[search_wikipedia, lookup_wikipedia, finish]), then `[[ ## next_tool_args ## ]]` (must be formatted as a valid Python dict[str, Any]), and then ending with the marker for `[[ ## completed ## ]]`.
-Assistant message:
+[31mAssistant message:[0m
 [[ ## next_thought ## ]]
 The search results confirm that the 1990 film "Lionheart" stars Jean-Claude Van Damme, who is well-known for his martial arts action films. This information aligns with what is needed to verify the claim. I now have the relevant titles related to the claim: "Khiladiyon Ka Khiladi" and "Lionheart."
 [[ ## next_tool_name ## ]]
@@ -315,12 +184,12 @@ finish
 [[ ## next_tool_args ## ]]
 {}
 [[ ## completed ## ]]
-User message:
+[31mUser message:[0m
 [[ ## claim ## ]]
 The figure who currently holds the role Michael Noonan held from 2001 to 2002, was the Minister for Social Protection from 2016 until 2017.
 [[ ## trajectory ## ]]
 Respond with the corresponding output fields, starting with the field `[[ ## next_thought ## ]]`, then `[[ ## next_tool_name ## ]]` (must be formatted as a valid Python Literal[search_wikipedia, lookup_wikipedia, finish]), then `[[ ## next_tool_args ## ]]` (must be formatted as a valid Python dict[str, Any]), and then ending with the marker for `[[ ## completed ## ]]`.
-Assistant message:
+[31mAssistant message:[0m
 [[ ## next_thought ## ]]
 To verify the claim, I need to identify the role Michael Noonan held from 2001 to 2002. Then, I can find out who currently holds this role and check if they were the Minister for Social Protection from 2016 to 2017.
 [[ ## next_tool_name ## ]]
@@ -328,7 +197,7 @@ search_wikipedia
 [[ ## next_tool_args ## ]]
 {"query": "Michael Noonan role 2001 to 2002"}
 [[ ## completed ## ]]
-User message:
+[31mUser message:[0m
 [[ ## claim ## ]]
 An actor in a musical film was also a United States Navy Combat veteran in World War II. This film was awarded The Golden Bear at the 50th Berlin International Film Festival.
 [[ ## trajectory ## ]]
@@ -372,7 +241,7 @@ search_wikipedia
 [5] «Jason Dunkerley | Jason Joseph Dunkerley (born August 21, 1977, Newtownards, Northern Ireland) is a Canadian Paralympian athlete competing mainly in category T11 and T12 middle distance events.»
 [6] «Other retrieved pages have titles: `Jase Daniels`, `Jason Dunham`, `Jason Schauble`, `Frederick C. Billard`, `Wilfred C. Menard, Jr.`, `Jason Millard`, `George C. Rickards`, `Jason Amerine`, `USS Jason (AR-8)`, `Rob (dog)`, `USS Jason Dunham`, `Robert Lee Bullard`, `Jason Chee (para-athlete)`, `The War Between Men and Women`, `Thomas Byard`, `Ralph Baker (general)`, `Jason Lamont`, `Jason Rother incident`, `William H. G. Bullard`, `Sidney Gerald Burrard`, `Jason Gilardi`, `Reunion (1989 film)`, `JASON (advisory group)`, `The Great American West`, `Samuel Robison`.»
 Respond with the corresponding output fields, starting with the field `[[ ## next_thought ## ]]`, then `[[ ## next_tool_name ## ]]` (must be formatted as a valid Python Literal[search_wikipedia, lookup_wikipedia, finish]), then `[[ ## next_tool_args ## ]]` (must be formatted as a valid Python dict[str, Any]), and then ending with the marker for `[[ ## completed ## ]]`.
-Assistant message:
+[31mAssistant message:[0m
 [[ ## next_thought ## ]]
 I have confirmed that Jason Robards, an actor in the film "Magnolia," was a United States Navy combat veteran of World War II. Since "Magnolia" was awarded The Golden Bear at the 50th Berlin International Film Festival, this satisfies the claim. I can now finish with the relevant Wikipedia titles.
 [[ ## next_tool_name ## ]]
@@ -380,7 +249,7 @@ finish
 [[ ## next_tool_args ## ]]
 {}
 [[ ## completed ## ]]
-User message:
+[31mUser message:[0m
 [[ ## claim ## ]]
 The author of the 1960s unproduced script written for The Beatles, Up Against It, and Bernard-Marie Koltès are both playwrights.
 [[ ## trajectory ## ]]
@@ -419,16 +288,16 @@ lookup_wikipedia
 [[ ## observation_2 ## ]]
 John Kingsley "Joe" Orton (1 January 1933 – 9 August 1967) was an English playwright and author. His public career was short but prolific, lasting from 1964 until his death three years later. During this brief period he shocked, outraged, and amused audiences with his scandalous black comedies. The adjective "Ortonesque" is sometimes used to refer to work characterised by a similarly dark yet farcical cynicism.
 Respond with the corresponding output fields, starting with the field `[[ ## next_thought ## ]]`, then `[[ ## next_tool_name ## ]]` (must be formatted as a valid Python Literal[search_wikipedia, lookup_wikipedia, finish]), then `[[ ## next_tool_args ## ]]` (must be formatted as a valid Python dict[str, Any]), and then ending with the marker for `[[ ## completed ## ]]`.
-Response:
-[[ ## next_thought ## ]]
+[31mResponse:[0m
+[32m[[ ## next_thought ## ]]
 I have identified both playwrights as Bernard-Marie Koltès and Joe Orton, who both wrote the unproduced script for "Up Against It".
 [[ ## next_tool_name ## ]]
 finish
 [[ ## next_tool_args ## ]]
 {}
-[[ ## completed ## ]]
-[2024-12-17T15:13:27.562128]
-System message:
+[[ ## completed ## ]][0m
+[34m[2024-12-17T15:13:27.562128][0m
+[31mSystem message:[0m
 Your input fields are:
 1. `claim` (str)
 2. `trajectory` (str)
@@ -447,7 +316,7 @@ All interactions will be structured in the following way, with the appropriate v
 [[ ## completed ## ]]
 In adhering to this structure, your objective is: 
         You are a fact-checking assistant tasked with verifying or refuting claims using Wikipedia as your primary source. Your goal is to identify all relevant Wikipedia titles that can help substantiate or invalidate the given claim. Approach the task by reasoning through the claim step-by-step, using your knowledge to determine the best tools for gathering evidence. Utilize the available tools to search for and look up Wikipedia articles, and compile a list of titles that are pertinent to the claim. Finish the process by ensuring the list of titles accurately reflects the information needed to assess the claim's validity.
-User message:
+[31mUser message:[0m
 [[ ## claim ## ]]
 1990 Film that Khiladiyon Ka Khiladi is loosely based on stars this actor who is best known for martial arts action films.
 [[ ## trajectory ## ]]
@@ -486,13 +355,13 @@ finish
 [[ ## observation_2 ## ]]
 Completed.
 Respond with the corresponding output fields, starting with the field `[[ ## reasoning ## ]]`, then `[[ ## titles ## ]]` (must be formatted as a valid Python list[str]), and then ending with the marker for `[[ ## completed ## ]]`.
-Assistant message:
+[31mAssistant message:[0m
 [[ ## reasoning ## ]]
 The claim suggests that the 1990 film which "Khiladiyon Ka Khiladi" is loosely based on stars an actor known for martial arts action films. Upon investigation, "Khiladiyon Ka Khiladi" is indeed loosely based on the Hollywood film "Lionheart". The 1990 film "Lionheart" stars Jean-Claude Van Damme, who is recognized for his roles in martial arts action films. This information supports the claim.
 [[ ## titles ## ]]
 ["Khiladiyon Ka Khiladi", "Lionheart (1990 film)", "Jean-Claude Van Damme"]
 [[ ## completed ## ]]
-User message:
+[31mUser message:[0m
 [[ ## claim ## ]]
 Both the Chengiopanax sciadophylloides and Amaryllis are genus.
 [[ ## trajectory ## ]]
@@ -552,13 +421,13 @@ finish
 [[ ## observation_4 ## ]]
 Completed.
 Respond with the corresponding output fields, starting with the field `[[ ## reasoning ## ]]`, then `[[ ## titles ## ]]` (must be formatted as a valid Python list[str]), and then ending with the marker for `[[ ## completed ## ]]`.
-Assistant message:
+[31mAssistant message:[0m
 [[ ## reasoning ## ]]
 The claim states that both "Chengiopanax sciadophylloides" and "Amaryllis" are genus. Upon investigation, it was found that "Chengiopanax sciadophylloides" is a species of flowering tree, and there is no confirmation that "Chengiopanax" itself is a recognized genus. It was previously included in the genus "Eleutherococcus". On the other hand, "Amaryllis" is confirmed to be a genus, specifically a small genus of flowering bulbs with two species. Therefore, the claim is only partially correct as "Chengiopanax sciadophylloides" is not a genus.
 [[ ## titles ## ]]
 ["Amaryllis", "Eleutherococcus", "Chengiopanax sciadophylloides"]
 [[ ## completed ## ]]
-User message:
+[31mUser message:[0m
 [[ ## claim ## ]]
 200,000 people go through the airport where the headquarters of the airline that acquired Baboo Airlines are located.
 [[ ## trajectory ## ]]
@@ -597,13 +466,13 @@ finish
 [[ ## observation_2 ## ]]
 Completed.
 Respond with the corresponding output fields, starting with the field `[[ ## reasoning ## ]]`, then `[[ ## titles ## ]]` (must be formatted as a valid Python list[str]), and then ending with the marker for `[[ ## completed ## ]]`.
-Assistant message:
+[31mAssistant message:[0m
 [[ ## reasoning ## ]]
 The claim states that 200,000 people go through the airport where the headquarters of the airline that acquired Baboo Airlines are located. Through the information found, Baboo Airlines was acquired by Darwin Airline Group. The headquarters of Darwin Airline Group are located at Lugano Airport. Further research revealed that Lugano Airport handles approximately 200,000 passengers per year. This confirms the accuracy of the claim regarding passenger traffic at the airport associated with Darwin Airline Group's headquarters.
 [[ ## titles ## ]]
 ["Baboo (airline)", "Darwin Airline", "Lugano Airport"]
 [[ ## completed ## ]]
-User message:
+[31mUser message:[0m
 [[ ## claim ## ]]
 The author of the 1960s unproduced script written for The Beatles, Up Against It, and Bernard-Marie Koltès are both playwrights.
 [[ ## trajectory ## ]]
@@ -650,44 +519,28 @@ finish
 [[ ## observation_3 ## ]]
 Completed.
 Respond with the corresponding output fields, starting with the field `[[ ## reasoning ## ]]`, then `[[ ## titles ## ]]` (must be formatted as a valid Python list[str]), and then ending with the marker for `[[ ## completed ## ]]`.
-Response:
-[[ ## reasoning ## ]]
+[31mResponse:[0m
+[32m[[ ## reasoning ## ]]
 The claim states that the authors of the unproduced script for "Up Against It" are both playwrights. Investigation revealed that Bernard-Marie Koltès wrote the unproduced script, and further research confirmed that Joe Orton was also a playwright who wrote the script. Therefore, both playwrights are indeed the authors of the unproduced script for "Up Against It".
 [[ ## titles ## ]]
 ["Bernard-Marie Koltès", "Joe Orton"]
-[[ ## completed ## ]]
-
-Finally, let's save our optimized program so we can use it again later.
-
+[[ ## completed ## ]][0m
 ```
-optimized_react.save("optimized_react.json")
-loaded_react = dspy.ReAct("claim -> titles: list[str]", tools=[search_wikipedia, lookup_wikipedia], max_iters=20)
-loaded_react.load("optimized_react.json")
-loaded_react(claim="The author of the 1960s unproduced script written for The Beatles, Up Against It, and Bernard-Marie Koltès are both playwrights.").titles
+Finally, let’s save our optimized program so we can use it again later.
+
 ```
 ['Bernard-Marie Koltès', 'Joe Orton']
-
+```
 ## Saving programs in MLflow Experiment
 
 Instead of saving the program to a local file, you can track it in MLflow for better reproducibility and collaboration.
 
 1. **Dependency Management** : MLflow automatically save the frozen environment metadata along with the program to ensure reproducibility.
-2. **Experiment Tracking** : With MLflow, you can track the program's performance and cost along with the program itself.
+2. **Experiment Tracking** : With MLflow, you can track the program’s performance and cost along with the program itself.
 3. **Collaboration** : You can share the program and results with your team members by sharing the MLflow experiment.
 
 To save the program in MLflow, run the following code:
 
-```
-import mlflow
-# Start an MLflow Run and save the program
-with mlflow.start_run(run_name="optimized_rag"):
-    model_info = mlflow.dspy.log_model(
-        optimized_react,
-        artifact_path="model", # Any name to save the program in MLflow
-    )
-# Load the program back from MLflow
-loaded = mlflow.dspy.load_model(model_info.model_uri)
-```
 To learn more about the integration, visit [MLflow DSPy Documentation](https://mlflow.org/docs/latest/llms/dspy/index.html) as well.
 
 # Citations

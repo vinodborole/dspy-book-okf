@@ -3,14 +3,14 @@ type: Web Page
 title: Class-based signatures - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/getting-started/class-based-signatures
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Writing a class-based signature
 
-## Adding instructional nuance with class-based signatures
+ ## Adding instructional nuance with class-based signatures
 
-A class-based signature details the same structure a string signature can, but adds a few levers for adding additional nuance. Here’s our haiku writer string signature rephrased as a class-based signature:
+ A class-based signature details the same structure a string signature can, but adds a few levers for adding additional nuance. Here’s our haiku writer string signature rephrased as a class-based signature:
 
 We have the same fields (`location`, `mood`, and the `haiku` output) typed as strings, but we now have the ability to add descriptions to each. Field descriptions allow us to add nuance that might not fit within a field name.
 
@@ -26,7 +26,7 @@ Though it’s worth noting: field descriptions are not touched by the optimizers
 
 ## Tightening signature fields with richer types
 
-Sometimes a plain `str` is too loose. When a value should come from a small fixed set, we’d rather pin it down so the LM (and the caller) can’t drift outside it. This is the unit-test framing from Section 3 made stricter: not just *some string*, but *one of these specific strings*.
+ Sometimes a plain `str` is too loose. When a value should come from a small fixed set, we’d rather pin it down so the LM (and the caller) can’t drift outside it. This is the unit-test framing from Section 3 made stricter: not just *some string*, but *one of these specific strings*.
 
 We can use `typing`, from Python’s standard lib, to add richer types.
 

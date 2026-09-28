@@ -3,14 +3,14 @@ type: Web Page
 title: GEPA optimization - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/getting-started/gepa-optimization
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Prompt Optimizing with GEPA
 
-## Why we optimize prompts
+ ## Why we optimize prompts
 
-Different language models respond differently to the same prompt. A request that gets clean structured output from one model can confuse another into rambling. Phrasing that works on today’s model can stop working when the provider ships an update next month. [Sometimes a model can’t stop talking about goblins](https://openai.com/index/where-the-goblins-came-from/), for some reason. Learning each model’s quirks by hand is slow, and the work doesn’t transfer.
+ Different language models respond differently to the same prompt. A request that gets clean structured output from one model can confuse another into rambling. Phrasing that works on today’s model can stop working when the provider ships an update next month. [Sometimes a model can’t stop talking about goblins](https://openai.com/index/where-the-goblins-came-from/), for some reason. Learning each model’s quirks by hand is slow, and the work doesn’t transfer.
 
 And even if we stuck with only *one* model, the potential permutations of our word choices and instructions are nearly infinite.
 
@@ -24,7 +24,7 @@ Better yet: when a new model launches next week, we can rerun the optimizer agai
 
 ## GEPA uses reflection to improve instructions
 
-DSPy ships with [several prompt optimizers](../../diving-deeper/choosing-an-optimizer/), but today we’re going to focus on GEPA.
+ DSPy ships with [several prompt optimizers](../../diving-deeper/choosing-an-optimizer/), but today we’re going to focus on GEPA.
 
 There are many reasons to like GEPA, but a key feature is it allows our metric to provide text feedback which the LM uses to inform subsequent instructions. Let’s update our original metric to demonstrate how this works:
 
@@ -32,7 +32,7 @@ Instead of just returning a score, we can tell the instruction-writing LM *why* 
 
 ## Expanding our haiku metric
 
-To give our model more of a challenge, we’ve built out our metric to check for many conditions we expect from our haikus, specifically:
+ To give our model more of a challenge, we’ve built out our metric to check for many conditions we expect from our haikus, specifically:
 
 - Does it have the correct number of lines?
 - Does it have the correct syllable count in each line?
@@ -49,7 +49,7 @@ All of these conditions make our metric too long to drop into this walkthrough, 
 
 ## Compiling our optimization
 
-With our metric defined, it’s time to configure our optimizer:
+ With our metric defined, it’s time to configure our optimizer:
 
 The first thing to note here is `reflection_lm`. GEPA lets us choose a separate LM for reflection and instruction writing. This LM looks at our examples and how they score, then rewrites our prompt in an attempt to improve our scores.
 
@@ -63,21 +63,11 @@ Finally, we compile our optimized program:
 
 ### Choosing the training and validation sets
 
-GEPA uses these two splits for different jobs. The `trainset` supplies examples
-for reflective prompt updates, while the `valset` tracks Pareto scores and
-selects the program returned by `compile`. Keep a final test set separate so you
-can evaluate the optimized program on examples that influenced neither step.
+ GEPA uses these two splits for different jobs. The `trainset` supplies examples for reflective prompt updates, while the `valset` tracks Pareto scores and selects the program returned by `compile`. Keep a final test set separate so you can evaluate the optimized program on examples that influenced neither step.
 
-There is no universal split ratio. For generalization, keep as much data as
-possible in `trainset` and make `valset` the smallest sample that still
-represents the downstream distribution. Every candidate is scored on the
-validation examples, so an unnecessarily large `valset` also reduces how many
-candidate prompts GEPA can explore within a fixed metric-call budget.
+There is no universal split ratio. For generalization, keep as much data as possible in `trainset` and make `valset` the smallest sample that still represents the downstream distribution. Every candidate is scored on the validation examples, so an unnecessarily large `valset` also reduces how many candidate prompts GEPA can explore within a fixed metric-call budget.
 
-If you omit `valset`, GEPA reuses `trainset` for selection. That can be useful
-for inference-time search, where the goal is to find the best output for the
-examples at hand, but it deliberately allows prompts to overfit those examples.
-Pass a separate validation set when you care about performance on unseen data.
+If you omit `valset`, GEPA reuses `trainset` for selection. That can be useful for inference-time search, where the goal is to find the best output for the examples at hand, but it deliberately allows prompts to overfit those examples. Pass a separate validation set when you care about performance on unseen data.
 
 Now it’s time to grab a beverage and wait.
 
@@ -97,7 +87,7 @@ Let’s quickly save our optimized program, then take a look at how our prompt c
 
 ## GEPA’s improved prompt
 
-As previously discussed, `ReAct` is composed of a `Predict` module that reasons and decides what tools to call and a `ChainOfThought` module that synthesizes the final output. GEPA prompt optimized *both* of these modules.
+ As previously discussed, `ReAct` is composed of a `Predict` module that reasons and decides what tools to call and a `ChainOfThought` module that synthesizes the final output. GEPA prompt optimized *both* of these modules.
 
 Inside the JSON file containing our saved program state, we can see both improved instructions.
 

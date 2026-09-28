@@ -3,14 +3,14 @@ type: Web Page
 title: Expanding signatures - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/getting-started/expanding-signatures
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Expanding your signature: more inputs and adding types
 
-## Adding additional inputs and outputs
+ ## Adding additional inputs and outputs
 
-Adding more fields to signature strings is as easy as separating field names with commas. For example, let’s update our program to accept two inputs, a `location` and `mood`:
+ Adding more fields to signature strings is as easy as separating field names with commas. For example, let’s update our program to accept two inputs, a `location` and `mood`:
 
 This yields:
 
@@ -20,7 +20,7 @@ Yielding:
 
 ## Hone your signature by mindfully naming your fields
 
-The field names we choose aren’t just for our own readability. Unlike traditional programming, where variable names are purely identifiers, the LM reads them too, and uses them to infer what each input and output means.
+ The field names we choose aren’t just for our own readability. Unlike traditional programming, where variable names are purely identifiers, the LM reads them too, and uses them to infer what each input and output means.
 
 If we replaced `"location, mood -> haiku"` with `"a, b -> c"`, the LM would be lost. Let’s try it:
 
@@ -32,7 +32,7 @@ Naming is the cheapest optimization in DSPy. A field called `research_request` w
 
 ## Typing your fields yields more reliable programs
 
-We can add more specificity to our task by *typing* our fields using the format `name: type`. For example, the signature `"location, mood, contains_pun: bool -> haiku"` accepts a boolean to indicate whether we want our poem to include a pun:
+ We can add more specificity to our task by *typing* our fields using the format `name: type`. For example, the signature `"location, mood, contains_pun: bool -> haiku"` accepts a boolean to indicate whether we want our poem to include a pun:
 
 Which yields:
 

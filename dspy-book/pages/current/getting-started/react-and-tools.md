@@ -3,18 +3,18 @@ type: Web Page
 title: Tools with ReAct - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/getting-started/react-and-tools
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Give the program tools with `dspy.ReAct`
 
-## Grounding our program with tools
+ ## Grounding our program with tools
 
-Our haiku writer is competent, but it could use more information about the locations we name. When asked for a haiku set in Bodega Bay in autumn, our LM makes plausible guesses about the weather, but sometimes gets them wrong. Giving the program tools allows our program to research and ground its references before writing its verse.
+ Our haiku writer is competent, but it could use more information about the locations we name. When asked for a haiku set in Bodega Bay in autumn, our LM makes plausible guesses about the weather, but sometimes gets them wrong. Giving the program tools allows our program to research and ground its references before writing its verse.
 
 ## Tools are just Python functions
 
-A DSPy tool is a standard Python function, with type-hinted parameters and a docstring. DSPy reads the name, parameters, and docstring of a function to assemble the instructions it sends to an LM.
+ A DSPy tool is a standard Python function, with type-hinted parameters and a docstring. DSPy reads the name, parameters, and docstring of a function to assemble the instructions it sends to an LM.
 
 For example, let’s define a tool that lets an agent search Wikipedia using the [`wikipedia`](https://pypi.org/project/wikipedia/) library (run `pip install wikipedia`, if you’re following along):
 
@@ -26,7 +26,7 @@ Note that there’s a tool in the mix that we didn’t define. `finish` is a spe
 
 ## Defining our Wikipedia-wielding haiku bot
 
-In addition to searching Wikipedia, we’ll need a tool that lets our agent fetch a given page:
+ In addition to searching Wikipedia, we’ll need a tool that lets our agent fetch a given page:
 
 With these two tools and our existing `HaikuBot` signature, we have all we need to define our agent:
 
@@ -42,7 +42,7 @@ Printing `result.reasoning` produces:
 
 ## ReAct manages an agentic loop
 
-ReAct is a test-time (or inference time) loop strategy. We hand the model a set of tools and a task. The `dspy.ReAct` module instructs the model to reason then act using its tools. When the model calls `finish`, DSPy stops the loop and runs one last synthesis pass to produce the declared output fields.
+ ReAct is a test-time (or inference time) loop strategy. We hand the model a set of tools and a task. The `dspy.ReAct` module instructs the model to reason then act using its tools. When the model calls `finish`, DSPy stops the loop and runs one last synthesis pass to produce the declared output fields.
 
 The model decides how many loops to run, but we can cap the number with the `max_iters` parameter, like so:
 
@@ -50,7 +50,7 @@ While testing this program, we saw runs where the model made as many as 8 tool c
 
 ## Inspecting the ReAct trajectory
 
-ReAct’s returned `Prediction` instance carries a `trajectory` field: a dictionary that records each thought, tool call, and observation (what the tool returned) in order. When an agent does something surprising, the trajectory is the first thing to read.
+ ReAct’s returned `Prediction` instance carries a `trajectory` field: a dictionary that records each thought, tool call, and observation (what the tool returned) in order. When an agent does something surprising, the trajectory is the first thing to read.
 
 We can print it like so:
 

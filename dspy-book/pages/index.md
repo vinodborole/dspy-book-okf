@@ -1,5 +1,5 @@
 # /pages — directory listing
 
 - [current/](/pages/current/index.md)
-- [DSPy](/pages/current.md)
+- [Overview - DSPy](/pages/current.md)
 - [Redirecting](/pages/home.md)

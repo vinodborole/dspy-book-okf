@@ -3,14 +3,14 @@ type: Web Page
 title: Metrics - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/getting-started/metrics
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Building metrics for evaluation and optimization
 
-## Why optimizers need metrics
+ ## Why optimizers need metrics
 
-Before DSPy can improve our program automatically, we need to tell it what “better” means. That starts with a metric and a baseline evaluation. In this section we’ll see why optimization beats hand-tuning, design a quantifiable metric for our haiku task, and run a baseline score so we have something to beat.
+ Before DSPy can improve our program automatically, we need to tell it what “better” means. That starts with a metric and a baseline evaluation. In this section we’ll see why optimization beats hand-tuning, design a quantifiable metric for our haiku task, and run a baseline score so we have something to beat.
 
 So far we’ve written DSPy programs by hand. Our signatures and instructions are only as good as what we type, with no examples to learn from. The quality of our haikus depends on the base knowledge a given model has about locations and writing haikus.
 
@@ -32,7 +32,7 @@ Today, however, we’re going to keep it simple. We’re going to use a *quantif
 
 ## Preparing examples from the haiku dataset
 
-We’ve created a dataset of example inputs by randomly grouping locations, seasons, and mood strings. [Click here to download the JSONL file](https://gist.github.com/dbreunig/b64412e6103d41889f3a87615008408d), containing 800 rows.
+ We’ve created a dataset of example inputs by randomly grouping locations, seasons, and mood strings. [Click here to download the JSONL file](https://gist.github.com/dbreunig/b64412e6103d41889f3a87615008408d), containing 800 rows.
 
 To prepare them for an evaluation or optimization, we need to convert each record into a `dspy.Example` object, like so:
 
@@ -40,7 +40,7 @@ To prepare them for an evaluation or optimization, we need to convert each recor
 
 ## Building our evaluation metric
 
-A metric function for `dspy.Evaluate` accepts the original `example` and the program’s `prediction`, and returns a single float. By convention, scores fall in between 0.0 and 1.0 (higher is better).
+ A metric function for `dspy.Evaluate` accepts the original `example` and the program’s `prediction`, and returns a single float. By convention, scores fall in between 0.0 and 1.0 (higher is better).
 
 For our evaluation metrics, let’s keep it super simple and only check if our season or mood inputs are being used verbatim in the haiku:
 

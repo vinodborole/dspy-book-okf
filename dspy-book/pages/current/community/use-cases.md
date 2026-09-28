@@ -3,31 +3,29 @@ type: Web Page
 title: Use Cases - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/community/use-cases
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # DSPy in Production
 
-DSPy is in production at **Shopify, Databricks, Dropbox, Microsoft AI, Moody's, AWS, Sephora, VMware, Nubank**, and dozens more.
+ DSPy is in production at **Shopify, Databricks, Dropbox, Microsoft AI, Moody's, AWS, Sephora, VMware, Nubank**, and dozens more.
 
 This list represents companies that have publicly shared their use cases or have provided permission to be included. It reflects a selection of the many industry applications of DSPy currently in production. To add yours, please [open a PR](https://github.com/stanfordnlp/dspy/edit/main/docs/docs/community/use-cases.md).
 
 ## Featured case studies
 
-~550× cost reduction
+ ~550× cost reduction
 
-  Scaled DSPy + GEPA for structured metadata extraction across 
+ Scaled DSPy + GEPA for structured metadata extraction across 
 
-  
-**all**Shopify shops.
+  **all**Shopify shops.
 Relevance judge, automated
 
-  Optimized Dash's relevance judge with DSPy for retrieval ranking and offline evaluation.
+ Optimized Dash's relevance judge with DSPy for retrieval ranking and offline evaluation.
 
-  
-## All companies
+  ## All companies
 
-| **Company** | **Use case** | 
+ | **Company** | **Use case** | 
 |---|---|
 | **[Shopify](https://www.shopify.com/)** | Structured metadata extraction across all Shopify shops with DSPy + GEPA; reduced yearly costs ~550×. [Talk](https://www.youtube.com/watch?v=bxToahwOVpY) | 
 | **[Dropbox](https://www.dropbox.com/)** | Optimized Dash’s relevance judge using DSPy across ranking, training data generation, and offline evaluation. [Engineering blog](https://dropbox.tech/machine-learning/optimizing-dropbox-dash-relevance-judge-with-dspy) ,[Talk](https://www.youtube.com/watch?v=gGGCJWbqHqc) | 

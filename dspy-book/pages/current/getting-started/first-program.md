@@ -3,12 +3,12 @@ type: Web Page
 title: Your first program - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/getting-started/first-program
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Writing our first DSPy program
 
-In this tutorial we’re building a haiku-generating program, extending it in each section to introduce new DSPy concepts and capabilities.
+ In this tutorial we’re building a haiku-generating program, extending it in each section to introduce new DSPy concepts and capabilities.
 
 Let’s start by writing the simplest version of our program and run it, then walk through everything DSPy is doing behind the scenes:
 

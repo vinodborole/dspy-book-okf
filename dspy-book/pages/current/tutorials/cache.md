@@ -3,16 +3,16 @@ type: Web Page
 title: Cache - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/tutorials/cache
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Use and Customize DSPy Cache
 
-In this tutorial, we will explore the design of DSPy’s caching mechanism and demonstrate how to effectively use and customize it.
+ In this tutorial, we will explore the design of DSPy’s caching mechanism and demonstrate how to effectively use and customize it.
 
 ## DSPy Cache Structure
 
-DSPy’s caching system is architected in three distinct layers:
+ DSPy’s caching system is architected in three distinct layers:
 
 1. **In-memory cache** : Implemented using`cachetools.LRUCache` , this layer provides fast access to frequently used data.
 2. **On-disk cache** : Leveraging`diskcache.FanoutCache` , this layer offers persistent storage for cached items.
@@ -22,7 +22,7 @@ DSPy controls its in-memory and on-disk answer caches. Provider-side prompt cach
 
 ## Using DSPy Cache
 
-By default, both in-memory and on-disk caching are automatically enabled in DSPy. No specific action is required to start using the cache. When a cache hit occurs, you will observe a significant reduction in the module call’s execution time. Furthermore, if usage tracking is enabled, the usage metrics for a cached call will be `None`.
+ By default, both in-memory and on-disk caching are automatically enabled in DSPy. No specific action is required to start using the cache. When a cache hit occurs, you will observe a significant reduction in the module call’s execution time. Furthermore, if usage tracking is enabled, the usage metrics for a cached call will be `None`.
 
 Consider the following example:
 
@@ -30,11 +30,11 @@ A sample output looks like:
 
 ## Using Provider-Side Prompt Caching
 
-In addition to DSPy’s built-in caching mechanism, you can leverage provider-side prompt caching offered by LLM providers like Anthropic and OpenAI. This feature is particularly useful when working with modules like `dspy.ReAct()` that send similar prompts repeatedly, as it reduces both latency and costs by caching prompt prefixes on the provider’s servers.
+ In addition to DSPy’s built-in caching mechanism, you can leverage provider-side prompt caching offered by LLM providers like Anthropic and OpenAI. This feature is particularly useful when working with modules like `dspy.ReAct()` that send similar prompts repeatedly, as it reduces both latency and costs by caching prompt prefixes on the provider’s servers.
 
 ### Native lm15 engines (3.4 development API)
 
-Pass an actual `dspy.lm15.CacheConfig` as `prompt_cache`. This small bridge is intended for advanced users and adapter authors:
+ Pass an actual `dspy.lm15.CacheConfig` as `prompt_cache`. This small bridge is intended for advanced users and adapter authors:
 
 `prefix="stable"` asks lm15 to mark the reusable system/tool prefix where supported. Providers with automatic caching may need no marker. This does not select demonstrations automatically, and this short example may be below the provider’s cache minimum. Savings require an eligible, identical prefix across requests; each changing input still gets a fresh answer.
 
@@ -51,7 +51,7 @@ Adapter authors can put the same object in `lm_kwargs["prompt_cache"]`. DSPy att
 
 ### LiteLLM compatibility engine
 
-With `engine="litellm"`, use LiteLLM’s own options, such as `cache_control_injection_points`, rather than `prompt_cache`. See the [LiteLLM prompt caching documentation](https://docs.litellm.ai/docs/tutorials/prompt_caching#configuration) for provider-specific support.
+ With `engine="litellm"`, use LiteLLM’s own options, such as `cache_control_injection_points`, rather than `prompt_cache`. See the [LiteLLM prompt caching documentation](https://docs.litellm.ai/docs/tutorials/prompt_caching#configuration) for provider-specific support.
 
 This is especially beneficial when:
 
@@ -61,7 +61,7 @@ This is especially beneficial when:
 
 ## Restricting Pickle Deserialization
 
-By default, DSPy’s on-disk cache uses Python’s `pickle` for serialization. While this handles arbitrary Python objects, `pickle.load` can execute arbitrary code – meaning a corrupted or malicious cache file could be dangerous.
+ By default, DSPy’s on-disk cache uses Python’s `pickle` for serialization. While this handles arbitrary Python objects, `pickle.load` can execute arbitrary code – meaning a corrupted or malicious cache file could be dangerous.
 
 DSPy provides an opt-in `restrict_pickle` mode that restricts which types the cache is allowed to deserialize:
 
@@ -77,13 +77,13 @@ If a type is missing from the allowlist, the cache treats it as a miss and retur
 
 ### Nested types
 
-If your registered type contains nested custom types, you must register all of them. For example, if `MyResult` contains a `Metadata` field, register both:
+ If your registered type contains nested custom types, you must register all of them. For example, if `MyResult` contains a `Metadata` field, register both:
 
 The error message will tell you exactly which nested type is missing.
 
 ## Disabling/Enabling DSPy Cache
 
-There are scenarios where you might need to disable caching, either entirely or selectively for in-memory or on-disk caches. For instance:
+ There are scenarios where you might need to disable caching, either entirely or selectively for in-memory or on-disk caches. For instance:
 
 - You require different responses for identical LM requests.
 - You lack disk write permissions and need to disable the on-disk cache.
@@ -97,7 +97,7 @@ Please note that `disk_size_limit_bytes` defines the maximum size in bytes for t
 
 ## Understanding and Customizing the Cache
 
-In specific situations, you might want to implement a custom cache, for example, to gain finer control over how cache keys are generated. By default, the cache key is derived from a hash of all request arguments sent to `litellm`, excluding credentials like `api_key`.
+ In specific situations, you might want to implement a custom cache, for example, to gain finer control over how cache keys are generated. By default, the cache key is derived from a hash of all request arguments sent to `litellm`, excluding credentials like `api_key`.
 
 To create a custom cache, you need to subclass `dspy.clients.Cache` and override the relevant methods:
 

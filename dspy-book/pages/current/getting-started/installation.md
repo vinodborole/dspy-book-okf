@@ -3,16 +3,16 @@ type: Web Page
 title: Setting up DSPy - DSPy
 description: The framework for programming—rather than prompting—language models.
 resource: https://dspy.ai/current/getting-started/installation
-timestamp: '2026-09-21T12:23:21.849957+00:00'
+timestamp: '2026-09-28T13:20:17.892585+00:00'
 ---
 
 # Setting up DSPy
 
-Install DSPy with `pip install dspy` or run `uv add dspy` to add DSPy to a virtual environment. DSPy works in Python 3.10+ environments.
+ Install DSPy with `pip install dspy` or run `uv add dspy` to add DSPy to a virtual environment. DSPy works in Python 3.10+ environments.
 
 ## Connecting to a language model
 
-DSPy connects to language models with the `dspy.LM` class. To set up a language model, we provide a `"provider/model"` format string and an API key:
+ DSPy connects to language models with the `dspy.LM` class. To set up a language model, we provide a `"provider/model"` format string and an API key:
 
 Behind the scenes, DSPy uses the [LiteLLM](https://docs.litellm.ai/docs/#litellm-python-sdk) library to normalize inference providers into a single format. This allows you to provide a LiteLLM model string and connect to nearly any model and its provider. [Click here to search for the full list](https://models.litellm.ai/).
 
